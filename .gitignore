@@ -1,0 +1,8 @@
+bin/
+build/
+gen/
+.idea/gradle.xml
+.idea/uiDesigner.xml
+.idea/workspace.xml
+
+local.properties

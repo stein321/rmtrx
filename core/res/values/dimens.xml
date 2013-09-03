@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- The width of the master fragment in a master/detail split view. -->
+    <dimen name="split_view_master_width">240dp</dimen>
+
+    <dimen name="tab_page_indicator_text_size">10sp</dimen>
+
+    <!-- The spacing along the top of an expandable list parent item-->
+    <dimen name="expandable_list_parent_padding_top">6dp</dimen>
+    <!-- The spacing along the bottom of an expandable list parent item-->
+    <dimen name="expandable_list_parent_padding_bottom">6dp</dimen>
+
+    <!--The spacing in between the Grid Layout header and item-->
+    <dimen name="grid_layout_label_preferred_margin_right">8dp</dimen>
+
+</resources>

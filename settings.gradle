@@ -1,0 +1,3 @@
+include 'rmtrxdev',
+        'core',
+        'viewpagerindicator'
