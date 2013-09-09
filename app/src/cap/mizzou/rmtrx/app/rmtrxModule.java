@@ -1,6 +1,9 @@
 package cap.mizzou.rmtrx.app;
 
+import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
+import cap.mizzou.rmtrx.app.settings.SettingsActivity;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
+import cap.mizzou.rmtrx.app.ui.HomeFragment;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
@@ -21,7 +24,10 @@ import javax.inject.Singleton;
                 SecurityUiModule.class
         },*/
         injects = {
-                HomeActivity.class
+                HomeActivity.class,
+                GroceryActivity.class,
+                SettingsActivity.class,
+                HomeFragment.class
         })
 public final class rmtrxModule {
 
