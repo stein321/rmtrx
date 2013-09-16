@@ -17,8 +17,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="viewpagerindicator" />
     <orderEntry type="library" exported="" name="core-libs" level="project" />
-    <orderEntry type="library" exported="" name="android-support-v4" level="application" />
-    <orderEntry type="module" module-name="actionbarsherlock" />
+    <orderEntry type="module" module-name="actionbarsherlock" exported="" />
   </component>
 </module>
 

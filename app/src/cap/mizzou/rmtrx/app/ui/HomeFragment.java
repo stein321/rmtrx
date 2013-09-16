@@ -25,6 +25,8 @@ public class HomeFragment extends BaseListFragment {
 
     public static final String TAG = HomeFragment.class.getName();
 
+    private static final String STATE_LAST_CHECKED_ITEM = "lastCheckedItem";
+
     private List<RmtrxActivity> activities;
 
     private int lastCheckedItem;
@@ -36,6 +38,10 @@ public class HomeFragment extends BaseListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activities = getActivities();
+        lastCheckedItem = ListView.INVALID_POSITION;
+        if (savedInstanceState != null) {
+            lastCheckedItem = savedInstanceState.getInt(STATE_LAST_CHECKED_ITEM, ListView.INVALID_POSITION);
+        }
 
     }
 

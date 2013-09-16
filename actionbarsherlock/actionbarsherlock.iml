@@ -6,11 +6,6 @@
         <option name="LIBRARY_PROJECT" value="true" />
       </configuration>
     </facet>
-    <facet type="android" name="Android2">
-      <configuration>
-        <option name="LIBRARY_PROJECT" value="true" />
-      </configuration>
-    </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
@@ -19,9 +14,9 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Android 4.3 Platform" jdkType="Android SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="android-support-v4" level="application" />
+    <orderEntry type="library" exported="" name="android-support-v4" level="application" />
   </component>
 </module>
 
