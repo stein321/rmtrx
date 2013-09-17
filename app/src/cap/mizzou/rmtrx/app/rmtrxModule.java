@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app;
 
+import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.app.settings.SettingsActivity;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
@@ -27,6 +28,7 @@ import javax.inject.Singleton;
                 HomeActivity.class,
                 GroceryActivity.class,
                 SettingsActivity.class,
+                MessagesActivity.class,
                 HomeFragment.class
         })
 public final class rmtrxModule {

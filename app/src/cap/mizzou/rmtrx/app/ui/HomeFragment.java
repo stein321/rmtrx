@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.core.ui.BaseListFragment;
@@ -75,6 +76,7 @@ public class HomeFragment extends BaseListFragment {
     public List<RmtrxActivity> getActivities() {
         List<RmtrxActivity> activitiesList = new ArrayList<RmtrxActivity>();
         activitiesList.add(new RmtrxActivity(R.string.grocery_list_activity_name, GroceryActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
 /*        activitiesList.add(new RmtrxActivity(R.string.action_settings, SettingsActivity.class));*/
 
         return activitiesList;
