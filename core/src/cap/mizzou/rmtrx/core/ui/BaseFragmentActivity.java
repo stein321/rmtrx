@@ -1,8 +1,8 @@
 package cap.mizzou.rmtrx.core.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import cap.mizzou.rmtrx.core.ObjectGraphProvider;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 /**
  * @author Steven Rodenberg
  */
-public class BaseFragmentActivity extends FragmentActivity {
+public class BaseFragmentActivity extends SherlockFragmentActivity {
 
     @Inject
     Bus bus;

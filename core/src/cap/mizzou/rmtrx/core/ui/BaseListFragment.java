@@ -3,6 +3,7 @@ package cap.mizzou.rmtrx.core.ui;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import cap.mizzou.rmtrx.core.ObjectGraphProvider;
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -10,7 +11,7 @@ import javax.inject.Inject;
 /**
  * A {@link ListFragment} that can be injected and is automatically registered for events on the injected {@link Bus}.
  */
-public class BaseListFragment extends ListFragment {
+public class BaseListFragment extends SherlockListFragment {
 
     @Inject
     Bus bus;
