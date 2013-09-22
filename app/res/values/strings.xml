@@ -7,4 +7,9 @@
 
     <string name="grocery_list_activity_name">Grocery List</string>
     <string name="messages_activity_name">Messages</string>
+    <string name="main_activity_name">Login</string>
+    <string name="Login">Login</string>
+    <string name="Username">Username</string>
+    <string name="password">password</string>
+    <string name="title_activity_display_message">My Message</string>
 </resources>
