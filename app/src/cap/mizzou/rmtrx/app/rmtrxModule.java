@@ -29,7 +29,9 @@ import javax.inject.Singleton;
                 GroceryActivity.class,
                 SettingsActivity.class,
                 MessagesActivity.class,
-                HomeFragment.class
+                HomeFragment.class,
+                MainActivity.class,
+                DisplayMessageActivity.class
         })
 public final class rmtrxModule {
 
