@@ -56,6 +56,12 @@
                 android:parentActivityName="cap.mizzou.rmtrx.app.MainActivity">
 
         </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity"
+                android:label="@string/Test_DB"
+                android:parentActivityName="cap.mizzou.rmtrx.app.MainActivity">
+
+        </activity>
     </application>
 
 </manifest>

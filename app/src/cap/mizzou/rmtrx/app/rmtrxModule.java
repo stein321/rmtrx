@@ -1,6 +1,10 @@
 package cap.mizzou.rmtrx.app;
 
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
+import cap.mizzou.rmtrx.app.SQLite.Comment;
+import cap.mizzou.rmtrx.app.SQLite.CommentsDataSource;
+import cap.mizzou.rmtrx.app.SQLite.MySQLiteHelper;
+import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.app.settings.SettingsActivity;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
@@ -31,7 +35,11 @@ import javax.inject.Singleton;
                 MessagesActivity.class,
                 HomeFragment.class,
                 MainActivity.class,
-                DisplayMessageActivity.class
+                DisplayMessageActivity.class,
+                Comment.class,
+                CommentsDataSource.class,
+                MySQLiteHelper.class,
+                TestDatabaseActivity.class
         })
 public final class rmtrxModule {
 
