@@ -18,6 +18,7 @@ public class HomeActivity extends BaseFragmentActivity {
         setContentView(R.layout.merge_empty);
         getSupportActionBar().setTitle("Dashboard");
 
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Fragment homeFragment = fragmentManager.findFragmentByTag(HomeFragment.TAG);
@@ -35,8 +36,9 @@ public class HomeActivity extends BaseFragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getSupportMenuInflater().inflate(R.menu.home, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
+
 
     @Subscribe
     public void onActivitySelected(ActivitySelectedEvent event) {

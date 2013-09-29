@@ -1,6 +1,8 @@
 package cap.mizzou.rmtrx.app.Messages;
 
-import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
+import android.app.Activity;
+import android.os.Bundle;
+import cap.mizzou.rmtrx.app.R;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,5 +11,13 @@ import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
  * Time: 10:55 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MessagesActivity extends BaseFragmentActivity {
+public class MessagesActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.merge_empty);
+        getActionBar().setTitle("Messages");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 }

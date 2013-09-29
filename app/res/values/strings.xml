@@ -10,6 +10,10 @@
     <string name="main_activity_name">Login</string>
     <string name="Login">Login</string>
     <string name="Username">Username</string>
-    <string name="password">password</string>
+    <string name="password">Password</string>
     <string name="title_activity_display_message">My Message</string>
+    <string name="title_activity_send_info">Send Info</string>
+    <string name="action_search">Search</string>
+    <string name="show_messages">show_messages</string>
+
 </resources>
