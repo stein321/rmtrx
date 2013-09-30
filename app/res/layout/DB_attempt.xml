@@ -9,6 +9,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+        <EditText android:id="@+id/add_item"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:inputType="text"
+                />
         <Button
                 android:id="@+id/add"
                 android:layout_width="wrap_content"

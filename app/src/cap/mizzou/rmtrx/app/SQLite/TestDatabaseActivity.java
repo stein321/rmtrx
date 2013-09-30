@@ -12,10 +12,10 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
 
 import java.util.List;
-import java.util.Random;
 
 public class TestDatabaseActivity extends ListActivity {
     private CommentsDataSource datasource;
@@ -24,6 +24,8 @@ public class TestDatabaseActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.db_attempt);
+        getActionBar().setTitle("Add/Delete Items");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         datasource = new CommentsDataSource(this);
         datasource.open();
@@ -45,10 +47,10 @@ public class TestDatabaseActivity extends ListActivity {
         Comment comment;
         int i = view.getId();
         if (i == R.id.add) {
-            String[] comments = new String[]{"Cool", "Very nice", "Hate it"};
-            int nextInt = new Random().nextInt(3);
+            EditText text = (EditText) findViewById(R.id.add_item);
+            String item_to_add = text.getText().toString();
             // Save the new comment to the database
-            comment = datasource.createComment(comments[nextInt]);
+            comment = datasource.createComment(item_to_add);
             adapter.add(comment);
 
         } else if (i == R.id.delete) {
