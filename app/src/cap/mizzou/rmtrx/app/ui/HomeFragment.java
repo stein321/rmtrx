@@ -86,7 +86,7 @@ public class HomeFragment extends BaseListFragment {
         activitiesList.add(new RmtrxActivity(R.string.grocery_list_activity_name, GroceryActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.main_activity_name, MainActivity.class));
-        activitiesList.add(new RmtrxActivity(R.string.test_database_name, TestDatabaseActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
 /*        activitiesList.add(new RmtrxActivity(R.string.action_settings, SettingsActivity.class));*/
 
         return activitiesList;
