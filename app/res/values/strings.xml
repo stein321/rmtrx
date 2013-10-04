@@ -7,7 +7,7 @@
 
     <string name="grocery_list_activity_name">Grocery List</string>
     <string name="messages_activity_name">Messages</string>
-    <string name="main_activity_name">Login</string>
+    <string name="login_activity_name">Login</string>
     <string name="db_attempt_name">DB Test</string>
 
     <string name="Login">Login</string>

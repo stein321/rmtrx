@@ -34,7 +34,7 @@ import javax.inject.Singleton;
                 SettingsActivity.class,
                 MessagesActivity.class,
                 HomeFragment.class,
-                MainActivity.class,
+                LoginActivity.class,
                 DisplayMessageActivity.class,
                 Comment.class,
                 CommentsDataSource.class,

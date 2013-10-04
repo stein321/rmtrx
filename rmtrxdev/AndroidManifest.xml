@@ -35,7 +35,7 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.MainActivity"
+                android:name="cap.mizzou.rmtrx.app.LoginActivity"
                 android:label="@string/app_name"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
             <meta-data

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import cap.mizzou.rmtrx.app.MainActivity;
+import cap.mizzou.rmtrx.app.LoginActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
@@ -81,11 +81,12 @@ public class HomeFragment extends BaseListFragment {
 
     }
 
+    //this lists all the menu items on the dashboard
     public List<RmtrxActivity> getActivities() {
         List<RmtrxActivity> activitiesList = new ArrayList<RmtrxActivity>();
         activitiesList.add(new RmtrxActivity(R.string.grocery_list_activity_name, GroceryActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
-        activitiesList.add(new RmtrxActivity(R.string.main_activity_name, MainActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.login_activity_name, LoginActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
 /*        activitiesList.add(new RmtrxActivity(R.string.action_settings, SettingsActivity.class));*/
 

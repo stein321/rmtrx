@@ -14,7 +14,7 @@ import android.widget.EditText;
  * Time: 8:41 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MainActivity extends FragmentActivity {
+public class LoginActivity extends FragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private SharedPreferences user_name;
 
@@ -26,7 +26,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
 //        SharedPreferences user_name = getSharedPreferences();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
