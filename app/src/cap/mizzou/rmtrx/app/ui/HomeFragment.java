@@ -93,6 +93,7 @@ public class HomeFragment extends BaseListFragment {
         return activitiesList;
     }
 
+    //
 
     /**
      * Adapter for this activity that will hold possible
