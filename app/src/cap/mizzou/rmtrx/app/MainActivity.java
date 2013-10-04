@@ -36,19 +36,24 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
 
+        //grabs text from form
         EditText login_name_text = (EditText) findViewById(R.id.login_name);
         EditText p_word_text = (EditText) findViewById(R.id.p_word);
 
+        //turns it into a string
         String login_to_add = login_name_text.getText().toString();
         String p_word_to_add = p_word_text.getText().toString();
 
+        //stores string as key valued pairs
         editor.putString("login_name", login_to_add);
         editor.putString("p_word", p_word_to_add);
-        editor.commit();
+        editor.commit();     //commits it to local memory
 
+        //grabs values out of memory for debugging purposes
         login_name = pref.getString("login_name", null);
         password = pref.getString("p_word", null);
 
+        //prints values out in the debugger screen
         Log.d("test-login", login_name);
         Log.d("test-pass", password);
         return;
