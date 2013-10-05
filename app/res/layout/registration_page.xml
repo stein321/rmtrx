@@ -8,25 +8,65 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Username"
+            android:text="@string/first_and_last_name"
             />
-    <EditText android:id="@+id/login_name"
+    <EditText android:id="@+id/firstAndLastName"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:inputType="text"/>
+              android:inputType="textPersonName"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            />
+    <EditText android:id="@+id/email"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="textEmailAddress"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_of_residence"
+            />
+    <EditText android:id="@+id/number_of_roommates"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="number"
+            />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/password"
             />
-    <EditText android:id="@+id/p_word"
+    <EditText android:id="@+id/password"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:inputType="textPassword"
             />
-
-    <Button
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Login"
-            android:onClick="sendLoginInfo"/>
+            android:text="@string/confirm_password"
+            />
+    <EditText android:id="@+id/confirm_password"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="textPassword"
+            />
+    <Button
+            android:id="@+id/joinResidence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/JoinResidence"
+            android:onClick="onClick"/>
+    <Button
+            android:id="@+id/createResidence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/CreateResidence"
+            android:onClick="onClick"/>
+
+
 </LinearLayout>

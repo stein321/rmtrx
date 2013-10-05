@@ -1,11 +1,13 @@
-package cap.mizzou.rmtrx.app;
+package cap.mizzou.rmtrx.app.Login;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import cap.mizzou.rmtrx.app.R;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,5 +60,20 @@ public class LoginActivity extends FragmentActivity {
         Log.d("test-pass", password);
         return;
     }
+
+    public void register(View view) {
+        Intent myIntent = new Intent(this, RegistrationActivity.class);
+        startActivity(myIntent);
+    }
+//    public class RegistrationActivity extends Activity {
+//
+//        @Override
+//        protected void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            setContentView(R.layout.registration_page);
+//            getActionBar().setTitle("Register");
+//            getActionBar().setDisplayHomeAsUpEnabled(true);
+//        }
+//}
 
 }

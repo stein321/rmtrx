@@ -1,5 +1,9 @@
 package cap.mizzou.rmtrx.app;
 
+import cap.mizzou.rmtrx.app.Login.CreateResidenceActivity;
+import cap.mizzou.rmtrx.app.Login.JoinResidenceActivity;
+import cap.mizzou.rmtrx.app.Login.LoginActivity;
+import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.SQLite.Comment;
 import cap.mizzou.rmtrx.app.SQLite.CommentsDataSource;
@@ -39,7 +43,12 @@ import javax.inject.Singleton;
                 Comment.class,
                 CommentsDataSource.class,
                 MySQLiteHelper.class,
-                TestDatabaseActivity.class
+                TestDatabaseActivity.class,
+                RegistrationActivity.class,
+                CreateResidenceActivity.class,
+                JoinResidenceActivity.class
+
+
         })
 public final class rmtrxModule {
 

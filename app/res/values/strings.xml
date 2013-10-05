@@ -20,6 +20,16 @@
     <string name="hello">hello</string>
     <string name="Delete_first">Delete First</string>
     <string name="add_new">Add New</string>
+    <string name="registration_activity_name">Register</string>
+    <string name="Register">Register</string>
+    <string name="newResidence">Create User</string>
+    <string name="JoinResidence">Join Residence</string>
+    <string name="CreateResidence">Create Residence</string>
+    <string name="first_name">First Name</string>
+    <string name="first_and_last_name">Name</string>
+    <string name="email">Email</string>
+    <string name="number_of_residence">Total Number of Roommates</string>
+    <string name="confirm_password">Confirm Password</string>
 
 
 </resources>
