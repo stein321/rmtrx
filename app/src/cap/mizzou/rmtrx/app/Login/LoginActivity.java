@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.Login;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -30,10 +31,23 @@ public class LoginActivity extends FragmentActivity {
 //        SharedPreferences user_name = getSharedPreferences();
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public void finish() {
+        // Prepare data intent
+        Intent data = new Intent();
+        data.putExtra("returnKey1", "Swinging on a star. ");
+        data.putExtra("returnKey2", "You could be better then you are. ");
+        // Activity finished ok, return the data
+        setResult(5, data);
+        super.finish();
     }
 
     public void sendLoginInfo(View view) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
         //saved to shared preferences
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
@@ -46,34 +60,50 @@ public class LoginActivity extends FragmentActivity {
         String login_to_add = login_name_text.getText().toString();
         String p_word_to_add = p_word_text.getText().toString();
 
-        //stores string as key valued pairs
+//        //stores string as key valued pairs
         editor.putString("login_name", login_to_add);
         editor.putString("p_word", p_word_to_add);
-        editor.commit();     //commits it to local memory
 
+        //hard coded login info, change to server call
+        if (checkLoginCredentials(login_to_add, p_word_to_add)) {
+            editor.putBoolean("logged_in_status_yo", true);
+            editor.commit();
+            alertDialogBuilder
+                    .setMessage("Bro has logged in successfully")
+                    .setCancelable(true);
+            finish();
+        } else {
+            alertDialogBuilder
+                    .setMessage("Username and/password incorrect")
+                    .setCancelable(true);
+        }
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
         //grabs values out of memory for debugging purposes
-        login_name = pref.getString("login_name", null);
+        Boolean status = pref.getBoolean("logged_in_status_yo", false);
         password = pref.getString("p_word", null);
-
+        String User = pref.getString("login_name", null);
         //prints values out in the debugger screen
-        Log.d("test-login", login_name);
+        Log.d("test-login", status.toString());
         Log.d("test-pass", password);
-        return;
+        Log.d("test-user", User);
+
+
+    }
+
+    public boolean checkLoginCredentials(String username, String password) {
+        boolean result = false;
+
+        if (username.equals("user") && password.equals("test")) { //hard coded, will be replaced by HTTP request
+            result = true;
+        }
+        return result;
     }
 
     public void register(View view) {
         Intent myIntent = new Intent(this, RegistrationActivity.class);
         startActivity(myIntent);
     }
-//    public class RegistrationActivity extends Activity {
-//
-//        @Override
-//        protected void onCreate(Bundle savedInstanceState) {
-//            super.onCreate(savedInstanceState);
-//            setContentView(R.layout.registration_page);
-//            getActionBar().setTitle("Register");
-//            getActionBar().setDisplayHomeAsUpEnabled(true);
-//        }
-//}
-
 }

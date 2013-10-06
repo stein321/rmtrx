@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app;
 
+import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.Login.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.Login.JoinResidenceActivity;
 import cap.mizzou.rmtrx.app.Login.LoginActivity;
@@ -46,7 +47,8 @@ import javax.inject.Singleton;
                 TestDatabaseActivity.class,
                 RegistrationActivity.class,
                 CreateResidenceActivity.class,
-                JoinResidenceActivity.class
+                JoinResidenceActivity.class,
+                LogOutActivity.class
 
 
         })

@@ -37,10 +37,8 @@
         <activity
                 android:name="cap.mizzou.rmtrx.app.Login.LoginActivity"
                 android:label="@string/app_name"
-                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="cap.mizzou.rmtrx.app.ui.HomeActivity"/>
+                android:noHistory="true">
+
         </activity>
         <activity
                 android:name="cap.mizzou.rmtrx.app.DisplayMessageActivity"
@@ -80,6 +78,15 @@
                 android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
 
         </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Log_out.LogOutActivity"
+                android:label="@string/Logout"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
+                android:noHistory="true">
+
+
+        </activity>
+
     </application>
 
 </manifest>

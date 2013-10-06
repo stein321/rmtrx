@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import cap.mizzou.rmtrx.app.Login.LoginActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -18,6 +20,13 @@ public class HomeActivity extends BaseFragmentActivity {
         setContentView(R.layout.merge_empty);
         getSupportActionBar().setTitle("Dashboard");
 
+        Intent i = new Intent(this, LoginActivity.class);
+        i.putExtra("Value1", "This value one for ActivityTwo ");
+        i.putExtra("Value2", "This value two ActivityTwo");
+        // Set the request code to any code you like, you can identify the
+        // callback via this code
+        startActivityForResult(i, 3);
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -28,6 +37,13 @@ public class HomeActivity extends BaseFragmentActivity {
             fragmentManager.beginTransaction()
                     .add(android.R.id.content, homeFragment, HomeFragment.TAG)
                     .commit();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 5 && requestCode == 3) {
+            Log.d("Returned_statement", "You did it");
         }
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.Login.LoginActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
@@ -88,6 +89,7 @@ public class HomeFragment extends BaseListFragment {
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.login_activity_name, LoginActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));
         //  activitiesList.add(new RmtrxActivity(R.string.registration_activity_name, RegistrationActivity.class));
 /*        activitiesList.add(new RmtrxActivity(R.string.action_settings, SettingsActivity.class));*/
 
