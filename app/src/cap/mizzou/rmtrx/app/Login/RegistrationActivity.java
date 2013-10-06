@@ -17,6 +17,7 @@ import cap.mizzou.rmtrx.app.R;
  * To change this template use File | Settings | File Templates.
  */
 public class RegistrationActivity extends Activity {
+    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private String first_and_last_name;
     private String email;
     private String password;
@@ -55,6 +56,7 @@ public class RegistrationActivity extends Activity {
         if (this.validateForm()) {
             this.storeDataInSharedPreference();
             Intent myIntent = new Intent(this, JoinResidenceActivity.class);
+            myIntent.putExtra(EXTRA_MESSAGE, this.first_and_last_name);
             startActivity(myIntent);
         }
     }
@@ -108,12 +110,15 @@ public class RegistrationActivity extends Activity {
                     .setCancelable(true);
             result = false;
         }
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
 
-        // show it
-        alertDialog.show();
+        //create alert box if needed and print it
+        if (result == false) {
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
 
+            // show it
+            alertDialog.show();
+        }
         return result;
     }
 

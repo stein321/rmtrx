@@ -17,7 +17,7 @@
     <string name="title_activity_send_info">Send Info</string>
     <string name="action_search">Search</string>
     <string name="show_messages">show_messages</string>
-    <string name="hello">hello</string>
+    <string name="hello">Hello</string>
     <string name="Delete_first">Delete First</string>
     <string name="add_new">Add New</string>
     <string name="registration_activity_name">Register</string>
@@ -30,6 +30,7 @@
     <string name="email">Email</string>
     <string name="number_of_residence">Total Number of Roommates</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="join_residence_intro">Please enter your residence code below</string>
 
 
 </resources>
