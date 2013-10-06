@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
@@ -42,14 +43,13 @@ public class RegistrationActivity extends Activity {
         int i = view.getId();
 
         if (this.validateForm()) {
+            this.storeDataInSharedPreference();
             if (i == R.id.createResidence) {
                 this.createResidence(view);
             } else if (i == R.id.joinResidence) {
                 this.joinResidence(view);
             }
-
         }
-
     }
 
     public void joinResidence(View view) {
@@ -73,9 +73,17 @@ public class RegistrationActivity extends Activity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
 
-        //grab text from registration form
+        //take attributes and store them in shared preferences
+        editor.putString("name", first_and_last_name);
+        editor.putString("email", email);
+        editor.putBoolean("logged_in_status_yo", true); //set to logged in
+        editor.commit();
 
+        //test
+        Log.d("test-name_first_last", pref.getString("name", null));
+        Log.d("test-email", pref.getString("email", null));
 
+        return;
     }
 
     public boolean validateForm() {
