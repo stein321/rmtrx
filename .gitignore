@@ -6,4 +6,5 @@ gen/
 .idea/workspace.xml
 out/production/rmtrxdev/rmtrxdev.apk
 out/production/rmtrxdev/rmtrxdev.unaligned.apk
+out/
 local.properties
