@@ -23,7 +23,7 @@ public class TestDatabaseActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.db_attempt);
+        setContentView(R.layout.attempt);
         getActionBar().setTitle("Add/Delete Items");
         getActionBar().setDisplayHomeAsUpEnabled(true);
 

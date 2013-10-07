@@ -4,7 +4,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="?android:attr/listPreferredItemHeight"
-                android:padding="6dip" >
+                android:padding="6dip">
 
     <ImageView
             android:id="@+id/icon"
@@ -14,7 +14,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="6dip"
             android:contentDescription="TODO"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_launcher"/>
 
     <TextView
             android:id="@+id/secondLine"
@@ -26,7 +26,7 @@
             android:ellipsize="marquee"
             android:singleLine="true"
             android:text="Date Posted"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
 
     <TextView
             android:layout_width="fill_parent"
@@ -38,6 +38,6 @@
             android:layout_toRightOf="@id/icon"
             android:gravity="center_vertical"
             android:text="Post Name"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
 </RelativeLayout>
