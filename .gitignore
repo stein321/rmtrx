@@ -8,7 +8,4 @@ gen/
 out/
 local.properties
 
-out/*
-local.properties
 .idea/dictionaries
->>>>>>> .merge_file_uElcYV
