@@ -4,6 +4,6 @@ gen/
 .idea/gradle.xml
 .idea/uiDesigner.xml
 .idea/workspace.xml
-out/
+out/*
 local.properties
 .idea/dictionaries
