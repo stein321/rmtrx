@@ -19,7 +19,7 @@ import cap.mizzou.rmtrx.app.R;
  */
 public class LoginActivity extends FragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private SharedPreferences user_name;
+    private SharedPreferences logged_in_status;
 
     private String login_name;  //just for printing to log
     private String password; //just for printing to log
@@ -49,8 +49,8 @@ public class LoginActivity extends FragmentActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         //saved to shared preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
+        this.logged_in_status = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = this.logged_in_status.edit();
 
         //grabs text from form
         EditText login_name_text = (EditText) findViewById(R.id.login_name);
@@ -68,9 +68,9 @@ public class LoginActivity extends FragmentActivity {
         if (checkLoginCredentials(login_to_add, p_word_to_add)) {
             editor.putBoolean("logged_in_status_yo", true);
             editor.commit();
-            alertDialogBuilder
-                    .setMessage("Bro has logged in successfully")
-                    .setCancelable(true);
+//            alertDialogBuilder
+//                    .setMessage("Bro has logged in successfully")
+//                    .setCancelable(true);
             finish();
         } else {
             alertDialogBuilder
@@ -82,11 +82,11 @@ public class LoginActivity extends FragmentActivity {
         // show it
         alertDialog.show();
         //grabs values out of memory for debugging purposes
-        Boolean status = pref.getBoolean("logged_in_status_yo", false);
-        password = pref.getString("p_word", null);
-        String User = pref.getString("login_name", null);
+        boolean status = logged_in_status.getBoolean("logged_in_status_yo", false);
+        password = logged_in_status.getString("p_word", null);
+        String User = logged_in_status.getString("login_name", null);
         //prints values out in the debugger screen
-        Log.d("test-login", status.toString());
+        Log.d("test-login", String.valueOf(status));
         Log.d("test-pass", password);
         Log.d("test-user", User);
 
