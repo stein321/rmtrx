@@ -20,6 +20,8 @@ public class HomeActivity extends BaseFragmentActivity {
         setContentView(R.layout.merge_empty);
         getSupportActionBar().setTitle("Dashboard");
 
+        //check to see if login flag is step, if not login
+        //if(loginSet then skip this shit
         Intent i = new Intent(this, LoginActivity.class);
         i.putExtra("Value1", "This value one for ActivityTwo ");
         i.putExtra("Value2", "This value two ActivityTwo");
