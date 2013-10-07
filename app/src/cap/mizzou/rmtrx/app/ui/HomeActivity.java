@@ -1,6 +1,7 @@
 package cap.mizzou.rmtrx.app.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,13 +23,12 @@ public class HomeActivity extends BaseFragmentActivity {
 
         //check to see if login flag is step, if not login
         //if(loginSet then skip this shit
-        Intent i = new Intent(this, LoginActivity.class);
-        i.putExtra("Value1", "This value one for ActivityTwo ");
-        i.putExtra("Value2", "This value two ActivityTwo");
-        // Set the request code to any code you like, you can identify the
-        // callback via this code
-        startActivityForResult(i, 3);
-
+        if(!isLoginSet()) {
+            Intent go_to_login_page = new Intent(this, LoginActivity.class);
+            go_to_login_page.putExtra("Value1", "This value one for ActivityTwo ");
+            go_to_login_page.putExtra("Value2", "This value two ActivityTwo");
+            startActivityForResult(go_to_login_page, 3);
+        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -48,7 +48,12 @@ public class HomeActivity extends BaseFragmentActivity {
             Log.d("Returned_statement", "You did it");
         }
     }
-
+    private boolean isLoginSet() {
+        boolean result=false;
+        SharedPreferences logged_in_status=getApplicationContext().getSharedPreferences("MyPref", 0);
+        result = logged_in_status.getBoolean("logged_in_status_yo", false);
+        return result;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
