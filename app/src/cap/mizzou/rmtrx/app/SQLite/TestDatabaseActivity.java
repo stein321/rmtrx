@@ -11,6 +11,7 @@ package cap.mizzou.rmtrx.app.SQLite;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
@@ -37,6 +38,19 @@ public class TestDatabaseActivity extends ListActivity {
         ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
+        this.getListView().setClickable(true);
+        this.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
+                Comment comment = null;
+                if (getListAdapter().getCount() > 0) {
+                    comment = (Comment) getListAdapter().getItem(position);
+                    datasource.deleteComment(comment);
+                    adapter.remove(comment);
+                }
+                return;
+            }});
     }
 
     // Will be called via the onClick attribute
@@ -51,6 +65,8 @@ public class TestDatabaseActivity extends ListActivity {
             String item_to_add = text.getText().toString();
             // Save the new comment to the database
             comment = datasource.createComment(item_to_add);
+            if(comment.getComment().equals("mike"))
+                comment.setComment("crossed off");
             adapter.add(comment);
 
         } else if (i == R.id.delete) {

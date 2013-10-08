@@ -9,6 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
+import com.google.gson.annotations.SerializedName;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,6 +27,7 @@ public class LoginActivity extends FragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private SharedPreferences logged_in_status;
 
+    protected boolean login_result;
     private String login_name;  //just for printing to log
     private String password; //just for printing to log
 
@@ -94,16 +101,58 @@ public class LoginActivity extends FragmentActivity {
     }
 
     public boolean checkLoginCredentials(String username, String password) {
-        boolean result = false;
 
-        if (username.equals("user") && password.equals("test")) { //hard coded, will be replaced by HTTP request
-            result = true;
+        RestAdapter restAdapter =
+                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+
+        AuthenticationRequestInterface ri = restAdapter.create(AuthenticationRequestInterface.class);
+
+
+        ri.login(username, password, new Callback<AuthResponse>() {
+
+
+            @Override
+            public void success(AuthResponse authResponse, Response response) {
+                //To change body of implemented methods use File | Settings | File Templates.
+                   login_result=true;
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+                login_result=false;
+            }
         }
-        return result;
+        );
+        return login_result;
+//        return true;//comment out
     }
+
 
     public void register(View view) {
         Intent myIntent = new Intent(this, RegistrationActivity.class);
         startActivity(myIntent);
+    }
+
+    public class AuthResponse {
+            @SerializedName("_id")
+            String id;
+            String key;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getKey() {
+                return key;
+            }
+
+            public void setKey(String key) {
+                this.key = key;
+            }
     }
 }
