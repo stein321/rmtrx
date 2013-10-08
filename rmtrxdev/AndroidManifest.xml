@@ -3,7 +3,7 @@
           package="cap.mizzou.rmtrx.development"
           android:versionCode="1"
           android:versionName="1.0">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-sdk
             android:minSdkVersion="8"
             android:targetSdkVersion="14"/>
@@ -24,24 +24,69 @@
         </activity>
         <activity
                 android:name="cap.mizzou.rmtrx.app.grocery.GroceryActivity"
-                android:label="@string/grocery_list_activity_name">
+                android:label="@string/grocery_list_activity_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+
         </activity>
         <activity
                 android:name="cap.mizzou.rmtrx.app.Messages.MessagesActivity"
-                android:label="@string/messages_activity_name">
+                android:label="@string/messages_activity_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.MainActivity"
-                android:label="@string/app_name">
+                android:name="cap.mizzou.rmtrx.app.Login.LoginActivity"
+                android:label="@string/app_name"
+                android:noHistory="true">
+
         </activity>
         <activity
                 android:name="cap.mizzou.rmtrx.app.DisplayMessageActivity"
                 android:label="@string/title_activity_display_message"
-                android:parentActivityName="cap.mizzou.rmtrx.app.MainActivity">
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="cap.mizzou.rmtrx.app.MainActivity"/>
+                    android:value="cap.mizzou.rmtrx.app.ui.HomeActivity"/>
         </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.sendLoginInfo"
+                android:label="@string/title_activity_send_info"
+                android:parentActivityName="cap.mizzou.rmtrx.app.LoginActivity">
+
+        </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity"
+                android:label="@string/Test_DB"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+
+        </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Login.RegistrationActivity"
+                android:label="@string/registration_activity_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.Login.LoginActivity">
+
+        </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Login.JoinResidenceActivity"
+                android:label="@string/JoinResidence"
+                android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
+
+        </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Login.CreateResidenceActivity"
+                android:label="@string/CreateResidence"
+                android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
+
+        </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Log_out.LogOutActivity"
+                android:label="@string/Logout"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
+                android:noHistory="true">
+
+
+        </activity>
+
     </application>
 
 </manifest>

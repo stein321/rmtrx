@@ -1,23 +1,24 @@
-package cap.mizzou.rmtrx.app.Messages;
+package cap.mizzou.rmtrx.app.Login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import cap.mizzou.rmtrx.app.R;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Ben
- * Date: 9/16/13
- * Time: 10:55 PM
+ * Date: 10/5/13
+ * Time: 2:21 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MessagesActivity extends Activity {
-
+public class CreateResidenceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.merge_empty);
-        getActionBar().setTitle("Messages");
+        Intent intent = getIntent();
+        setContentView(R.layout.join_residence_page);
+        getActionBar().setTitle("Create Residence");
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

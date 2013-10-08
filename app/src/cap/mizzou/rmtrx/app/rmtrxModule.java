@@ -1,6 +1,15 @@
 package cap.mizzou.rmtrx.app;
 
+import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
+import cap.mizzou.rmtrx.app.Login.CreateResidenceActivity;
+import cap.mizzou.rmtrx.app.Login.JoinResidenceActivity;
+import cap.mizzou.rmtrx.app.Login.LoginActivity;
+import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
+import cap.mizzou.rmtrx.app.SQLite.Comment;
+import cap.mizzou.rmtrx.app.SQLite.CommentsDataSource;
+import cap.mizzou.rmtrx.app.SQLite.MySQLiteHelper;
+import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.app.settings.SettingsActivity;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
@@ -30,8 +39,18 @@ import javax.inject.Singleton;
                 SettingsActivity.class,
                 MessagesActivity.class,
                 HomeFragment.class,
-                MainActivity.class,
-                DisplayMessageActivity.class
+                LoginActivity.class,
+                DisplayMessageActivity.class,
+                Comment.class,
+                CommentsDataSource.class,
+                MySQLiteHelper.class,
+                TestDatabaseActivity.class,
+                RegistrationActivity.class,
+                CreateResidenceActivity.class,
+                JoinResidenceActivity.class,
+                LogOutActivity.class
+
+
         })
 public final class rmtrxModule {
 

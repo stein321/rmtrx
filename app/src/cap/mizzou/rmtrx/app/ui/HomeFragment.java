@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import cap.mizzou.rmtrx.app.MainActivity;
+import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
+import cap.mizzou.rmtrx.app.Login.LoginActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.core.ui.BaseListFragment;
 import com.squareup.otto.Bus;
@@ -80,16 +82,21 @@ public class HomeFragment extends BaseListFragment {
 
     }
 
+    //this lists all the menu items on the dashboard
     public List<RmtrxActivity> getActivities() {
         List<RmtrxActivity> activitiesList = new ArrayList<RmtrxActivity>();
         activitiesList.add(new RmtrxActivity(R.string.grocery_list_activity_name, GroceryActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
-        activitiesList.add(new RmtrxActivity(R.string.main_activity_name, MainActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.login_activity_name, LoginActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));
+        //  activitiesList.add(new RmtrxActivity(R.string.registration_activity_name, RegistrationActivity.class));
 /*        activitiesList.add(new RmtrxActivity(R.string.action_settings, SettingsActivity.class));*/
 
         return activitiesList;
     }
 
+    //
 
     /**
      * Adapter for this activity that will hold possible

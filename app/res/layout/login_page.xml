@@ -10,16 +10,16 @@
             android:layout_height="wrap_content"
             android:text="@string/Username"
             />
-    <EditText android:id="@+id/edit_message"
+    <EditText android:id="@+id/login_name"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-            />
+              android:inputType="text"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/password"
             />
-    <EditText android:id="@+id/edit_message"
+    <EditText android:id="@+id/p_word"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
             />
@@ -28,5 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Login"
-            android:onClick="sendLoginData"/>
+            android:onClick="sendLoginInfo"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/newResidence"
+            android:onClick="register"/>
 </LinearLayout>

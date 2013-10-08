@@ -4,5 +4,7 @@
     <string name="app_name">rmtrxdev</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="Test_DB">db_tester</string>
+    <string name="Logout">Logout</string>
 
 </resources>
