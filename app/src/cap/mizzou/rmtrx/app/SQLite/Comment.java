@@ -11,6 +11,16 @@ public class Comment {
     private long id;
     private String comment;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    private String status;
+
     public long getId() {
         return id;
     }
