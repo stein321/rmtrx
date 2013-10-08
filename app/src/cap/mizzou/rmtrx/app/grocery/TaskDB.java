@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TaskDB extends SQLiteOpenHelper {
 
@@ -28,7 +31,7 @@ public class TaskDB extends SQLiteOpenHelper {
 
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_TASKS + " ( "
                 + KEY_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_TASKNAME+ " TEXT, "
+                + KEY_TASKNAME + " TEXT, "
                 + KEY_STATUS + " INTEGER)";
         db.execSQL(sql);
     }
@@ -54,8 +57,8 @@ public class TaskDB extends SQLiteOpenHelper {
 
 
     //READ TASK
-    public java.util.List<Task> getAllTasks() {
-        java.util.List<Task> taskList = new java.util.ArrayList<Task>();
+    public List<Task> getAllTasks() {
+        List<Task> taskList = new ArrayList<Task>();
         String selectQuery = "SELECT  * FROM " + TABLE_TASKS;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -73,7 +76,6 @@ public class TaskDB extends SQLiteOpenHelper {
         // return list
         return taskList;
     }
-
 
 
     //UPDATE TASK

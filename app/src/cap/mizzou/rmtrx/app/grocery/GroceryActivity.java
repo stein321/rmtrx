@@ -1,48 +1,27 @@
 package cap.mizzou.rmtrx.app.grocery;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-import java.util.List;
-
-import android.os.Bundle;
-import android.app.Activity;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
 
-public class GroceryActivity extends Activity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GroceryActivity extends BaseFragmentActivity {
     protected TaskDB db;
     List<Task> list;
     MyAdapter adapt;
-=======
-import android.app.Activity;
-import android.os.Bundle;
-import cap.mizzou.rmtrx.app.R;
-
-/**
- * Javadoc needed
- */
-public class GroceryActivity extends Activity {
->>>>>>> 604866c0e2befea9c12029da170e58f875c6b030
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
 
-        //getSupportActionBar().setTitle("Grocery List");
 
         setContentView(R.layout.view_task);
         db = new TaskDB(this);
@@ -50,11 +29,9 @@ public class GroceryActivity extends Activity {
         adapt = new MyAdapter(this, R.layout.list_inner_view, list);
         ListView listTask = (ListView) findViewById(R.id.listView1);
         listTask.setAdapter(adapt);
-=======
-        getActionBar().setTitle("Grocery List");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Grocery List");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.article_view);
->>>>>>> 604866c0e2befea9c12029da170e58f875c6b030
     }
 
     public void addTaskNow(View v) {
