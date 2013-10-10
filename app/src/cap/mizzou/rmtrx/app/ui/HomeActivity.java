@@ -23,7 +23,11 @@ public class HomeActivity extends BaseFragmentActivity {
 
         //check to see if login flag is step, if not login
         //if(loginSet then skip this shit
-        if(!isLoginSet()) {
+
+        //for now going to assume user is logged-in
+        //once login is working, will add isLoginSet
+
+        if(false) {
             Intent go_to_login_page = new Intent(this, LoginActivity.class);
             go_to_login_page.putExtra("Value1", "This value one for ActivityTwo ");
             go_to_login_page.putExtra("Value2", "This value two ActivityTwo");
