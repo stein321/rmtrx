@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="FrameworkRoot.Theme">
+        <!-- The preferred padding along the start edge of list items. -->
+        <attr name="listPreferredItemPaddingStart" format="dimension"/>
+        <!-- The preferred padding along the end edge of list items. -->
+        <attr name="listPreferredItemPaddingEnd" format="dimension"/>
+
+        <!-- The spacing along the top of an expandable list parent item-->
+        <attr name="expandableListParentPaddingTop" format="dimension"/>
+        <!-- The spacing along the bottom of an expandable list parent item-->
+        <attr name="expandableListParentPaddingBottom" format="dimension"/>
+    </declare-styleable>
+</resources>

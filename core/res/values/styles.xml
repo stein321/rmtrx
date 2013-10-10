@@ -1,20 +1,19 @@
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <!-- Root styles that vary by API level -->
+    <style name="FrameworkRoot.Theme.Light" parent="@android:Theme.Holo.Light.DarkActionBar">
+        <!-- API 17+ (compatibility) -->
+        <item name="listPreferredItemPaddingStart">@dimen/compat_list_preferred_item_padding_start</item>
+        <item name="listPreferredItemPaddingEnd">@dimen/compat_list_preferred_item_padding_end</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    <!-- Immediate parent theme to specify base values for custom attributes -->
+    <style name="Theme.Base.Light" parent="FrameworkRoot.Theme.Light">
+        <item name="expandableListParentPaddingBottom">@dimen/expandable_list_parent_padding_bottom</item>
+        <item name="expandableListParentPaddingTop">@dimen/expandable_list_parent_padding_top</item>
+
     </style>
+
+    <style name="Theme.rmtrx.Light" parent="Theme.Base.Light"/>
 
 </resources>

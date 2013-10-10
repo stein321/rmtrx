@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="home_activity" type="layout">@layout/merge_empty</item>
+    <item name='article_view' type="layout">@layout/merge_empty</item>
+</resources>

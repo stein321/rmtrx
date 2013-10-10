@@ -5,4 +5,7 @@ gen/
 .idea/uiDesigner.xml
 .idea/workspace.xml
 
+out/
 local.properties
+
+.idea/dictionaries
