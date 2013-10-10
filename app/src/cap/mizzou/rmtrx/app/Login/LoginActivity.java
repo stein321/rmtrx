@@ -22,6 +22,7 @@ import retrofit.client.Response;
  * Date: 9/21/13
  * Time: 8:41 PM
  * To change this template use File | Settings | File Templates.
+ * Ben adds a change
  */
 public class LoginActivity extends FragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
