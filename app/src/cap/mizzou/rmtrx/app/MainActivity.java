@@ -12,6 +12,7 @@ import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
  * Date: 9/21/13
  * Time: 8:41 PM
  * To change this template use File | Settings | File Templates.
+ * Alec change.
  */
 public class MainActivity extends BaseFragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
