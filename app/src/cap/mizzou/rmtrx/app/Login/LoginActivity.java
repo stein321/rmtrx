@@ -72,7 +72,8 @@ public class LoginActivity extends FragmentActivity {
         editor.putString("p_word", p_word_to_add);
 
         //hard coded login info, change to server call
-        if (checkLoginCredentials(login_to_add, p_word_to_add)) {
+        checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
+        if (login_result) {
             editor.putBoolean("logged_in_status_yo", true);
             editor.commit();
 //            alertDialogBuilder
@@ -100,7 +101,7 @@ public class LoginActivity extends FragmentActivity {
 
     }
 
-    public boolean checkLoginCredentials(String username, String password) {
+    public void checkLoginCredentials(String username, String password) {
 
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
@@ -124,8 +125,9 @@ public class LoginActivity extends FragmentActivity {
             }
         }
         );
-        return login_result;
+//        return login_result;
 //        return true;//comment out
+
     }
 
 

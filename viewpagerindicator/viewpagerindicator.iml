@@ -32,7 +32,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/retrofit-1.2.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../core/libs/retrofit-1.2.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
