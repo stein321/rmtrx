@@ -2,7 +2,9 @@ package cap.mizzou.rmtrx.app.Login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import cap.mizzou.rmtrx.app.R;
 
@@ -14,6 +16,8 @@ import cap.mizzou.rmtrx.app.R;
  * To change this template use File | Settings | File Templates.
  */
 public class JoinResidenceActivity extends Activity {
+    public SharedPreferences residence_info;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,13 +28,11 @@ public class JoinResidenceActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         TextView textView = (TextView) findViewById(R.id.change);
         textView.setText(name);
+    }
 
-// Create the text view
-//        TextView textView = new TextView(this);
-//        textView.setTextSize(40);
-//        textView.setText(name);
-//
-//        // Set the text view as the activity layout
-//        setContentView(textView);
+    public void onClick(View view) {
+        //store information in shared preferences
+
+
     }
 }
