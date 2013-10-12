@@ -9,6 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.ui.HomeActivity;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import cap.mizzou.rmtrx.app.ui.HomeActivity.AuthResponse;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,12 +51,29 @@ public class RegistrationActivity extends Activity {
         int i = view.getId();
 
         if (this.validateForm()) {
-            this.storeDataInSharedPreference();
-            if (i == R.id.createResidence) {
-                this.createResidence(view);
-            } else if (i == R.id.joinResidence) {
-                this.joinResidence(view);
-            }
+//            this.storeDataInSharedPreference();
+//            if (i == R.id.createResidence) {
+//                this.createResidence(view);
+//            } else if (i == R.id.joinResidence) {
+//                this.joinResidence(view);
+//            }
+
+            RestAdapter restAdapter =
+                    new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+
+            UserCreationInterface ri = restAdapter.create(UserCreationInterface.class);
+
+            ri.createUser(this.first_name, this.last_name, this.email, this.password, new Callback<CreateUserResponse>() {
+                @Override
+                public void success(CreateUserResponse userAndKey, Response response) {
+                    int x = 1;
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    int x = 1;
+                }
+            });
         }
     }
 
@@ -140,5 +163,65 @@ public class RegistrationActivity extends Activity {
         }
 
         return result;
+    }
+
+    public class User {
+        String email;
+        String password;
+        String firstName;
+        String lastName;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+    }
+
+    public class CreateUserResponse {
+        User user;
+        HomeActivity.AuthResponse key;
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        public HomeActivity.AuthResponse getKey() {
+            return key;
+        }
+
+        public void setKey(HomeActivity.AuthResponse key) {
+            this.key = key;
+        }
     }
 }

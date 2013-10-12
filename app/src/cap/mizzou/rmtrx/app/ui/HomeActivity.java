@@ -88,9 +88,9 @@ public class HomeActivity extends BaseFragmentActivity {
         password = logged_in_status.getString("p_word", null);
         String User = logged_in_status.getString("login_name", null);
         //prints values out in the debugger screen
-        Log.d("test-login", String.valueOf(status));
-        Log.d("test-pass", password);
-        Log.d("test-user", User);
+//        Log.d("test-login", String.valueOf(status));
+//        Log.d("test-pass", password);
+//        Log.d("test-user", User);
 
 
     }
