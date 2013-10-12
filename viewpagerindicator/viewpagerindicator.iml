@@ -29,6 +29,15 @@
         <jarDirectory url="file://$MODULE_DIR$/libs-sources" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../core/libs/retrofit-1.2.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

@@ -13,5 +13,5 @@
 
     <!--The spacing in between the Grid Layout header and item-->
     <dimen name="grid_layout_label_preferred_margin_right">8dp</dimen>
-
+    <dimen name="Residence_font_size">30sp</dimen>
 </resources>

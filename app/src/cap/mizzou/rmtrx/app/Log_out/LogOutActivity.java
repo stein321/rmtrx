@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import cap.mizzou.rmtrx.app.Login.LoginActivity;
+import cap.mizzou.rmtrx.app.ui.HomeActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,7 +33,7 @@ public class LogOutActivity extends Activity {  //make sure to delete all shared
 //        setContentView(R.layout.registration_page);
 //        getActionBar().setTitle("Login");
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
-        Intent myIntent = new Intent(this, LoginActivity.class);
+        Intent myIntent = new Intent(this, HomeActivity.class);
         myIntent.putExtra(EXTRA_MESSAGE, "Logged Out");
         startActivity(myIntent);
 

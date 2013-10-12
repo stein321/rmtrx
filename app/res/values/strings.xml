@@ -32,6 +32,13 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="join_residence_intro">Please enter your residence code below</string>
     <string name="logout_name">Logout</string>
+    <string name="name">Name: </string>
+    <string name="address">Address: </string>
+    <string name="residence_info">Info</string>
+    <string name="user_list_title">Housemates:</string>
+    <string name="code">Code: </string>
+    <string name="Number_left">Spots Left: </string>
+    <string name="last_name">Last Name</string>
 
 
 </resources>

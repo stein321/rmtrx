@@ -6,5 +6,8 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="Test_DB">db_tester</string>
     <string name="Logout">Logout</string>
+    <string name="SeeResidenceInfo">Residence Info</string>
+    <string name="currentResidence">Current Residence</string>
+    <string name="dashboardActivity">Dashboard</string>
 
 </resources>

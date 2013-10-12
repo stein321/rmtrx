@@ -9,6 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.ui.HomeActivity;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import cap.mizzou.rmtrx.app.ui.HomeActivity.AuthResponse;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,10 +25,11 @@ import cap.mizzou.rmtrx.app.R;
  */
 public class RegistrationActivity extends Activity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private String first_and_last_name;
+    private String first_name;
     private String email;
     private String password;
     private String confirm_password;
+    private String last_name;
 
 
     @Override
@@ -36,19 +43,37 @@ public class RegistrationActivity extends Activity {
 
 
     public void onClick(View view) {
-        this.first_and_last_name = ((EditText) findViewById(R.id.firstAndLastName)).getText().toString();
+        this.first_name = ((EditText) findViewById(R.id.firstName)).getText().toString();
+        this.last_name = ((EditText) findViewById(R.id.lastName)).getText().toString();
         this.email = ((EditText) findViewById(R.id.email)).getText().toString();
         this.password = ((EditText) findViewById((R.id.password))).getText().toString();
         this.confirm_password = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
         int i = view.getId();
 
         if (this.validateForm()) {
-            this.storeDataInSharedPreference();
-            if (i == R.id.createResidence) {
-                this.createResidence(view);
-            } else if (i == R.id.joinResidence) {
-                this.joinResidence(view);
-            }
+//            this.storeDataInSharedPreference();
+//            if (i == R.id.createResidence) {
+//                this.createResidence(view);
+//            } else if (i == R.id.joinResidence) {
+//                this.joinResidence(view);
+//            }
+
+            RestAdapter restAdapter =
+                    new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+
+            UserCreationInterface ri = restAdapter.create(UserCreationInterface.class);
+
+            ri.createUser(this.first_name, this.last_name, this.email, this.password, new Callback<CreateUserResponse>() {
+                @Override
+                public void success(CreateUserResponse userAndKey, Response response) {
+                    int x = 1;
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+                    int x = 1;
+                }
+            });
         }
     }
 
@@ -56,7 +81,7 @@ public class RegistrationActivity extends Activity {
         if (this.validateForm()) {
             this.storeDataInSharedPreference();
             Intent myIntent = new Intent(this, JoinResidenceActivity.class);
-            myIntent.putExtra(EXTRA_MESSAGE, this.first_and_last_name);
+            myIntent.putExtra(EXTRA_MESSAGE, this.first_name);
             startActivity(myIntent);
         }
     }
@@ -74,7 +99,7 @@ public class RegistrationActivity extends Activity {
         SharedPreferences.Editor editor = pref.edit();
 
         //take attributes and store them in shared preferences
-        editor.putString("name", first_and_last_name);
+        editor.putString("name", first_name);
         editor.putString("email", email);
         editor.putBoolean("logged_in_status_yo", true); //set to logged in
         editor.commit();
@@ -91,7 +116,7 @@ public class RegistrationActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 
-        if (this.first_and_last_name.equals("")) {
+        if (this.first_name.equals("")) {
             alertDialogBuilder
                     .setMessage("Name is empty")
                     .setCancelable(true);
@@ -138,5 +163,65 @@ public class RegistrationActivity extends Activity {
         }
 
         return result;
+    }
+
+    public class User {
+        String email;
+        String password;
+        String firstName;
+        String lastName;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+    }
+
+    public class CreateUserResponse {
+        User user;
+        HomeActivity.AuthResponse key;
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        public HomeActivity.AuthResponse getKey() {
+            return key;
+        }
+
+        public void setKey(HomeActivity.AuthResponse key) {
+            this.key = key;
+        }
     }
 }
