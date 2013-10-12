@@ -30,6 +30,7 @@ public class RegistrationActivity extends Activity {
     private String password;
     private String confirm_password;
     private String last_name;
+    private SharedPreferences logged_in_status;
 
 
     @Override
@@ -51,32 +52,39 @@ public class RegistrationActivity extends Activity {
         int i = view.getId();
 
         if (this.validateForm()) {
-//            this.storeDataInSharedPreference();
-//            if (i == R.id.createResidence) {
-//                this.createResidence(view);
-//            } else if (i == R.id.joinResidence) {
-//                this.joinResidence(view);
-//            }
-
-            RestAdapter restAdapter =
-                    new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-
-            UserCreationInterface ri = restAdapter.create(UserCreationInterface.class);
-
-            ri.createUser(this.first_name, this.last_name, this.email, this.password, new Callback<CreateUserResponse>() {
-                @Override
-                public void success(CreateUserResponse userAndKey, Response response) {
-                    int x = 1;
-                }
-
-                @Override
-                public void failure(RetrofitError retrofitError) {
-                    int x = 1;
-                }
-            });
+              sendUserInfoToServerToCreateUser();
+              this.storeDataInSharedPreference();
         }
     }
 
+    private void sendUserInfoToServerToCreateUser() {
+        RestAdapter restAdapter =
+                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+
+        UserCreationInterface ri = restAdapter.create(UserCreationInterface.class);
+
+        ri.createUser(this.first_name, this.last_name, this.email, this.password, new Callback<CreateUserResponse>() {
+            @Override
+            public void success(CreateUserResponse userAndKey, Response response) {
+                int x = 1;
+
+                setFirst_name(userAndKey.user.firstName);
+                setLast_name(userAndKey.user.lastName);
+                setEmail(userAndKey.user.email);
+
+                //make class to store SharedPreferences
+
+                //s
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                int x = 1;
+            }
+        });
+
+
+    }
     public void joinResidence(View view) {
         if (this.validateForm()) {
             this.storeDataInSharedPreference();
@@ -155,6 +163,7 @@ public class RegistrationActivity extends Activity {
         return result;
     }
 
+
     public boolean checkPassword() {             //validates that password i
         Boolean result = false;
 
@@ -164,6 +173,45 @@ public class RegistrationActivity extends Activity {
 
         return result;
     }
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirm_password() {
+        return confirm_password;
+    }
+
+    public void setConfirm_password(String confirm_password) {
+        this.confirm_password = confirm_password;
+    }
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
 
     public class User {
         String email;
@@ -202,6 +250,7 @@ public class RegistrationActivity extends Activity {
         public void setLastName(String lastName) {
             this.lastName = lastName;
         }
+
     }
 
     public class CreateUserResponse {
@@ -224,4 +273,5 @@ public class RegistrationActivity extends Activity {
             this.key = key;
         }
     }
+
 }

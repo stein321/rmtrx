@@ -110,6 +110,7 @@ public class HomeActivity extends BaseFragmentActivity {
             public void success(AuthResponse authResponse, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
                 login_result=true;
+
                 //set key in shared preferences
                 //authResponse.key will give me the key back
             }

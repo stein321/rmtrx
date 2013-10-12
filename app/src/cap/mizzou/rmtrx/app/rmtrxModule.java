@@ -40,7 +40,7 @@ import javax.inject.Singleton;
                 MessagesActivity.class,
                 HomeFragment.class,
                 DashboardActivity.class,
-                DisplayMessageActivity.class,
+//                DisplayMessageActivity.class,
                 Comment.class,
                 CommentsDataSource.class,
                 MySQLiteHelper.class,
