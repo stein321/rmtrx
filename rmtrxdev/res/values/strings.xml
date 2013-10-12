@@ -8,5 +8,6 @@
     <string name="Logout">Logout</string>
     <string name="SeeResidenceInfo">Residence Info</string>
     <string name="currentResidence">Current Residence</string>
+    <string name="dashboardActivity">Dashboard</string>
 
 </resources>

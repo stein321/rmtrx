@@ -19,10 +19,11 @@ import cap.mizzou.rmtrx.app.R;
  */
 public class RegistrationActivity extends Activity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private String first_and_last_name;
+    private String first_name;
     private String email;
     private String password;
     private String confirm_password;
+    private String last_name;
 
 
     @Override
@@ -36,7 +37,8 @@ public class RegistrationActivity extends Activity {
 
 
     public void onClick(View view) {
-        this.first_and_last_name = ((EditText) findViewById(R.id.firstAndLastName)).getText().toString();
+        this.first_name = ((EditText) findViewById(R.id.firstName)).getText().toString();
+        this.last_name = ((EditText) findViewById(R.id.lastName)).getText().toString();
         this.email = ((EditText) findViewById(R.id.email)).getText().toString();
         this.password = ((EditText) findViewById((R.id.password))).getText().toString();
         this.confirm_password = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
@@ -56,7 +58,7 @@ public class RegistrationActivity extends Activity {
         if (this.validateForm()) {
             this.storeDataInSharedPreference();
             Intent myIntent = new Intent(this, JoinResidenceActivity.class);
-            myIntent.putExtra(EXTRA_MESSAGE, this.first_and_last_name);
+            myIntent.putExtra(EXTRA_MESSAGE, this.first_name);
             startActivity(myIntent);
         }
     }
@@ -74,7 +76,7 @@ public class RegistrationActivity extends Activity {
         SharedPreferences.Editor editor = pref.edit();
 
         //take attributes and store them in shared preferences
-        editor.putString("name", first_and_last_name);
+        editor.putString("name", first_name);
         editor.putString("email", email);
         editor.putBoolean("logged_in_status_yo", true); //set to logged in
         editor.commit();
@@ -91,7 +93,7 @@ public class RegistrationActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 
-        if (this.first_and_last_name.equals("")) {
+        if (this.first_name.equals("")) {
             alertDialogBuilder
                     .setMessage("Name is empty")
                     .setCancelable(true);

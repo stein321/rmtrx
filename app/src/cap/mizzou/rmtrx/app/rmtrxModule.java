@@ -3,7 +3,6 @@ package cap.mizzou.rmtrx.app;
 import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.Login.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.Login.JoinResidenceActivity;
-import cap.mizzou.rmtrx.app.Login.LoginActivity;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.SQLite.Comment;
@@ -12,6 +11,7 @@ import cap.mizzou.rmtrx.app.SQLite.MySQLiteHelper;
 import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.app.settings.SettingsActivity;
+import cap.mizzou.rmtrx.app.ui.DashboardActivity;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
 import cap.mizzou.rmtrx.app.ui.HomeFragment;
 import com.squareup.otto.Bus;
@@ -39,7 +39,7 @@ import javax.inject.Singleton;
                 SettingsActivity.class,
                 MessagesActivity.class,
                 HomeFragment.class,
-                LoginActivity.class,
+                DashboardActivity.class,
                 DisplayMessageActivity.class,
                 Comment.class,
                 CommentsDataSource.class,

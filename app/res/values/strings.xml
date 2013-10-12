@@ -38,6 +38,7 @@
     <string name="user_list_title">Housemates:</string>
     <string name="code">Code: </string>
     <string name="Number_left">Spots Left: </string>
+    <string name="last_name">Last Name</string>
 
 
 </resources>
