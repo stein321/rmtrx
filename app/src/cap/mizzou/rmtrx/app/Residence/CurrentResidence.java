@@ -1,4 +1,4 @@
-package cap.mizzou.rmtrx.app;
+package cap.mizzou.rmtrx.app.Residence;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.R;
 
 import java.util.ArrayList;
 

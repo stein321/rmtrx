@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
+import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
+import cap.mizzou.rmtrx.app.User_setup.UserCreationInterface;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
 import retrofit.Callback;
 import retrofit.RestAdapter;
-import cap.mizzou.rmtrx.app.ui.HomeActivity.AuthResponse;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 

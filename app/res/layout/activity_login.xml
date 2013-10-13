@@ -4,14 +4,14 @@
               android:layout_height="fill_parent"
               android:orientation="horizontal" android:baselineAligned="false">
 
-    <fragment android:name="cap.mizzou.rmtrx.app.ui.fragments.LoginFragment"
+    <fragment android:name="cap.mizzou.rmtrx.app.Login.LoginFragment"
               android:id="@+id/article_fragment"
               android:layout_weight="1"
               android:layout_width="0dp"
               android:layout_height="match_parent"/>
 
 
-    <!--<fragment android:name="cap.mizzou.rmtrx.app.ui.fragments.LoginFragment"-->
+    <!--<fragment android:name="cap.mizzou.rmtrx.app.Login.LoginFragment"-->
     <!--android:id="@+id/article_fragment"-->
     <!--android:layout_weight="1"-->
     <!--android:layout_width="0dp"-->

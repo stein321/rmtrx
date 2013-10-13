@@ -68,7 +68,7 @@ public class HomeActivity extends BaseFragmentActivity {
         editor.putString("p_word", p_word_to_add);
 
         //hard coded login info, change to server call
-        checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
+        Boolean isLoggedIn=checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
         if (login_result) {
             editor.putBoolean("logged_in_status_yo", true);
             editor.commit();
@@ -95,7 +95,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
     }
 
-    public void checkLoginCredentials(String username, String password) {
+    public Boolean checkLoginCredentials(String username, String password) {
 
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
@@ -111,6 +111,11 @@ public class HomeActivity extends BaseFragmentActivity {
                 //To change body of implemented methods use File | Settings | File Templates.
                 login_result=true;
 
+                SharedPreferences saveKey=getApplicationContext().getSharedPreferences("MyPref", 0);
+                SharedPreferences.Editor editor=saveKey.edit();
+                editor.putString("login_key",authResponse.key);
+                editor.commit();
+
                 //set key in shared preferences
                 //authResponse.key will give me the key back
             }
@@ -124,7 +129,7 @@ public class HomeActivity extends BaseFragmentActivity {
         );
 //        return login_result;
 //        return true;//comment out
-
+           return login_result;
     }
 
 

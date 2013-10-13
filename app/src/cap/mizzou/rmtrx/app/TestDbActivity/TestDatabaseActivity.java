@@ -1,4 +1,4 @@
-package cap.mizzou.rmtrx.app.SQLite;
+package cap.mizzou.rmtrx.app.TestDbActivity;
 
 /**
  * Created with IntelliJ IDEA.

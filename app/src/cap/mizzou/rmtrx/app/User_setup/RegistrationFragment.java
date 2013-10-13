@@ -1,4 +1,4 @@
-package cap.mizzou.rmtrx.app.ui.fragments;
+package cap.mizzou.rmtrx.app.User_setup;
 
 import android.app.Fragment;
 import android.os.Bundle;

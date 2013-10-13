@@ -13,7 +13,7 @@ import cap.mizzou.rmtrx.app.ui.HomeActivity;
  * Time: 1:35 PM
  * To change this template use File | Settings | File Templates.
  */
-public class LogOutActivity extends Activity {  //make sure to delete all shared preferences and probably all SQLite Data
+public class LogOutActivity extends Activity {  //make sure to delete all shared preferences and probably all TestDbActivity Data
 
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
