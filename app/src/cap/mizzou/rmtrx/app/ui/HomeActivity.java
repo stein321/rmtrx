@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
@@ -47,7 +46,10 @@ public class HomeActivity extends BaseFragmentActivity {
         setResult(5, data);
         super.finish();
     }
-
+    public void startIntent() {
+        Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+        startActivity(goToDashBoard);
+    }
     public void sendLoginInfo(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -69,20 +71,20 @@ public class HomeActivity extends BaseFragmentActivity {
 
         //hard coded login info, change to server call
         checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
-        if (login_result) {
-            editor.putBoolean("logged_in_status_yo", true);
-            editor.commit();
-            Intent goToDashBoard=new Intent(this,DashboardActivity.class);
-            startActivity(goToDashBoard);
-        } else {
-            alertDialogBuilder
-                    .setMessage("Username and/password incorrect")
-                    .setCancelable(true);
-        }
-        AlertDialog alertDialog = alertDialogBuilder.create();
+//        if (login_result) {
+//            editor.putBoolean("logged_in_status_yo", true);
+//            editor.commit();
+//            Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+//            startActivity(goToDashBoard);
+//        } else {
+//            alertDialogBuilder
+//                    .setMessage("Username and/password incorrect")
+//                    .setCancelable(true);
+//        }
+//        AlertDialog alertDialog = alertDialogBuilder.create();
 
         // show it
-        alertDialog.show();
+//        alertDialog.show();
         //grabs values out of memory for debugging purposes
         boolean status = logged_in_status.getBoolean("logged_in_status_yo", false);
         password = logged_in_status.getString("p_word", null);
@@ -109,8 +111,11 @@ public class HomeActivity extends BaseFragmentActivity {
             @Override
             public void success(ResponseObject authResponse, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
-                login_result=true;
+//                login_result=true;
 
+                startIntent();
+//                Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+//                startActivity(goToDashBoard);
 //                SharedPreferences saveKey=getApplicationContext().getSharedPreferences("MyPref", 0);
 //                SharedPreferences.Editor editor=saveKey.edit();
 //                editor.putString("login_key",authResponse.response.getKey());

@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app;
 
+import android.content.SharedPreferences;
 import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
@@ -59,4 +60,11 @@ public final class rmtrxModule {
     Bus provideBus() {
         return new Bus();
     }
+
+//    @Provides
+//    @Singleton
+//    SharedPreferences pref() {
+//            return getDefaultSharedPreferences();
+//    }
+    //figure this out
 }
