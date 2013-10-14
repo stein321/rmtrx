@@ -68,7 +68,7 @@ public class HomeActivity extends BaseFragmentActivity {
         editor.putString("p_word", p_word_to_add);
 
         //hard coded login info, change to server call
-        Boolean isLoggedIn=checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
+        checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
         if (login_result) {
             editor.putBoolean("logged_in_status_yo", true);
             editor.commit();
@@ -95,7 +95,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
     }
 
-    public Boolean checkLoginCredentials(String username, String password) {
+    public void checkLoginCredentials(String username, String password) {
 
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
@@ -129,7 +129,6 @@ public class HomeActivity extends BaseFragmentActivity {
         );
 //        return login_result;
 //        return true;//comment out
-           return login_result;
     }
 
 
