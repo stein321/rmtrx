@@ -103,21 +103,23 @@ public class HomeActivity extends BaseFragmentActivity {
         AuthenticationRequestInterface ri = restAdapter.create(AuthenticationRequestInterface.class);
 
 
-        ri.login(username, password, new Callback<AuthResponse>() {
+        ri.login(username, password, new Callback<ResponseObject>() {
 
 
             @Override
-            public void success(AuthResponse authResponse, Response response) {
+            public void success(ResponseObject authResponse, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
                 login_result=true;
 
-                SharedPreferences saveKey=getApplicationContext().getSharedPreferences("MyPref", 0);
-                SharedPreferences.Editor editor=saveKey.edit();
-                editor.putString("login_key",authResponse.key);
-                editor.commit();
+//                SharedPreferences saveKey=getApplicationContext().getSharedPreferences("MyPref", 0);
+//                SharedPreferences.Editor editor=saveKey.edit();
+//                editor.putString("login_key",authResponse.response.getKey());
+//                editor.putString("user_id",authResponse.user.getId());
+//                editor.commit();
+                //This needs to be in another function
+                //Need to figure out how do the variable listener
 
-                //set key in shared preferences
-                //authResponse.key will give me the key back
+
             }
 
             @Override
@@ -136,7 +138,54 @@ public class HomeActivity extends BaseFragmentActivity {
         Intent myIntent = new Intent(this, RegistrationActivity.class);
         startActivity(myIntent);
     }
+    public class User {
+        @SerializedName("_id")
+        String id;
+        String email;
+        String password;
+        String firstName;
+        String lastName;
 
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+    }
     public class AuthResponse {
         @SerializedName("_id")
         String id;
@@ -157,6 +206,28 @@ public class HomeActivity extends BaseFragmentActivity {
         public void setKey(String key) {
             this.key = key;
         }
+    }
+    public class ResponseObject {
+        AuthResponse response;
+        User user;
+
+        public AuthResponse getResponse() {
+            return response;
+        }
+
+        public void setResponse(AuthResponse response) {
+            this.response = response;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+
     }
 
 

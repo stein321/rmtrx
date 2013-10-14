@@ -13,6 +13,7 @@ import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.UserCreationInterface;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
+import com.google.gson.annotations.SerializedName;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -32,6 +33,7 @@ public class RegistrationActivity extends Activity {
     private String password;
     private String confirm_password;
     private String last_name;
+    private String api_key;
     private SharedPreferences logged_in_status;
 
 
@@ -55,7 +57,7 @@ public class RegistrationActivity extends Activity {
 
         if (this.validateForm()) {
               sendUserInfoToServerToCreateUser();
-              this.storeDataInSharedPreference();
+//              this.storeDataInSharedPreference();
         }
     }
 
@@ -73,9 +75,17 @@ public class RegistrationActivity extends Activity {
                 setFirst_name(userAndKey.user.firstName);
                 setLast_name(userAndKey.user.lastName);
                 setEmail(userAndKey.user.email);
+                setApi_key(userAndKey.key.getKey());
 
                 //make class to store SharedPreferences
-
+                 SharedPreferences createUser=getApplicationContext().getSharedPreferences("MyPref", 0);
+                SharedPreferences.Editor editor= createUser.edit();
+                editor.putString("first_name",getFirst_name());
+                editor.putString("last_name",getLast_name());
+                editor.putString("email",getEmail());
+                editor.putString("api_key",getApi_key());
+                editor.putBoolean("logged_in_status_yo",true);
+                editor.commit();
                 //s
             }
 
@@ -213,9 +223,18 @@ public class RegistrationActivity extends Activity {
     public void setFirst_name(String first_name) {
         this.first_name = first_name;
     }
+    public String getApi_key() {
+        return api_key;
+    }
+
+    public void setApi_key(String key) {
+        this.api_key = key;
+    }
 
 
     public class User {
+        @SerializedName("_id")
+        String id;
         String email;
         String password;
         String firstName;
@@ -251,6 +270,13 @@ public class RegistrationActivity extends Activity {
 
         public void setLastName(String lastName) {
             this.lastName = lastName;
+        }
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
 
     }

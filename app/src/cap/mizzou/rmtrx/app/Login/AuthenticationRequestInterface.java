@@ -17,5 +17,5 @@ public interface AuthenticationRequestInterface {
 
     @FormUrlEncoded
     @POST("/authenticate")
-    void login(@Field("email") String username, @Field("password") String password, Callback<HomeActivity.AuthResponse> printKey);
+    void login(@Field("email") String username, @Field("password") String password, Callback<HomeActivity.ResponseObject> user);
 }

@@ -61,10 +61,13 @@ public class CurrentResidence extends Activity {
 //               username=residence_info.getString("username",null);
 //               address=residence_info.getString("address",null);
 //               number_of_users_left=residence_info.getInt("users_left",0);
-        code="01525";
-        name_of_user="Ben Stein";
-        address="509 S 5th St";
-        username="ben";
+
+        SharedPreferences user_values=getApplicationContext().getSharedPreferences("MyPref", 0);
+        code="1234";
+        name_of_user=user_values.getString("email",null);
+        address= user_values.getString("address","509 S 5th St");
+        username=user_values.getString("email",null);
+        //will be a database call
         number_of_users=4;
         other_users=new String[number_of_users-1];
 //        sample array just to do listview
