@@ -166,6 +166,7 @@ public class GroceryDB extends ContentProvider {
         switch (groceryUriMatcher.match(uri)) {
         case GetList:
 
+             //move items
 	        if (!values.containsKey(GroceryList.Columns.CreatedDate)) {
 	            values.put(GroceryList.Columns.CreatedDate, now);
 	        }
@@ -215,6 +216,7 @@ public class GroceryDB extends ContentProvider {
         }
 
         throw new SQLException("Failed to insert row: " + uri);
+
     }
 
 
