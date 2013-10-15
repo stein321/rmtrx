@@ -112,7 +112,7 @@ public class HomeActivity extends BaseFragmentActivity {
             public void success(ResponseObject authResponse, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
 //                login_result=true;
-
+                           int x=1;
                 startIntent();
 //                Intent goToDashBoard=new Intent(this,DashboardActivity.class);
 //                startActivity(goToDashBoard);

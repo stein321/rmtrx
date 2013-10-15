@@ -39,6 +39,7 @@
     <string name="code">Code: </string>
     <string name="Number_left">Spots Left: </string>
     <string name="last_name">Last Name</string>
+    <string name="residence_name">Residence Name</string>
 
 
 </resources>
