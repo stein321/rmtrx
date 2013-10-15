@@ -1,14 +1,15 @@
 package cap.mizzou.rmtrx.app;
 
+import android.content.SharedPreferences;
 import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
-import cap.mizzou.rmtrx.app.Login.CreateResidenceActivity;
-import cap.mizzou.rmtrx.app.Login.JoinResidenceActivity;
+import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
+import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
-import cap.mizzou.rmtrx.app.SQLite.Comment;
-import cap.mizzou.rmtrx.app.SQLite.CommentsDataSource;
-import cap.mizzou.rmtrx.app.SQLite.MySQLiteHelper;
-import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
+import cap.mizzou.rmtrx.app.TestDbActivity.Comment;
+import cap.mizzou.rmtrx.app.TestDbActivity.CommentsDataSource;
+import cap.mizzou.rmtrx.app.TestDbActivity.MySQLiteHelper;
+import cap.mizzou.rmtrx.app.TestDbActivity.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.app.settings.SettingsActivity;
 import cap.mizzou.rmtrx.app.ui.DashboardActivity;
@@ -40,7 +41,7 @@ import javax.inject.Singleton;
                 MessagesActivity.class,
                 HomeFragment.class,
                 DashboardActivity.class,
-                DisplayMessageActivity.class,
+//                DisplayMessageActivity.class,
                 Comment.class,
                 CommentsDataSource.class,
                 MySQLiteHelper.class,
@@ -59,4 +60,11 @@ public final class rmtrxModule {
     Bus provideBus() {
         return new Bus();
     }
+
+//    @Provides
+//    @Singleton
+//    SharedPreferences pref() {
+//            return getDefaultSharedPreferences();
+//    }
+    //figure this out
 }

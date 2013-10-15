@@ -43,13 +43,13 @@
                     android:value="cap.mizzou.rmtrx.app.ui.HomeActivity"/>
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.sendLoginInfo"
+                android:name="cap.mizzou.rmtrx.app.Login.sendLoginInfo"
                 android:label="@string/title_activity_send_info"
                 android:parentActivityName="cap.mizzou.rmtrx.app.LoginActivity">
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity"
+                android:name="cap.mizzou.rmtrx.app.TestDbActivity.TestDatabaseActivity"
                 android:label="@string/Test_DB"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
 
@@ -61,13 +61,13 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.Login.JoinResidenceActivity"
+                android:name="cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity"
                 android:label="@string/JoinResidence"
                 android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.Login.CreateResidenceActivity"
+                android:name="cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity"
                 android:label="@string/CreateResidence"
                 android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
 
@@ -87,7 +87,7 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.CurrentResidence"
+                android:name="cap.mizzou.rmtrx.app.Residence.CurrentResidence"
                 android:label="@string/currentResidence"
               >
 

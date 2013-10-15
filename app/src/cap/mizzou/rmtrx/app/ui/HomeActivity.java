@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
@@ -47,7 +46,10 @@ public class HomeActivity extends BaseFragmentActivity {
         setResult(5, data);
         super.finish();
     }
-
+    public void startIntent() {
+        Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+        startActivity(goToDashBoard);
+    }
     public void sendLoginInfo(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -69,20 +71,20 @@ public class HomeActivity extends BaseFragmentActivity {
 
         //hard coded login info, change to server call
         checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
-        if (login_result) {
-            editor.putBoolean("logged_in_status_yo", true);
-            editor.commit();
-            Intent goToDashBoard=new Intent(this,DashboardActivity.class);
-            startActivity(goToDashBoard);
-        } else {
-            alertDialogBuilder
-                    .setMessage("Username and/password incorrect")
-                    .setCancelable(true);
-        }
-        AlertDialog alertDialog = alertDialogBuilder.create();
+//        if (login_result) {
+//            editor.putBoolean("logged_in_status_yo", true);
+//            editor.commit();
+//            Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+//            startActivity(goToDashBoard);
+//        } else {
+//            alertDialogBuilder
+//                    .setMessage("Username and/password incorrect")
+//                    .setCancelable(true);
+//        }
+//        AlertDialog alertDialog = alertDialogBuilder.create();
 
         // show it
-        alertDialog.show();
+//        alertDialog.show();
         //grabs values out of memory for debugging purposes
         boolean status = logged_in_status.getBoolean("logged_in_status_yo", false);
         password = logged_in_status.getString("p_word", null);
@@ -103,15 +105,26 @@ public class HomeActivity extends BaseFragmentActivity {
         AuthenticationRequestInterface ri = restAdapter.create(AuthenticationRequestInterface.class);
 
 
-        ri.login(username, password, new Callback<AuthResponse>() {
+        ri.login(username, password, new Callback<ResponseObject>() {
 
 
             @Override
-            public void success(AuthResponse authResponse, Response response) {
+            public void success(ResponseObject authResponse, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
-                login_result=true;
-                //set key in shared preferences
-                //authResponse.key will give me the key back
+//                login_result=true;
+
+                startIntent();
+//                Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+//                startActivity(goToDashBoard);
+//                SharedPreferences saveKey=getApplicationContext().getSharedPreferences("MyPref", 0);
+//                SharedPreferences.Editor editor=saveKey.edit();
+//                editor.putString("login_key",authResponse.response.getKey());
+//                editor.putString("user_id",authResponse.user.getId());
+//                editor.commit();
+                //This needs to be in another function
+                //Need to figure out how do the variable listener
+
+
             }
 
             @Override
@@ -123,7 +136,6 @@ public class HomeActivity extends BaseFragmentActivity {
         );
 //        return login_result;
 //        return true;//comment out
-
     }
 
 
@@ -131,7 +143,54 @@ public class HomeActivity extends BaseFragmentActivity {
         Intent myIntent = new Intent(this, RegistrationActivity.class);
         startActivity(myIntent);
     }
+    public class User {
+        @SerializedName("_id")
+        String id;
+        String email;
+        String password;
+        String firstName;
+        String lastName;
 
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public void setFirstName(String firstName) {
+            this.firstName = firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+    }
     public class AuthResponse {
         @SerializedName("_id")
         String id;
@@ -152,6 +211,28 @@ public class HomeActivity extends BaseFragmentActivity {
         public void setKey(String key) {
             this.key = key;
         }
+    }
+    public class ResponseObject {
+        AuthResponse response;
+        User user;
+
+        public AuthResponse getResponse() {
+            return response;
+        }
+
+        public void setResponse(AuthResponse response) {
+            this.response = response;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+
     }
 
 

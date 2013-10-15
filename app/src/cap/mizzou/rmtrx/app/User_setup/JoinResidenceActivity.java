@@ -1,4 +1,4 @@
-package cap.mizzou.rmtrx.app.Login;
+package cap.mizzou.rmtrx.app.User_setup;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
 
 /**
