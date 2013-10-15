@@ -8,30 +8,72 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Welcome To Rmtrx"
+            android:id="@+id/textView"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="25dp"/>
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space2"
+            android:layout_gravity="center"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/Username"
-            />
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"/>
     <EditText android:id="@+id/login_name"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:inputType="text"/>
+              android:inputType="text"
+              android:layout_gravity="center"/>
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space1"
+            android:layout_gravity="center"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/password"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="20dp"
             />
     <EditText android:id="@+id/p_word"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-            />
+              android:layout_gravity="center"
+              android:password="true"/>
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Login"
-            android:onClick="sendLoginInfo"/>
+            android:onClick="sendLoginInfo"
+            android:layout_gravity="center"
+            android:textStyle="italic"/>
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space"
+            android:layout_gravity="center"/>
+
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/newResidence"
-            android:onClick="register"/>
+            android:onClick="register"
+            android:layout_gravity="center"
+            android:textStyle="italic"
+            android:clickable="false"/>
+
 </LinearLayout>
