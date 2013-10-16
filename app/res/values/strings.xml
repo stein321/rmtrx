@@ -10,6 +10,9 @@
     <string name="login_activity_name">Login</string>
     <string name="db_attempt_name">DB Test</string>
 
+    <string name="bulletin_board_activity_name">Bulletin Board</string>
+    <string name="bb_add_post_name">Add Post</string>
+
     <string name="Login">Login</string>
     <string name="Username">Username</string>
     <string name="password">Password</string>
