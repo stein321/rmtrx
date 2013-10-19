@@ -22,28 +22,28 @@ import java.util.Random;
 
 public class HomeActivity extends BaseFragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private SharedPreferences logged_in_status;
+    private SharedPreferences pref;
+    public Boolean logged_in_status;
+
 
     protected boolean login_result;
-    private String login_name;  //just for printing to log
-    private String password; //just for printing to log
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        SharedPreferences user_name = getSharedPreferences();
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
-
+        logged_in_status=pref.getBoolean("logged_in_status_yo",false);
+        if(logged_in_status==true) {
+            startIntent();
+        }
     }
 
     @Override
     public void finish() {
         // Prepare data intent
         Intent data = new Intent();
-        data.putExtra("returnKey1", "Swinging on a star. ");
-        data.putExtra("returnKey2", "You could be better then you are. ");
         // Activity finished ok, return the data
         setResult(5, data);
         super.finish();
@@ -56,8 +56,8 @@ public class HomeActivity extends BaseFragmentActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         //saved to shared preferences
-        this.logged_in_status = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = this.logged_in_status.edit();
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences.Editor editor = pref.edit();
 
         //grabs text from form
         EditText login_name_text = (EditText) findViewById(R.id.login_name);
@@ -73,30 +73,6 @@ public class HomeActivity extends BaseFragmentActivity {
 
         //hard coded login info, change to server call
         checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
-//        if (login_result) {
-//            editor.putBoolean("logged_in_status_yo", true);
-//            editor.commit();
-//            Intent goToDashBoard=new Intent(this,DashboardActivity.class);
-//            startActivity(goToDashBoard);
-//        } else {
-//            alertDialogBuilder
-//                    .setMessage("Username and/password incorrect")
-//                    .setCancelable(true);
-//        }
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-//        alertDialog.show();
-        //grabs values out of memory for debugging purposes
-        boolean status = logged_in_status.getBoolean("logged_in_status_yo", false);
-        password = logged_in_status.getString("p_word", null);
-        String User = logged_in_status.getString("login_name", null);
-        //prints values out in the debugger screen
-//        Log.d("test-login", String.valueOf(status));
-//        Log.d("test-pass", password);
-//        Log.d("test-user", User);
-
-
     }
 
     public void checkLoginCredentials(String username, String password) {
@@ -112,21 +88,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
             @Override
             public void success(ResponseObject authResponse, Response response) {
-                //To change body of implemented methods use File | Settings | File Templates.
-//                login_result=true;
-//                SharedPreferences saveKey=getApplicationContext().getSharedPreferences("MyPref", 0);
-//                SharedPreferences.Editor editor=saveKey.edit();
-//                editor.putString("login_key",authResponse.response.getKey());
-//                editor.putString("user_id",authResponse.user.getId());
-//                editor.commit();
-                startIntent();
-//                Intent goToDashBoard=new Intent(this,DashboardActivity.class);
-//                startActivity(goToDashBoard);
-
-                //This needs to be in another function
-                //Need to figure out how do the variable listener
-
-
+                successfulLogin(authResponse.key,authResponse.getUser());
             }
 
             @Override
@@ -138,6 +100,22 @@ public class HomeActivity extends BaseFragmentActivity {
         );
 //        return login_result;
 //        return true;//comment out
+    }
+
+    private void successfulLogin(Key key, User user) {
+        String email=user.getEmail();
+        String first_name=user.getFirstName();
+        String last_name=user.getLastName();
+        String authKey=key.getKey();
+
+         SharedPreferences.Editor editor=pref.edit();
+        editor.putString("email",email);
+        editor.putString("first_name",first_name);
+        editor.putString("last_name",last_name);
+        editor.putString("auth_key", authKey);
+        editor.putBoolean("logged_in_status_yo",true);
+        editor.commit();
+        startIntent();
     }
 
 
@@ -236,7 +214,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
 
     }
-
+    //Todo:move this to the residence info page
     private String generateCode() {
         String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         int maxLength = alphabet.length();

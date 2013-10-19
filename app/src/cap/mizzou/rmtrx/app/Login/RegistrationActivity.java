@@ -146,7 +146,7 @@ public class RegistrationActivity extends Activity {
         SharedPreferences.Editor editor = pref.edit();
 
         //take attributes and store them in shared preferences
-        editor.putString("name", first_name);
+        editor.putString("first_name", first_name);
         editor.putString("email", email);
         editor.putBoolean("logged_in_status_yo", true); //set to logged in
         editor.commit();
