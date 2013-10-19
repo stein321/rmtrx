@@ -17,6 +17,8 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import java.util.Random;
+
 
 public class HomeActivity extends BaseFragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
@@ -213,15 +215,15 @@ public class HomeActivity extends BaseFragmentActivity {
         }
     }
     public class ResponseObject {
-        Key response;
+        Key key;
         User user;
 
         public Key getResponse() {
-            return response;
+            return key;
         }
 
-        public void setResponse(Key response) {
-            this.response = response;
+        public void setResponse(Key key) {
+            this.key = key;
         }
 
         public User getUser() {
@@ -235,6 +237,19 @@ public class HomeActivity extends BaseFragmentActivity {
 
     }
 
+    private String generateCode() {
+        String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int maxLength = alphabet.length();
 
+        String code = "";
+
+        Random r = new Random();
+
+        for (int i = 0; i < 6; i++) {
+              code = code.concat(String.valueOf(alphabet.charAt(r.nextInt(maxLength))));
+        }
+
+        return code;
+    }
 
 }
