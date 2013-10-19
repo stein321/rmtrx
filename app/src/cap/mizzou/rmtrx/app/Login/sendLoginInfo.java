@@ -1,4 +1,4 @@
-package cap.mizzou.rmtrx.app;
+package cap.mizzou.rmtrx.app.Login;
 
 import android.app.Activity;
 import android.content.Intent;
