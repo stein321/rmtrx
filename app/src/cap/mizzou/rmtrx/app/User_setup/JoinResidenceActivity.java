@@ -8,6 +8,13 @@ import android.view.View;
 import android.widget.TextView;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.Residence.Code;
+import cap.mizzou.rmtrx.app.Residence.Residence;
+import cap.mizzou.rmtrx.app.ui.DashboardActivity;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,23 +24,46 @@ import cap.mizzou.rmtrx.app.R;
  * To change this template use File | Settings | File Templates.
  */
 public class JoinResidenceActivity extends Activity {
-    public SharedPreferences residence_info;
+    public SharedPreferences pref;
+    private String code="This is a code";
+    private String residence_id="This is a residence id";
+    private String user_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(RegistrationActivity.EXTRA_MESSAGE);
-        setContentView(R.layout.join_residence_page);
-        getActionBar().setTitle("Join Residence");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView textView = (TextView) findViewById(R.id.change);
-        textView.setText(name);
+
+        setUserId();
+        joinResidenceOnServer();
     }
+    public void joinResidenceOnServer() {
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        String user_id=pref.getString("user_id","hello");
 
-    public void onClick(View view) {
-        //store information in shared preferences
+        RestAdapter restAdapter =
+                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+        ResidenceCreationInterface ri= restAdapter.create(ResidenceCreationInterface.class);
 
+        ri.joinResidenceWithCode("abcde",user_id, new Callback<Residence>() {
+            @Override
+            public void success(Residence residence, Response response) {
+                //To change body of implemented methods use File | Settings | File Templates.
+                goToDashboard();
+            }
 
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+    }
+    private void setUserId() {
+        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        this.user_id=pref.getString("user_id","hello");
+    }
+    private void goToDashboard() {
+        Intent dashboard = new Intent(this, DashboardActivity.class);
+        startActivity(dashboard);
     }
 }

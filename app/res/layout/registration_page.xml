@@ -3,6 +3,21 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+        <RadioButton android:id="@+id/JoinRadioButton"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/JoinResidence"
+                     android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/CreateRadioButton"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/CreateResidence"
+                     android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
 
 
     <TextView
@@ -35,16 +50,6 @@
               android:layout_height="wrap_content"
               android:inputType="textEmailAddress"
             />
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/number_of_residence"-->
-    <!--/>-->
-    <!--<EditText android:id="@+id/number_of_roommates"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:inputType="number"-->
-    <!--/>-->
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,18 +70,30 @@
               android:layout_height="wrap_content"
               android:inputType="textPassword"
             />
+    <TextView
+            android:id="@+id/code_or_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Code_of_residence"
+            />
+    <EditText android:id="@+id/code_or_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="text"
+            />
+
     <Button
             android:id="@+id/joinResidence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/JoinResidence"
+            android:text="@string/Go"
             android:onClick="onClick"/>
-    <Button
-            android:id="@+id/createResidence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/CreateResidence"
-            android:onClick="onClick"/>
+    <!--<Button-->
+            <!--android:id="@+id/createResidence"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/CreateResidence"-->
+            <!--android:onClick="onClick"/>-->
 
 
 </LinearLayout>

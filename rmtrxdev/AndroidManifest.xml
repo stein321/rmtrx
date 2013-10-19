@@ -35,14 +35,6 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.DisplayMessageActivity"
-                android:label="@string/title_activity_display_message"
-                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="cap.mizzou.rmtrx.app.ui.HomeActivity"/>
-        </activity>
-        <activity
                 android:name="cap.mizzou.rmtrx.app.Login.sendLoginInfo"
                 android:label="@string/title_activity_send_info"
                 android:parentActivityName="cap.mizzou.rmtrx.app.LoginActivity">
@@ -80,22 +72,21 @@
 
 
         </activity>
-        <activity
-                android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceInfo"
-                android:label="@string/SeeResidenceInfo"
-                android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
+        <!--<activity-->
+                <!--android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceI"-->
+                <!--android:label="@string/SeeResidenceInfo"-->
+                <!--android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">-->
 
-        </activity>
+        <!--</activity>-->
         <activity
                 android:name="cap.mizzou.rmtrx.app.Residence.CurrentResidence"
-                android:label="@string/currentResidence"
-              >
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
+                android:label="@string/currentResidence">
 
         </activity>
         <activity
                 android:name="cap.mizzou.rmtrx.app.ui.DashboardActivity"
-                android:label="@string/dashboardActivity"
-                >
+                android:label="@string/dashboardActivity">
 
         </activity>
 

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.TextView;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
@@ -27,14 +29,16 @@ import retrofit.client.Response;
  * To change this template use File | Settings | File Templates.
  */
 public class RegistrationActivity extends Activity {
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+
     private String first_name;
     private String email;
     private String password;
     private String confirm_password;
     private String last_name;
     private String api_key;
+    private String user_id;
     private SharedPreferences logged_in_status;
+    private String radioButtonSelected;
 
 
     @Override
@@ -46,18 +50,42 @@ public class RegistrationActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        int i=view.getId();
 
+        TextView textToBeChanged=(TextView)findViewById(R.id.code_or_name_title);
+
+        if(i==R.id.JoinRadioButton) {
+            textToBeChanged.setText("Code of the residence you would like to join");
+            radioButtonSelected="Join";
+        }
+        else if(i==R.id.CreateRadioButton) {
+            textToBeChanged.setText("Name of Residence");
+            radioButtonSelected="Create";
+        }
+
+    }
     public void onClick(View view) {
         this.first_name = ((EditText) findViewById(R.id.firstName)).getText().toString();
         this.last_name = ((EditText) findViewById(R.id.lastName)).getText().toString();
         this.email = ((EditText) findViewById(R.id.email)).getText().toString();
         this.password = ((EditText) findViewById((R.id.password))).getText().toString();
         this.confirm_password = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
+
         int i = view.getId();
+
+
 
         if (this.validateForm()) {
               sendUserInfoToServerToCreateUser();
 //              this.storeDataInSharedPreference();
+            if(this.radioButtonSelected.equals("Create")) {
+                      createResidence();
+            }
+            else if(this.radioButtonSelected.equals("Join")) {
+                      joinResidence();
+            }
         }
     }
 
@@ -76,14 +104,16 @@ public class RegistrationActivity extends Activity {
                 setLast_name(userAndKey.user.lastName);
                 setEmail(userAndKey.user.email);
                 setApi_key(userAndKey.key.getKey());
-
+                setUser_id(userAndKey.key.getId());
                 //make class to store SharedPreferences
-                 SharedPreferences createUser=getApplicationContext().getSharedPreferences("MyPref", 0);
+
+                SharedPreferences createUser=getApplicationContext().getSharedPreferences("MyPref", 0);
                 SharedPreferences.Editor editor= createUser.edit();
                 editor.putString("first_name",getFirst_name());
                 editor.putString("last_name",getLast_name());
                 editor.putString("email",getEmail());
                 editor.putString("api_key",getApi_key());
+                editor.putString("user_id", getUser_id());
                 editor.putBoolean("logged_in_status_yo",true);
                 editor.commit();
                 //s
@@ -97,20 +127,17 @@ public class RegistrationActivity extends Activity {
 
 
     }
-    public void joinResidence(View view) {
-        if (this.validateForm()) {
-            this.storeDataInSharedPreference();
+    public void joinResidence() {
+
             Intent myIntent = new Intent(this, JoinResidenceActivity.class);
-            myIntent.putExtra(EXTRA_MESSAGE, this.first_name);
             startActivity(myIntent);
-        }
     }
 
-    public void createResidence(View view) {
-        if (this.checkPassword()) {
+    public void createResidence() {
+//        if (this.checkPassword()) {
             Intent myIntent = new Intent(this, CreateResidenceActivity.class);
             startActivity(myIntent);
-        }
+//        }
     }
 
     public void storeDataInSharedPreference() {
@@ -230,6 +257,13 @@ public class RegistrationActivity extends Activity {
     public void setApi_key(String key) {
         this.api_key = key;
     }
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 
 
     public class User {
@@ -283,7 +317,7 @@ public class RegistrationActivity extends Activity {
 
     public class CreateUserResponse {
         User user;
-        HomeActivity.AuthResponse key;
+        HomeActivity.Key key;
 
         public User getUser() {
             return user;
@@ -293,11 +327,11 @@ public class RegistrationActivity extends Activity {
             this.user = user;
         }
 
-        public HomeActivity.AuthResponse getKey() {
+        public HomeActivity.Key getKey() {
             return key;
         }
 
-        public void setKey(HomeActivity.AuthResponse key) {
+        public void setKey(HomeActivity.Key key) {
             this.key = key;
         }
     }

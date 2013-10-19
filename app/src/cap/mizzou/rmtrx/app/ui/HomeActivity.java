@@ -112,15 +112,15 @@ public class HomeActivity extends BaseFragmentActivity {
             public void success(ResponseObject authResponse, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
 //                login_result=true;
-
-                startIntent();
-//                Intent goToDashBoard=new Intent(this,DashboardActivity.class);
-//                startActivity(goToDashBoard);
 //                SharedPreferences saveKey=getApplicationContext().getSharedPreferences("MyPref", 0);
 //                SharedPreferences.Editor editor=saveKey.edit();
 //                editor.putString("login_key",authResponse.response.getKey());
 //                editor.putString("user_id",authResponse.user.getId());
 //                editor.commit();
+                startIntent();
+//                Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+//                startActivity(goToDashBoard);
+
                 //This needs to be in another function
                 //Need to figure out how do the variable listener
 
@@ -191,7 +191,7 @@ public class HomeActivity extends BaseFragmentActivity {
         }
 
     }
-    public class AuthResponse {
+    public class Key {
         @SerializedName("_id")
         String id;
         String key;
@@ -213,14 +213,14 @@ public class HomeActivity extends BaseFragmentActivity {
         }
     }
     public class ResponseObject {
-        AuthResponse response;
+        Key response;
         User user;
 
-        public AuthResponse getResponse() {
+        public Key getResponse() {
             return response;
         }
 
-        public void setResponse(AuthResponse response) {
+        public void setResponse(Key response) {
             this.response = response;
         }
 

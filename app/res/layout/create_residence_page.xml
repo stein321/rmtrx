@@ -8,7 +8,12 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/first_name"
+            android:text="@string/name_of_residence"
+            />
+    <EditText android:id="@+id/residence_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="text"
             />
     <Button
             android:layout_width="wrap_content"

@@ -39,6 +39,10 @@
     <string name="code">Code: </string>
     <string name="Number_left">Spots Left: </string>
     <string name="last_name">Last Name</string>
+    <string name="GenerateCode">Generate Invite Code</string>
+    <string name="name_of_residence">Name of Residence</string>
+    <string name="Code_of_residence">Code of the residence you would like to join</string>
+    <string name="Go">Go</string>
 
 
 </resources>
