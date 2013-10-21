@@ -21,7 +21,7 @@ import retrofit.client.Response;
 public class HomeActivity extends BaseFragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private SharedPreferences logged_in_status;
-
+                         //test
     protected boolean login_result;
     private String login_name;  //just for printing to log
     private String password; //just for printing to log
