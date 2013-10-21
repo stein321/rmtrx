@@ -25,7 +25,7 @@ public class HomeActivity extends BaseFragmentActivity {
     protected boolean login_result;
     private String login_name;  //just for printing to log
     private String password; //just for printing to log
-
+           //testing commit˚
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
