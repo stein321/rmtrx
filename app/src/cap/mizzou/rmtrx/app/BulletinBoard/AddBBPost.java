@@ -16,7 +16,7 @@ import android.widget.*;
  * To change this template use File | Settings | File Templates.
  */
 public class AddBBPost extends Activity {
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+
 
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -30,9 +30,17 @@ public class AddBBPost extends Activity {
         // Sends Post Info
 
         Intent post = new Intent(this, BulletinBoardActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        post.putExtra(EXTRA_MESSAGE, message);
+        //Gets input from text views
+        EditText editText = (EditText) findViewById(R.id.edit_title);
+        EditText editText1 = (EditText) findViewById(R.id.edit_message);
+        //Pairs title and post message
+        Bundle extras = new Bundle();
+        String postTitle = editText.getText().toString();
+        String postMessage = editText1.getText().toString();
+
+        extras.putString("title", postTitle);
+        extras.putString("message", postMessage);
+        post.putExtras(extras);
         startActivity(post);
 
     }
