@@ -39,7 +39,7 @@ public class HomeActivity extends BaseFragmentActivity {
             startIntent();
         }
     }
-
+        //testing
     @Override
     public void finish() {
         // Prepare data intent
