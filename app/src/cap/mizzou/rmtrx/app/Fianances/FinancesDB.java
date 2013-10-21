@@ -22,8 +22,8 @@ public class FinancesDB {
     private SQLiteDatabase database;
 
 
-    public final static String RmName="";
-    public final static String TransactionAmount="";
+    public final static String RmName="Name";
+    public final static String TransactionAmount="Amount";
     public final static String CreditTable="Credits"; // name of credit table
     public final static String ChargeTable="Charges"; // name of charge table
 
@@ -79,11 +79,9 @@ public class FinancesDB {
 
 
         // Database creation sql statement
-        private static final String DATABASE_CREATE_CredTable ="";  /*"create table Credits
-        ( _id integer primary key,name text not null);";*/
+        private static final String DATABASE_CREATE_CredTable ="create table Credits( _id integer primary key,name text not null, amount text not null);";
 
-        private static final String DATABASE_CREATE_CharTable ="";  /*"create table Charges
-        ( _id integer primary key,name text not null);";*/
+        private static final String DATABASE_CREATE_CharTable ="create table Charges( _id integer primary key,name text not null, amount text not null);";
 
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
