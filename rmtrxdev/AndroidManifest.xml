@@ -34,14 +34,7 @@
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
 
         </activity>
-        <activity
-                android:name="cap.mizzou.rmtrx.app.DisplayMessageActivity"
-                android:label="@string/title_activity_display_message"
-                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="cap.mizzou.rmtrx.app.ui.HomeActivity"/>
-        </activity>
+
         <activity
                 android:name="cap.mizzou.rmtrx.app.Login.sendLoginInfo"
                 android:label="@string/title_activity_send_info"
@@ -96,6 +89,20 @@
                 android:name="cap.mizzou.rmtrx.app.ui.DashboardActivity"
                 android:label="@string/dashboardActivity"
                 >
+
+        </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity"
+                android:label="@string/bulletin_board_activity_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+
+        </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPost"
+                android:label="@string/bb_add_post_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity">
 
         </activity>
 

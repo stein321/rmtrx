@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/GroceryLayout">
+
+	<Spinner android:layout_height="wrap_content"
+             android:id="@+id/Spinner"
+             android:layout_width="fill_parent"></Spinner>
+
+	<ListView android:id="@+id/List"
+              android:layout_width="fill_parent"
+              android:layout_weight="1"
+              android:layout_height="wrap_content"
+              android:choiceMode="multipleChoice"></ListView>
+
+	<LinearLayout android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:id="@+id/AddNewLayout">
+
+		<EditText android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:id="@+id/AddNewEditText"
+                  android:hint="New Item"></EditText>
+
+		<ImageButton android:layout_height="wrap_content"
+                     android:id="@+id/AddNewImageButton"
+                     android:layout_width="50sp"></ImageButton>
+
+	</LinearLayout>
+</LinearLayout>
