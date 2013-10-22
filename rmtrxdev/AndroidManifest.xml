@@ -106,6 +106,12 @@
 
         </activity>
 
+        <activity android:name="cap.mizzou.rmtrx.app.grocery.GroceryActivity" android:label="@string/grocery_list_activity_name">
+        </activity>
+
+        <provider android:name="cap.mizzou.rmtrx.app.grocery.GroceryDB" android:authorities="cap.mizzou.rmtrx.app.grocery.GroceryDB">
+        </provider>
+
     </application>
 
 </manifest>
