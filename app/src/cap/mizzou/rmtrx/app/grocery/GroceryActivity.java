@@ -1,8 +1,5 @@
 package cap.mizzou.rmtrx.app.grocery;
 
-import java.util.ArrayList;
-import java.util.List;
-import cap.mizzou.rmtrx.app.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,26 +9,17 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.ResourceCursorAdapter;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
+import cap.mizzou.rmtrx.app.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroceryActivity extends Activity {
 
-    public static final String AUTHORITY = "cap.mizzou.rmtrx.app.grocery";
+    public static final String AUTHORITY = "cap.mizzou.rmtrx.app.grocery.GroceryDB";
 
     private Spinner listSpinner;
     private ListView list;
