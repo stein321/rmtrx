@@ -1,6 +1,10 @@
 package cap.mizzou.rmtrx.app.grocery;
 
-import android.content.*;
+import android.content.ContentProvider;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.UriMatcher;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -14,7 +18,8 @@ import java.util.HashMap;
 
 
 
-public class GroceryDB extends ContentProvider {
+public class GroceryDB extends ContentProvider
+{
 	
     private static final String TAG = "GroceryDB";
     private static final String DatabaseName = "grocery.db";
@@ -30,16 +35,17 @@ public class GroceryDB extends ContentProvider {
 
 
     @Override
-    public String getType(Uri uri) {
-        switch (groceryUriMatcher.match(uri)) {
+    public String getType(Uri uri)
+    {
+        switch (groceryUriMatcher.match(uri))
+        {
         case GetList:
         case GetListID:
-            return GroceryList.ContentType;
+        return GroceryList.ContentType;
 
         case GetItem:
         case GetItemID:
-            return GroceryItem.ContentType;
-
+        return GroceryItem.ContentType;
 
         }
         return null;
@@ -48,21 +54,22 @@ public class GroceryDB extends ContentProvider {
 
 
 
-    static {
+    static
+    {
         groceryUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         groceryUriMatcher.addURI(GroceryActivity.AUTHORITY, GroceryList.TableName, GetList);
         groceryUriMatcher.addURI(GroceryActivity.AUTHORITY, GroceryList.TableName + "/#", GetListID);
         groceryUriMatcher.addURI(GroceryActivity.AUTHORITY, GroceryItem.TableName, GetItem);
         groceryUriMatcher.addURI(GroceryActivity.AUTHORITY, GroceryItem.TableName + "/#", GetItemID);
 
-        GroceryListProjectionMap = new HashMap<String, String>();
+        GroceryListProjectionMap = new HashMap <String, String>();
         GroceryListProjectionMap.put(GroceryList.Columns._ID, GroceryList.Columns._ID);
         GroceryListProjectionMap.put(GroceryList.Columns.NAME, GroceryList.Columns.NAME);
         GroceryListProjectionMap.put(GroceryList.Columns.DEFAULT, GroceryList.Columns.DEFAULT);
         GroceryListProjectionMap.put(GroceryList.Columns.CreatedDate, GroceryList.Columns.CreatedDate);
         GroceryListProjectionMap.put(GroceryList.Columns.ModifiedDate, GroceryList.Columns.ModifiedDate);
 
-        GroceryItemProjectionMap = new HashMap<String, String>();
+        GroceryItemProjectionMap = new HashMap <String, String>();
         GroceryItemProjectionMap.put(GroceryItem.Columns._ID, GroceryItem.Columns._ID);
         GroceryItemProjectionMap.put(GroceryItem.Columns.NAME, GroceryItem.Columns.NAME);
         GroceryItemProjectionMap.put(GroceryItem.Columns.IsChecked, GroceryItem.Columns.IsChecked);
@@ -74,18 +81,24 @@ public class GroceryDB extends ContentProvider {
 
 
 
-    private static class DatabaseHelper extends SQLiteOpenHelper {
+    private static class DatabaseHelper extends SQLiteOpenHelper
+    {
 
-        DatabaseHelper(Context context) {
-            super(context, DatabaseName, null, DATABASE_VERSION);}
+        DatabaseHelper(Context context)
+        {
+            super(context, DatabaseName, null, DATABASE_VERSION);
+        }
+
         @Override
-        public void onCreate(SQLiteDatabase db) {
+        public void onCreate(SQLiteDatabase db)
+        {
             db.execSQL(GroceryList.CREATE_STATEMENT);
             db.execSQL(GroceryItem.CREATE_STATEMENT);
         }
 
         @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+        {
 
             db.execSQL("DROP TABLE IF EXISTS " + GroceryItem.TableName);
             db.execSQL("DROP TABLE IF EXISTS " + GroceryList.TableName);
@@ -95,39 +108,43 @@ public class GroceryDB extends ContentProvider {
 
 
 
-    private DatabaseHelper mOpenHelper;
+    private DatabaseHelper dbHelper;
 
 
 
     @Override
-    public boolean onCreate() {
-        mOpenHelper = new DatabaseHelper(getContext());
+    public boolean onCreate()
+    {
+        dbHelper = new DatabaseHelper(getContext());
         return true;
     }
+
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-            String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
+
+    {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         
         String contentType = getType(uri);
         
-        if(contentType == GroceryList.ContentType) {
+        if(contentType.equals(GroceryList.ContentType))
+        {
             qb.setTables(GroceryList.TableName);
-            qb.setProjectionMap(GroceryListProjectionMap);
-            if (TextUtils.isEmpty(sortOrder)) {
-            	sortOrder = GroceryList.DEFAULT_SORT_ORDER;
-            }
-        } else if(contentType == GroceryItem.ContentType) {
+            qb.setProjectionMap(GroceryListProjectionMap)
+            ;
+
+
+        } else if(contentType.equals(GroceryItem.ContentType))
+        {
             qb.setTables(GroceryItem.TableName);
             qb.setProjectionMap(GroceryItemProjectionMap);
-            if (TextUtils.isEmpty(sortOrder)) {
-            	sortOrder = GroceryItem.DEFAULT_SORT_ORDER;
-            }
+
         } else {}
 
 
 
-        switch(groceryUriMatcher.match(uri)) {
+        switch(groceryUriMatcher.match(uri))
+        {
         case GetListID:
             qb.appendWhere(GroceryList.Columns._ID + "=" + uri.getPathSegments().get(1));
             break;
@@ -137,7 +154,7 @@ public class GroceryDB extends ContentProvider {
         }
 
         // get database and run query
-        SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
 
 
@@ -149,65 +166,84 @@ public class GroceryDB extends ContentProvider {
 
 
     @Override
-    public Uri insert(Uri uri, ContentValues initialValues) {
+    public Uri insert(Uri uri, ContentValues initialValues)
+
+    {
     	
         ContentValues values;
-        if (initialValues != null) {
+        if (initialValues != null)
+        {
             values = new ContentValues(initialValues);
-        } else {
+        }
+        else
+        {
             values = new ContentValues();
         }
 
         Long now = Long.valueOf(System.currentTimeMillis());
         
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         long rowId;
 
-        switch (groceryUriMatcher.match(uri)) {
+        switch (groceryUriMatcher.match(uri))
+
+        {
         case GetList:
 
              //move items
-	        if (!values.containsKey(GroceryList.Columns.CreatedDate)) {
+	        if (!values.containsKey(GroceryList.Columns.CreatedDate))
+            {
 	            values.put(GroceryList.Columns.CreatedDate, now);
 	        }
 	
-	        if (!values.containsKey(GroceryList.Columns.ModifiedDate)) {
+	        if (!values.containsKey(GroceryList.Columns.ModifiedDate))
+            {
 	            values.put(GroceryList.Columns.ModifiedDate, now);
 	        }
 	
-	        if (!values.containsKey(GroceryList.Columns.NAME)) {
+	        if (!values.containsKey(GroceryList.Columns.NAME))
+            {
 	            Resources r = Resources.getSystem();
 	            values.put(GroceryList.Columns.NAME, r.getString(android.R.string.untitled));
 	        }
 	
 	        rowId = db.insert(GroceryList.TableName, GroceryList.Columns.NAME, values);
-	        if (rowId > 0) {
+
+	        if (rowId > 0)
+            {
 	            Uri noteUri = ContentUris.withAppendedId(GroceryList.ContentUri, rowId);
 	            getContext().getContentResolver().notifyChange(noteUri, null);
 	            return noteUri;
 	        }
 	        break;
+
         case GetItem:
 
-	        if (!values.containsKey(GroceryItem.Columns.CreatedDate)) {
+	        if (!values.containsKey(GroceryItem.Columns.CreatedDate))
+            {
 	            values.put(GroceryItem.Columns.CreatedDate, now);
 	        }
 	
-	        if (!values.containsKey(GroceryItem.Columns.ModifiedDate)) {
+	        if (!values.containsKey(GroceryItem.Columns.ModifiedDate))
+            {
 	            values.put(GroceryItem.Columns.ModifiedDate, now);
 	        }
 	
-	        if (!values.containsKey(GroceryItem.Columns.NAME)) {
+	        if (!values.containsKey(GroceryItem.Columns.NAME))
+            {
 	            Resources r = Resources.getSystem();
 	            values.put(GroceryItem.Columns.NAME, r.getString(android.R.string.untitled));
 	        }
 	        
-            if (!values.containsKey(GroceryItem.Columns.IsChecked)) {
+            if (!values.containsKey(GroceryItem.Columns.IsChecked))
+            {
                 values.put(GroceryItem.Columns.IsChecked, 0);
             }
 	
 	       	rowId = db.insert(GroceryItem.TableName, GroceryItem.Columns.NAME, values);
-	        if (rowId > 0) {
+
+	        if (rowId > 0)
+            {
 	            Uri noteUri = ContentUris.withAppendedId(GroceryItem.ContentUri, rowId);
 	            getContext().getContentResolver().notifyChange(noteUri, null);
 	            return noteUri;
@@ -215,7 +251,7 @@ public class GroceryDB extends ContentProvider {
 	        break;
         }
 
-        throw new SQLException("Failed to insert row: " + uri);
+        throw new SQLException("Failed:" + uri);
 
     }
 
@@ -225,11 +261,14 @@ public class GroceryDB extends ContentProvider {
 
 
     @Override
-    public int delete(Uri uri, String where, String[] whereArgs) {
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+    public int delete(Uri uri, String where, String[] whereArgs)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         int count = 0;
         String id;
-        switch (groceryUriMatcher.match(uri)) {
+        switch (groceryUriMatcher.match(uri))
+
+        {
         case GetList:
             count = db.delete(GroceryList.TableName, where, whereArgs);
             break;
@@ -260,11 +299,14 @@ public class GroceryDB extends ContentProvider {
 
 
     @Override
-    public int update(Uri uri, ContentValues values, String where, String[] whereArgs) {
-        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+    public int update(Uri uri, ContentValues values, String where, String[] whereArgs)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         int count=0;
         String noteId;
-        switch (groceryUriMatcher.match(uri)) {
+        switch (groceryUriMatcher.match(uri))
+
+        {
         case GetList:
             count = db.update(GroceryList.TableName, values, where, whereArgs);
             break;
@@ -289,6 +331,7 @@ public class GroceryDB extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
-        return count;}
+        return count;
+    }
 
 }

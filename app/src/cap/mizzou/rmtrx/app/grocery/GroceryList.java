@@ -4,7 +4,8 @@ import android.content.ContentValues;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-public final class GroceryList {
+public final class GroceryList
+{
 
 
 	private GroceryList() {}
@@ -13,7 +14,8 @@ public final class GroceryList {
 	public static final Uri ContentUri = Uri.parse("content://" + GroceryActivity.AUTHORITY + "/" + TableName);
 	public static final String ContentType = "vnd.android.cursor.dir/";
 
-    public static final class Columns implements BaseColumns {
+    public static final class Columns implements BaseColumns
+    {
 		private Columns() {}
 
 		public static final String NAME = "name";
@@ -22,8 +24,7 @@ public final class GroceryList {
 		public static final String ModifiedDate = "modified";
     }
     
-	public static final String DEFAULT_SORT_ORDER = Columns.DEFAULT + " DESC, " + Columns.NAME;
-    
+
 	public static final String CREATE_STATEMENT = 
 		"CREATE TABLE " + TableName + " ("
 		+ Columns._ID + " INTEGER PRIMARY KEY,"
@@ -33,7 +34,8 @@ public final class GroceryList {
 		+ Columns.ModifiedDate + " INTEGER"
 		+ ");";
 	
-	public static final String[] PROJECTION = new String[] {
+	public static final String[] PROJECTION = new String[]
+    {
 			Columns._ID, // 0
 			Columns.NAME, // 1
 	};
@@ -50,7 +52,8 @@ public final class GroceryList {
 		return contentValues(name, true);
 	}	
 	
-   public static ContentValues contentValues(String name, Boolean isDefault) {
+   public static ContentValues contentValues(String name, Boolean isDefault)
+   {
         ContentValues values = new ContentValues();
         values.put(Columns.NAME, name);
         values.put(Columns.DEFAULT, isDefault ? 1 : 0);
