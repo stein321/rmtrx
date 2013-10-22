@@ -13,7 +13,7 @@ import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
-//import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
+import cap.mizzou.rmtrx.app.TestDbActivity.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.core.ui.BaseListFragment;
 import com.squareup.otto.Bus;
@@ -21,6 +21,8 @@ import com.squareup.otto.Bus;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+
+//import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
 
 /**
  * Javadoc needs to be done.
@@ -87,7 +89,7 @@ public class HomeFragment extends BaseListFragment {
         List<RmtrxActivity> activitiesList = new ArrayList<RmtrxActivity>();
         activitiesList.add(new RmtrxActivity(R.string.grocery_list_activity_name, GroceryActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
-        //activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.residence_info, CurrentResidence.class));
         //  activitiesList.add(new RmtrxActivity(R.string.registration_activity_name, RegistrationActivity.class));

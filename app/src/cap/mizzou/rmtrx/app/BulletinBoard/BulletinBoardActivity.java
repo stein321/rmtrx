@@ -1,6 +1,6 @@
 package cap.mizzou.rmtrx.app.BulletinBoard;
 
-import android.app.Activity;
+import android.app.*;
 import android.content.Intent;
 import cap.mizzou.rmtrx.app.R;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import java.util.*;
 import android.widget.*;
 import android.content.*;
 import android.view.View;
-import android.widget.AdapterView.*;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,55 +22,52 @@ public class BulletinBoardActivity extends Activity {
 
     ListView listView ;
     // Defined Array values to show in ListView
-    ArrayList <String> values;
+    ArrayList <String> posts;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bulletin_board);
+        getActionBar().setTitle("Bulletin Board");
 
-        // Get ListView object from xml
-        listView = (ListView) findViewById(R.id.bblistview);
+        // Get the reference of ListViewAnimals
+        ListView postlistview=(ListView)findViewById(R.id.bblistview);
 
-
-
-        // Define a new Adapter
-        // First parameter - Context
-        // Second parameter - Layout for the row
-        // Third parameter - ID of the TextView to which the data is written
-        // Forth - the Array of data
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        posts= new ArrayList<String>();
 
 
-        // Assign adapter to ListView
-        listView.setAdapter(adapter);
+        //Receives data passed with intent
+        Bundle extras = getIntent().getExtras();
+        String title = extras.getString("title");
+        String message = extras.getString("message");
 
-        // ListView Item Click Listener
-        listView.setOnItemClickListener(new OnItemClickListener() {
+        //Adds messages to ArrayList
+        posts.add(message);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
 
-                // ListView Clicked item index
-                int itemPosition     = position;
+        //Create Adapter
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, posts);
+        // Set The Adapter
+        postlistview.setAdapter(arrayAdapter);
 
-                // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+        // register onClickListener to handle click events on each item
+        postlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // argument position gives the index of item which is clicked
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
 
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
-                        .show();
+                String selectedpost = posts.get(position);
+                Toast.makeText(getApplicationContext(), "Post Selected: " + selectedpost, Toast.LENGTH_LONG).show();
 
+                Intent display= new Intent(getApplicationContext(), DisplayBBPost.class);
+                display.putExtra("message", selectedpost);
+                startActivity(display);
             }
-
         });
-    }
 
+
+
+    }
 
 
 
@@ -83,8 +80,8 @@ public class BulletinBoardActivity extends Activity {
 
 
 
-    Intent post = getIntent();
-    String message = post.getStringExtra(AddBBPost.EXTRA_MESSAGE);
+
+
 
 
 
