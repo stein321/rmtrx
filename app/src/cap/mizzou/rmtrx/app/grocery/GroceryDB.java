@@ -23,7 +23,7 @@ public class GroceryDB extends ContentProvider
 	
     private static final String TAG = "GroceryDB";
     private static final String DatabaseName = "grocery.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DatabaseVersion = 4;
     private static HashMap <String, String> GroceryListProjectionMap;
     private static HashMap <String, String> GroceryItemProjectionMap;
     private static final int GetList = 1;
@@ -86,7 +86,7 @@ public class GroceryDB extends ContentProvider
 
         DatabaseHelper(Context context)
         {
-            super(context, DatabaseName, null, DATABASE_VERSION);
+            super(context, DatabaseName, null, DatabaseVersion);
         }
 
         @Override
@@ -130,14 +130,17 @@ public class GroceryDB extends ContentProvider
         if(contentType.equals(GroceryList.ContentType))
         {
             qb.setTables(GroceryList.TableName);
-            qb.setProjectionMap(GroceryListProjectionMap)
-            ;
+            qb.setProjectionMap(GroceryListProjectionMap);
+            /*if (TextUtils.isEmpty(sortOrder)) {
+                sortOrder = GroceryList.DEFAULT_SORT_ORDER;    */
 
 
         } else if(contentType.equals(GroceryItem.ContentType))
         {
             qb.setTables(GroceryItem.TableName);
             qb.setProjectionMap(GroceryItemProjectionMap);
+            /*if (TextUtils.isEmpty(sortOrder)) {
+                sortOrder = GroceryItem.DEFAULT_SORT_ORDER; */
 
         } else {}
 

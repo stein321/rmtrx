@@ -17,7 +17,114 @@ import cap.mizzou.rmtrx.app.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import cap.mizzou.rmtrx.app.grocery.GroceryItem.Sort;
+
+
 public class GroceryActivity extends Activity {
+
+    /*
+
+
+    public enum SortMode {
+        Alphabetical, Age, Youth;
+    }
+
+
+
+    public class SortComplex {
+        private SortMode sortMode;
+        private Sort sort;
+
+        SortComplex(SortMode sortMode) {
+            this.sortMode = sortMode;
+            setSortByMode();
+        }
+
+
+
+        public void setSortByMode() {
+            switch (checkMode) {
+                case Integrated:
+                    switch (sortMode) {
+                        case Alphabetical:
+                            sort = Sort.name;
+                            break;
+                        case Age:
+                            sort = Sort.age;
+                            break;
+                        case Youth:
+                            sort = Sort.youth;
+                            break;
+                    }
+                    break;
+                default:
+                    switch (sortMode) {
+                        case Alphabetical:
+                            sort = Sort.status_name;
+                            break;
+                        case Age:
+                            sort = Sort.status_age;
+                            break;
+                        case Youth:
+                            sort = Sort.status_youth;
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        public SortMode sortMode() {
+            return sortMode;
+        }
+
+
+
+        public boolean setSortModeByMenuItemId(int menuItemId) {
+            SortMode oldSortMode = sortMode;
+            switch (menuItemId) {
+                case R.id.menu_sort_name:
+                    sortMode = SortMode.Alphabetical;
+                    break;
+                case R.id.menu_sort_youth:
+                    sortMode = SortMode.Youth;
+                    break;
+                case R.id.menu_sort_age:
+                    sortMode = SortMode.Age;
+                    break;
+            }
+            setSortByMode();
+            return sortMode != oldSortMode;
+        }
+
+
+
+        public int getSortModeMenuId() {
+            switch (sortMode) {
+                case Alphabetical:
+                    return R.id.menu_sort_name;
+                case Youth:
+                    return R.id.menu_sort_youth;
+                case Age:
+                    return R.id.menu_sort_age;
+            }
+            return R.id.menu_sort_name;
+        }
+
+
+
+        @Override
+        public String toString() {
+            return sort.toString();
+        }
+
+    }
+
+    */
+
+
+
+
+
 
     public static final String AUTHORITY = "cap.mizzou.rmtrx.app.grocery.GroceryDB";
 
@@ -235,7 +342,7 @@ public class GroceryActivity extends Activity {
 
     private final int DeleteItemText = 1;
     private final int ListAddText = 2;
-    //
+    private final int SortListText = 3;
     private final int DeleteListText = 4;
     //
 
@@ -296,6 +403,27 @@ public class GroceryActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int id) {
+                                dialog.cancel();
+                            }
+                        });
+                dialog = builder.create();
+                break;
+
+            case SortListText:
+                builder = new AlertDialog.Builder(GroceryActivity.this);
+                builder.setMessage("Sort?").setCancelable(true)
+                        .setPositiveButton("A-Z",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id)
+                                    {
+                                        //sort
+                                        dialog.dismiss();
+                                    }
+                                }).setNegativeButton("Old-New",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
+                            //sort
                                 dialog.cancel();
                             }
                         });
@@ -389,7 +517,7 @@ public class GroceryActivity extends Activity {
 
 
     private final int AddListMenu = 1;
-
+    private final int SortListMenu = 2;
     private final int DeleteCheckedMenu = 4;
     private final int UncheckAllMenu = 5;
     private final int DeleteListMenu = 6;
@@ -400,6 +528,8 @@ public class GroceryActivity extends Activity {
         menu.add(0, DeleteCheckedMenu, 0, "Delete Checked");
         menu.add(0, UncheckAllMenu, 0, "Uncheck All");
         menu.add(0, DeleteListMenu, 0, "Delete List");
+        menu.add(0, SortListMenu, 0, "Sort List");
+
         return true;
     }
 
@@ -413,7 +543,9 @@ public class GroceryActivity extends Activity {
             case DeleteListMenu:
                 showDialog(DeleteListText);
                 return true;
-
+            case SortListMenu:
+                showDialog(SortListText);
+                return true;
             case DeleteCheckedMenu:
                 deleteCheckedEntries();
                 loadSelectedList();

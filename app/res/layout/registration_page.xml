@@ -65,7 +65,8 @@
               android:layout_height="wrap_content"
               android:inputType="textPassword"
             />
-
+<GridLayout android:layout_width="fill_parent"
+            android:layout_height="50dp">
     <Button
             android:id="@+id/joinResidence"
             android:layout_width="wrap_content"
@@ -81,6 +82,6 @@
             android:text="@string/CreateResidence"
             android:onClick="onClick"
             android:layout_gravity="left|center_vertical"/>
-
+</GridLayout>
 
 </LinearLayout>

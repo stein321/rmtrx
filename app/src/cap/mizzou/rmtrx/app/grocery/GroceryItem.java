@@ -25,12 +25,11 @@ public class GroceryItem
 		}
 
 
-    /*
+
     //Sort
     public enum Sort {
-        name(Columns.NAME), youth(Columns._ID + " DESC"), age(Columns._ID), status_name(
-                Columns.IsChecked + "," + name), status_youth(
-                Columns.IsChecked + "," + youth), status_age(
+        name(Columns.NAME), age(Columns._ID), status_name(
+                Columns.IsChecked + "," + name), status_age(
                 Columns.IsChecked + "," + age);
 
         private String sortString;
@@ -49,13 +48,14 @@ public class GroceryItem
         }
     }
 
-    */
+    //public static final String DEFAULT_SORT_ORDER = Columns._ID;
 
 
 
 
 
-		public static final String CREATE_STATEMENT =
+
+    public static final String CREATE_STATEMENT =
         "CREATE TABLE " + TableName + " ("
         + Columns._ID + " INTEGER PRIMARY KEY,"
         + Columns.ListID + " INTEGER,"

@@ -23,9 +23,10 @@ public final class GroceryList
 		public static final String CreatedDate = "created";
 		public static final String ModifiedDate = "modified";
     }
-    
+    //public static final String DEFAULT_SORT_ORDER = Columns.NAME;
 
-	public static final String CREATE_STATEMENT = 
+
+    public static final String CREATE_STATEMENT =
 		"CREATE TABLE " + TableName + " ("
 		+ Columns._ID + " INTEGER PRIMARY KEY,"
 		+ Columns.NAME + " TEXT,"

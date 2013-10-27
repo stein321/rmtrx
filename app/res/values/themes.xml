@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="ThemeGreen" parent="android:style/Theme.NoTitleBar">
+        <item name="android:buttonStyle">@style/ThemeGreen.Button</item>
+        <item name="android:checkboxStyle">@style/ThemeGreen.CheckBox</item>
+        <item name="android:spinnerStyle">@style/ThemeGreen.Spinner</item>
+        <item name="android:spinnerItemStyle">@style/ThemeGreen.SpinnerItemText</item>
+        <item name="android:editTextStyle">@style/ThemeGreen.EditText</item>
+        <item name="android:textViewStyle">@style/ThemeGreen.TextView</item>
+    </style>
+
+</resources>
