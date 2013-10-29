@@ -74,7 +74,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
         Context context=getApplicationContext();
         //hard coded login info, change to server call
-        if(isOnline(context)) {
+        if(true) {
             checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
         } else {
             showNotConnectedAlert();
@@ -100,12 +100,17 @@ public class HomeActivity extends BaseFragmentActivity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 //To change body of implemented methods use File | Settings | File Templates.
-                login_result=false;
+                incorrectLogin();
             }
         }
         );
 //        return login_result;
 //        return true;//comment out
+    }
+
+    private void incorrectLogin() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Wrong login").create().show();
     }
 
     private void successfulLogin(Key key, User user) {
@@ -235,8 +240,9 @@ public class HomeActivity extends BaseFragmentActivity {
 
         return code;
     }
-    private boolean isOnline(Context context)
+    private boolean isOnline()
     {
+        Context context=getApplicationContext();
         try
         {
             ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
