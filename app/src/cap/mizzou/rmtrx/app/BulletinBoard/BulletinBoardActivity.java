@@ -48,7 +48,7 @@ public class BulletinBoardActivity extends Activity {
 
         //Create Adapter
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, posts);
-        // Set The Adapter
+        // Set Adapter
         postlistview.setAdapter(arrayAdapter);
 
         // register onClickListener to handle click events on each item
