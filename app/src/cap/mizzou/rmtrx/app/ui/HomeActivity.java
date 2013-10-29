@@ -2,8 +2,10 @@ package cap.mizzou.rmtrx.app.ui;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -53,7 +55,6 @@ public class HomeActivity extends BaseFragmentActivity {
         startActivity(goToDashBoard);
     }
     public void sendLoginInfo(View view) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         //saved to shared preferences
         pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
@@ -71,10 +72,15 @@ public class HomeActivity extends BaseFragmentActivity {
         editor.putString("login_name", login_to_add);
         editor.putString("p_word", p_word_to_add);
 
+        Context context=getApplicationContext();
         //hard coded login info, change to server call
-        checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
-    }
+        if(isOnline(context)) {
+            checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
+        } else {
+            showNotConnectedAlert();
+        }
 
+    }
     public void checkLoginCredentials(String username, String password) {
 
         RestAdapter restAdapter =
@@ -228,6 +234,22 @@ public class HomeActivity extends BaseFragmentActivity {
         }
 
         return code;
+    }
+    private boolean isOnline(Context context)
+    {
+        try
+        {
+            ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            return cm.getActiveNetworkInfo().isConnectedOrConnecting();
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+    }
+    private void showNotConnectedAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Not online").create().show();
     }
 
 }
