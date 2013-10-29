@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
+import cap.mizzou.rmtrx.app.Fianances.*;
+import android.content.*;
+import android.app.*;
+
 
 
 /**
@@ -17,10 +21,16 @@ import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
  */
 public class TransactionActivity extends Activity {
 
+    private FinancesDB datasource;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction);
         getActionBar().setTitle("Add Transaction");
+
+
+        datasource = new FinancesDB(this);
+        datasource.open();
 
     }
 
@@ -32,7 +42,26 @@ public class TransactionActivity extends Activity {
         //Decide which roommate to credit
 
         //Send credit info to database (roommate specific table)
+        datasource.createCreditRecord("Alice", "100.00");
 
+
+        // Prepare intent which is triggered if the
+        // notification is selected
+        Intent intent = new Intent(this, FinancesActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        // Build notification
+        // Actions are just fake
+        Notification noti = new Notification.Builder(this)
+                .setContentTitle("New Credit")
+                .setContentText("$30").setSmallIcon(R.drawable.icon)
+                .setContentIntent(pIntent)
+                .addAction(R.drawable.icon, "And more", pIntent).build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        // hide the notification after its selected
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(0, noti);
 
     }
 
@@ -43,5 +72,25 @@ public class TransactionActivity extends Activity {
         //Decide which roommate to charge
 
         //Send charge info to database (roommate specific table)
+
+
+        // Prepare intent which is triggered if the
+        // notification is selected
+        Intent intent = new Intent(this, FinancesActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        // Build notification
+        // Actions are just fake
+        Notification noti = new Notification.Builder(this)
+                .setContentTitle("New Charge From" + "Alice")
+                .setContentText("You were charged $10").setSmallIcon(R.drawable.icon)
+                .setContentIntent(pIntent)
+                .addAction(R.drawable.icon, "And more", pIntent).build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        // hide the notification after its selected
+        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        notificationManager.notify(0, noti);
+
     }
 }

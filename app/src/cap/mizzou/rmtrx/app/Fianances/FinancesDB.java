@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.content.*;
 import android.util.Log;
+import cap.mizzou.rmtrx.app.TestDbActivity.MySQLiteHelper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +21,8 @@ public class FinancesDB {
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
+    private String[] allCreditColumns = { DatabaseHelper.COLUMN_CREDITID, DatabaseHelper.COLUMN_CREDITROOMATE, DatabaseHelper.COLUMN_CREDITAMOUNT };
+    private String[] allChargeColumns = { DatabaseHelper.COLUMN_CHARGEID, DatabaseHelper.COLUMN_CHARGEROOMATE, DatabaseHelper.COLUMN_CHARGEAMOUNT };
 
 
     public final static String RmName="Name";
@@ -37,13 +40,27 @@ public class FinancesDB {
         database = dbHelper.getWritableDatabase();
     }
 
+    public void open() throws SQLException {
+        database = dbHelper.getWritableDatabase();
+    }
 
-    public long createCreditRecord(String id, String name, String amount){
+    public void close() {
+        dbHelper.close();
+    }
+
+    public long createCreditRecord(String roommate, String amount) {
         ContentValues values = new ContentValues();
-        values.put(CreditID, id);
-        values.put(RmName, name);
-        values.put(TransactionAmount, amount);
-        return database.insert(CreditTable, null, values);
+        values.put(DatabaseHelper.COLUMN_CREDITROOMATE, roommate);
+        values.put(DatabaseHelper.COLUMN_CREDITAMOUNT, amount);
+        long insertId = database.insert(DatabaseHelper.TABLE_CREDITS, null,
+                values);
+        Cursor cursor = database.query(DatabaseHelper.TABLE_CREDITS,
+                allCreditColumns, DatabaseHelper.COLUMN_CREDITID + " = " + insertId, null,
+                null, null, null);
+        cursor.moveToFirst();
+        Comment newComment = cursorToComment(cursor);
+        cursor.close();
+        return newComment;
     }
 
     public long createChargeRecord(String id, String name, String amount){
@@ -67,21 +84,47 @@ public class FinancesDB {
         //return mCursor; // iterate to get each value.
     }
 
+    private Comment cursorToComment(Cursor cursor) {
+        Comment comment = new Comment();
+        comment.setId(cursor.getLong(0));
+        comment.setComment(cursor.getString(1));
+        return comment;
+    }
 
 
+    @Override
+    protected void onResume() {
+        datasource.open();
+        super.onResume();
+    }
 
+    @Override
+    protected void onPause() {
+        datasource.close();
+        super.onPause();
+    }
 
     public class DatabaseHelper extends SQLiteOpenHelper{
 
-        private static final String DATABASE_NAME = "DBName";
+        public static final String TABLE_CREDITS = "Credits";
+        public static final String COLUMN_CREDITID = "_id";
+        public static final String COLUMN_CREDITROOMATE = "Roomate";
+        public static final String COLUMN_CREDITAMOUNT = "Amount";
+
+        public static final String TABLE_CHARGES = "Credits";
+        public static final String COLUMN_CHARGEID = "_id";
+        public static final String COLUMN_CHARGEROOMATE = "Roomate";
+        public static final String COLUMN_CHARGEAMOUNT = "Amount";
+
+        private static final String DATABASE_NAME = "Credit.db";
 
         private static final int DATABASE_VERSION = 2;
 
 
         // Database creation sql statement
-        private static final String DATABASE_CREATE_CredTable ="create table Credits( _id integer primary key,name text not null, amount text not null);";
+        private static final String DATABASE_CREATE_CREDITTABLE = "create table " + TABLE_CREDITS + "(" + COLUMN_CREDITID + " integer primary key autoincrement, " + COLUMN_CREDITROOMATE + " text not null, " + COLUMN_CREDITAMOUNT + " text not null);";
 
-        private static final String DATABASE_CREATE_CharTable ="create table Charges( _id integer primary key,name text not null, amount text not null);";
+        private static final String DATABASE_CREATE_CHARGETABLE = "create table " + TABLE_CHARGES + "(" + COLUMN_CHARGEID + " integer primary key autoincrement, " + COLUMN_CHARGEROOMATE + " text not null, " + COLUMN_CHARGEAMOUNT + " text not null);";
 
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -90,8 +133,8 @@ public class FinancesDB {
         // Method is called during creation of the database
         @Override
         public void onCreate(SQLiteDatabase database) {
-            database.execSQL(DATABASE_CREATE_CredTable);
-            database.execSQL(DATABASE_CREATE_CharTable);
+            database.execSQL(DATABASE_CREATE_CREDITTABLE);
+            database.execSQL(DATABASE_CREATE_CHARGETABLE);
         }
 
         // Method is called during an upgrade of the database,
