@@ -1,14 +1,14 @@
-package cap.mizzou.rmtrx.app.Fianances;
+package cap.mizzou.rmtrx.app.Finances;
 
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.content.*;
 import android.util.Log;
-import cap.mizzou.rmtrx.app.TestDbActivity.MySQLiteHelper;
+import cap.mizzou.rmtrx.app.TestDbActivity.Comment;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,7 +48,7 @@ public class FinancesDB {
         dbHelper.close();
     }
 
-    public long createCreditRecord(String roommate, String amount) {
+    public Comment createCreditRecord(String roommate, String amount) {
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_CREDITROOMATE, roommate);
         values.put(DatabaseHelper.COLUMN_CREDITAMOUNT, amount);
@@ -92,17 +92,17 @@ public class FinancesDB {
     }
 
 
-    @Override
-    protected void onResume() {
-        datasource.open();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        datasource.close();
-        super.onPause();
-    }
+//    @Override
+//    protected void onResume() {
+//        datasource.open();
+//        super.onResume();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        datasource.close();
+//        super.onPause();
+//    }
 
     public class DatabaseHelper extends SQLiteOpenHelper{
 

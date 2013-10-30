@@ -1,14 +1,14 @@
-package cap.mizzou.rmtrx.app.Fianances;
+package cap.mizzou.rmtrx.app.Finances;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
-import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
-import cap.mizzou.rmtrx.app.Fianances.*;
-import android.content.*;
-import android.app.*;
 
 
 
@@ -54,9 +54,9 @@ public class TransactionActivity extends Activity {
         // Actions are just fake
         Notification noti = new Notification.Builder(this)
                 .setContentTitle("New Credit")
-                .setContentText("$30").setSmallIcon(R.drawable.icon)
+                .setContentText("$30")
                 .setContentIntent(pIntent)
-                .addAction(R.drawable.icon, "And more", pIntent).build();
+                .addAction(1, "And more", pIntent).build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         // hide the notification after its selected
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -83,9 +83,9 @@ public class TransactionActivity extends Activity {
         // Actions are just fake
         Notification noti = new Notification.Builder(this)
                 .setContentTitle("New Charge From" + "Alice")
-                .setContentText("You were charged $10").setSmallIcon(R.drawable.icon)
+                .setContentText("You were charged $10")
                 .setContentIntent(pIntent)
-                .addAction(R.drawable.icon, "And more", pIntent).build();
+                .addAction(1, "And more", pIntent).build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         // hide the notification after its selected
         noti.flags |= Notification.FLAG_AUTO_CANCEL;

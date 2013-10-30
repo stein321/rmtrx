@@ -1,8 +1,7 @@
 package cap.mizzou.rmtrx.app;
 
-import android.content.SharedPreferences;
 import cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity;
-import cap.mizzou.rmtrx.app.Fianances.FinancesActivity;
+import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
 import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
