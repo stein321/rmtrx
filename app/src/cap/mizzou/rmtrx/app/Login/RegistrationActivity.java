@@ -89,23 +89,6 @@ public class RegistrationActivity extends Activity {
               sendUserInfoToServerToCreateUser();
         }
     }
-    private void sendResidenceInfoToServerToCreateResidence() {
-        RestAdapter restAdapter =
-                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-
-        ResidenceInteractionInterface ri = restAdapter.create(ResidenceInteractionInterface.class);
-
-        ri.createResidence(getNameOfResidence(), getUserId(), new Callback<Residence>() {
-            @Override
-            public void success(Residence residence, Response response) {
-
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-            }
-        });
-    }
 
     private void sendUserInfoToServerToCreateUser() {
         RestAdapter restAdapter =
@@ -141,21 +124,19 @@ public class RegistrationActivity extends Activity {
         else if(this.radioButtonSelected.equals("Join")) {
             joinResidence();
         }
-        sendResidenceInfoToServerToCreateResidence();
     }
 
     public void joinResidence() {
 
-            Intent myIntent = new Intent(this, JoinResidenceActivity.class);
-            startActivity(myIntent);
+            Intent joinResidenceIntent = new Intent(this, JoinResidenceActivity.class);
+            joinResidenceIntent.putExtra("residence code",getJoinResidenceCode());
+            startActivity(joinResidenceIntent);
     }
 
     public void createResidence() {
-//        if (this.checkPassword()) {
             Intent createResidence = new Intent(this, CreateResidenceActivity.class);
             createResidence.putExtra("name of residence to be created", getNameOfResidence());
             startActivity(createResidence);
-//        }
     }
 
 

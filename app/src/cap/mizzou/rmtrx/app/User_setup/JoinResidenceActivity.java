@@ -2,6 +2,7 @@ package cap.mizzou.rmtrx.app.User_setup;
 
 import Models.Residence;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,46 +20,48 @@ import retrofit.client.Response;
  * To change this template use File | Settings | File Templates.
  */
 public class JoinResidenceActivity extends Activity {
-    public SharedPreferences pref;
-    private String code="This is a code";
-    private String residence_id="This is a residence id";
-    private String user_id;
-
+    private UserInfo userInfo;
+    private String residenceCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle info=getIntent().getExtras();
+        setResidenceCode(info.getString("residence code", null));
+        Context context=getApplicationContext();
+        userInfo=new UserInfo(context);
 
-        setUserId();
         joinResidenceOnServer();
     }
     public void joinResidenceOnServer() {
-        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        String user_id=pref.getString("user_id","hello");
-
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         ResidenceCreationInterface ri= restAdapter.create(ResidenceCreationInterface.class);
 
-        ri.joinResidenceWithCode("abcde",user_id, new Callback<Residence>() {
+        ri.joinResidenceWithCode(getResidenceCode(),userInfo.getId(), new Callback<Residence>() {
             @Override
             public void success(Residence residence, Response response) {
-                //To change body of implemented methods use File | Settings | File Templates.
                 goToDashboard();
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                //TODO:print some sort of error such as nonexistent code
+                //TODO: if user is created and doesn't successfully create/join a residence, need to figure out what's next
             }
         });
-    }
-    private void setUserId() {
-        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        this.user_id=pref.getString("user_id","hello");
     }
     private void goToDashboard() {
         Intent dashboard = new Intent(this, DashboardActivity.class);
         startActivity(dashboard);
     }
+
+    public String getResidenceCode() {
+        return residenceCode;
+    }
+
+    public void setResidenceCode(String residenceCode) {
+        this.residenceCode = residenceCode;
+    }
+
 }
