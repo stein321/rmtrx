@@ -130,7 +130,7 @@ public class RegistrationActivity extends Activity {
         user.setLastName(userAndKey.getUser().getLastName());
         user.setEmail(userAndKey.getUser().getEmail());
         user.setEmail(userAndKey.getKey().getKey());
-        user.setLoggedInStatus(true);
+        user.setLoggedIn(true);
         user.commit();
 
         if(this.radioButtonSelected.equals("Create")) {

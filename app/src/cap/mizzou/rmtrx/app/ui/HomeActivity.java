@@ -20,17 +20,9 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.util.Random;
-
-
 public class HomeActivity extends BaseFragmentActivity {
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     public Boolean logged_in_status;
     private UserInfo userInfo;
-
-    protected boolean login_result;
-    private String login_name;  //just for printing to log
-    private String password; //just for printing to log
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +31,7 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo =new UserInfo(context);
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
-        logged_in_status= userInfo.isLoggedInStatus();
-        if(logged_in_status==true) {
+        if(userInfo.isLoggedIn()) {
             startIntent();
         }
     }
@@ -56,11 +47,12 @@ public class HomeActivity extends BaseFragmentActivity {
         //turns it into a string
         String login_to_add = login_name_text.getText().toString();
         String p_word_to_add = p_word_text.getText().toString();
-        //stores string as key valued pairs
-        userInfo.setEmail(login_to_add);
-        userInfo.setPassword(p_word_to_add);
 
-        //hard coded login info, change to server call
+        //believe this is erroneous
+//        //stores string as key valued pairs
+//        userInfo.setEmail(login_to_add);
+//        userInfo.setPassword(p_word_to_add);
+//
         checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
     }
 
@@ -98,7 +90,7 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo.setFirstName(user.getFirstName());
         userInfo.setLastName(user.getLastName());
         userInfo.setAuthKey(key.getKey());
-        userInfo.setLoggedInStatus(true);
+        userInfo.setLoggedIn(true);
         userInfo.setId(user.getId());
         userInfo.commit();
         startIntent();
@@ -132,21 +124,6 @@ public class HomeActivity extends BaseFragmentActivity {
         }
 
 
-    }
-    //Todo:move this to the residence info page
-    private String generateCode() {
-        String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        int maxLength = alphabet.length();
-
-        String code = "";
-
-        Random r = new Random();
-
-        for (int i = 0; i < 6; i++) {
-              code = code.concat(String.valueOf(alphabet.charAt(r.nextInt(maxLength))));
-        }
-
-        return code;
     }
     private boolean isOnline()
     {

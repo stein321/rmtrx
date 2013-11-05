@@ -22,7 +22,7 @@ public class UserInfo {
     private String lastName;
     private String email;
     private String password;
-    private boolean loggedInStatus;
+    private boolean loggedIn;
 
     public UserInfo(Context context) {
             pref=context.getSharedPreferences("MyPref", 0);
@@ -32,7 +32,7 @@ public class UserInfo {
             setId(pref.getString("id", null));
             setResidenceId(pref.getString("residenceId", null));
             setResidenceName(pref.getString("residenceName",null));
-            setLoggedInStatus(pref.getBoolean("loggedInStatus",false));
+            setLoggedIn(pref.getBoolean("loggedIn", false));
 
 }
 
@@ -44,7 +44,7 @@ public class UserInfo {
         editor.putString("id",getId());
         editor.putString("residenceId", getResidenceId());
         editor.putString("residenceName",getResidenceName());
-        editor.putBoolean("loggedInStatus",isLoggedInStatus());
+        editor.putBoolean("loggedIn", isLoggedIn());
         editor.commit();
     }
 
@@ -99,12 +99,12 @@ public class UserInfo {
     }
 
 
-    public boolean isLoggedInStatus() {
-        return loggedInStatus;
+    public boolean isLoggedIn() {
+        return loggedIn;
     }
 
-    public void setLoggedInStatus(boolean loggedInStatus) {
-        this.loggedInStatus = loggedInStatus;
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
     public String getAuthKey() {
         return authKey;

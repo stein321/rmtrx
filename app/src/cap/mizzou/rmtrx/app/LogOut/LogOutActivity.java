@@ -29,7 +29,7 @@ public class LogOutActivity extends Activity {  //make sure to delete all  TestD
     }
     private void clearStoredUserInfo() {
         //TODO:clear local DB
-        userInfo.setLoggedInStatus(false);
+        userInfo.setLoggedIn(false);
         userInfo.commit();
     }
     private void goToLoginPage() {
