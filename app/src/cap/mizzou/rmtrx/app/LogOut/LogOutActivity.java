@@ -23,20 +23,19 @@ public class LogOutActivity extends Activity {  //make sure to delete all shared
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
         Context context=getApplicationContext();
         userInfo=new UserInfo(context);
+        clearStoredUserInfo();
+        goToLoginPage();
+    }
+    private void clearStoredUserInfo() {
+        //TODO:clear local DB
         userInfo.setLoggedInStatus(false);
         userInfo.commit();
-        Intent goToLoginPage = new Intent(this, HomeActivity.class);
-        goToLoginPage.putExtra(EXTRA_MESSAGE, "Logged Out");
-        startActivity(goToLoginPage);
-
-
     }
-
-
-
+    private void goToLoginPage() {
+        Intent goToLoginPageIntent = new Intent(this, HomeActivity.class);
+        goToLoginPageIntent.putExtra(EXTRA_MESSAGE, "Logged Out");
+        startActivity(goToLoginPageIntent);
+    }
 }
