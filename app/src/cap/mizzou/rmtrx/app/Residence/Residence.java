@@ -11,7 +11,15 @@ public class Residence {
     private int numberOfResidences;
     private String address;
     int[] users;
+    String residenceId;
 
+    public String getResidenceId() {
+        return residenceId;
+    }
+
+    public void setResidenceId(String residenceId) {
+        this.residenceId = residenceId;
+    }
 
     private String join_code;
 

@@ -6,10 +6,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import cap.mizzou.rmtrx.app.DataAccess.ResidenceDataInterface;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.Residence.Residence;
 import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.squareup.otto.Subscribe;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,6 +40,33 @@ public class DashboardActivity extends BaseFragmentActivity {
             fragmentManager.beginTransaction()
                     .add(android.R.id.content, homeFragment, HomeFragment.TAG)
                     .commit();
+        }
+
+        //Check if ResidenceId is set, and if not try and get it
+        final SharedPreferences preferences =getApplicationContext().getSharedPreferences("MyPref", 0);
+        String residenceId = preferences.getString("residence_id", "");
+
+        if(residenceId == "") {
+            String userId = preferences.getString("id", "");
+
+            RestAdapter restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+            ResidenceDataInterface restInterface = restAdapter.create(ResidenceDataInterface.class);
+
+            restInterface.getResidence(userId, new Callback<Residence>() {
+                @Override
+                public void success(Residence residence, Response response) {
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("residence_id", residence.getResidenceId());
+                }
+
+                @Override
+                public void failure(RetrofitError retrofitError) {
+
+                    int x = 1;
+
+                    //To change body of implemented methods use File | Settings | File Templates.
+                }
+            });
         }
     }
 

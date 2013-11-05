@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,10 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import cap.mizzou.rmtrx.app.R;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,9 @@ public class GroceryActivity extends Activity {
     private EditText popUpEditText;
     private ImageButton newItemButton;
     private View ItemView;
+    private RestAdapter restAdapter;
+    private GroceryRequestInterface restInterface;
+
 
 
     private Boolean setSelectedList;
@@ -40,6 +48,8 @@ public class GroceryActivity extends Activity {
         newItemEditText = (EditText) findViewById(R.id.AddNewEditText);
         newItemButton = (ImageButton) findViewById(R.id.AddNewImageButton);
         newItemButton.setImageResource(android.R.drawable.ic_input_add);
+        restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+        restInterface = restAdapter.create(GroceryRequestInterface.class);
         setupCallbacks();
         loadLists();
     }
@@ -92,12 +102,26 @@ public class GroceryActivity extends Activity {
                 null, null, null);
     }
 
-
-
-    public void addList(String name) {
+    public void addList(String listName) {
         clearDefaultSelected();
         getContentResolver().insert(GroceryList.ContentUri,
-                GroceryList.contentValues(name));
+                GroceryList.contentValues(listName));
+
+        SharedPreferences preferences =getApplicationContext().getSharedPreferences("MyPref", 0);
+        String residenceId = preferences.getString("residence_id", "");
+
+
+        restInterface.createList(residenceId, listName, new Callback<GroceryListModel>() {
+            @Override
+            public void success(GroceryListModel groceryListModel, Response response) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
     }
 
 
@@ -424,5 +448,31 @@ public class GroceryActivity extends Activity {
                 return true;
         }
         return false;
+    }
+
+    public class GroceryListModel {
+        String listName;
+        List<GroceryListItemModel> items;
+    }
+
+    public class GroceryListItemModel {
+        String itemName;
+        boolean itemStatus;
+
+        public String getItemName() {
+            return itemName;
+        }
+
+        public void setItemName(String itemName) {
+            this.itemName = itemName;
+        }
+
+        public boolean isItemStatus() {
+            return itemStatus;
+        }
+
+        public void setItemStatus(boolean itemStatus) {
+            this.itemStatus = itemStatus;
+        }
     }
 }
