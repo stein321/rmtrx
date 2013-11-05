@@ -12,9 +12,8 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.util.ArrayList;
 import java.util.Random;
-
+    //TODO:Make info display correctly
 /**
  * Created with IntelliJ IDEA.
  * User: Ben
@@ -31,7 +30,7 @@ public class CurrentResidence extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.residence_information);
+        setContentView(R.layout.user_info_page);
         getActionBar().setTitle("Residence Information");
         Context context=getApplicationContext();
         userInfo=new UserInfo(context);
@@ -61,9 +60,7 @@ public class CurrentResidence extends Activity {
     }
     private void setInfoOnPage() {
         TextView showNameOfUser=(TextView)findViewById(R.id.user_name);   //hard code for now
-        TextView showNameOfResidence=(TextView)findViewById(R.id.address);
-//        TextView show_code_of_residence=(TextView)findViewById(R.id.code);
-        TextView show_number_of_spots_left_in_residence=(TextView)findViewById(R.id.number_of_people_left);
+        TextView showNameOfResidence=(TextView)findViewById(R.id.residence);
 
         showNameOfUser.setText(userInfo.getFirstName() + " " + userInfo.getLastName());
         showNameOfResidence.setText(userInfo.getResidenceName());

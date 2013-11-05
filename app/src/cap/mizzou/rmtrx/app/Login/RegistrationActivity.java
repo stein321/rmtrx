@@ -30,16 +30,18 @@ import retrofit.client.Response;
  */
 public class RegistrationActivity extends Activity {
 
-    private String first_name;
+    private String firstName;
     private String email;
     private String password;
-    private String confirm_password;
-    private String last_name;
-    private String api_key;
-    private String name_of_residence;
-    private String user_id;
+    private String confirmPassword;
+    private String lastName;
+    private String apiKey;
+    private String nameOfResidence;
+    private String userId;
     private UserInfo user;
     private String radioButtonSelected;
+    private String joinResidenceCode;
+    private int viewId;
 
 
     @Override
@@ -54,52 +56,53 @@ public class RegistrationActivity extends Activity {
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
-        int i=view.getId();
+        viewId =view.getId();
+
 
         TextView textToBeChanged=(TextView)findViewById(R.id.code_or_name_title);
 
-        if(i==R.id.JoinRadioButton) {
+        if(viewId ==R.id.JoinRadioButton) {
             textToBeChanged.setText("Code of the residence you would like to join");
             radioButtonSelected="Join";
         }
-        else if(i==R.id.CreateRadioButton) {
+        else if(viewId ==R.id.CreateRadioButton) {
             textToBeChanged.setText("Name of Residence");
             radioButtonSelected="Create";
+
         }
 
     }
     public void onClick(View view) {
-        this.first_name = ((EditText) findViewById(R.id.firstName)).getText().toString();
-        this.last_name = ((EditText) findViewById(R.id.lastName)).getText().toString();
-        this.email = ((EditText) findViewById(R.id.email)).getText().toString();
-        this.password = ((EditText) findViewById((R.id.password))).getText().toString();
-        this.confirm_password = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
-        int i = view.getId();
+        if(viewId ==R.id.JoinRadioButton) {
+            setJoinResidenceCode(((EditText) findViewById(R.id.code_or_name)).getText().toString());
+        } else if(viewId ==R.id.CreateRadioButton) {
+            setNameOfResidence(((EditText) findViewById(R.id.code_or_name)).getText().toString());
+        }
+
+        setFirstName(((EditText) findViewById(R.id.firstName)).getText().toString());
+        setLastName(((EditText) findViewById(R.id.lastName)).getText().toString());
+        setEmail(((EditText) findViewById(R.id.email)).getText().toString());
+        setPassword(((EditText) findViewById((R.id.password))).getText().toString());
+        setConfirmPassword(((EditText) findViewById(R.id.confirmPassword)).getText().toString());
 
         if (this.validateForm()) {
               sendUserInfoToServerToCreateUser();
-//
         }
     }
-
     private void sendResidenceInfoToServerToCreateResidence() {
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
 
         ResidenceInteractionInterface ri = restAdapter.create(ResidenceInteractionInterface.class);
 
-        ri.createResidence(this.name_of_residence, this.user_id, new Callback<Residence>() {
+        ri.createResidence(getNameOfResidence(), getUserId(), new Callback<Residence>() {
             @Override
             public void success(Residence residence, Response response) {
-                //To change body of implemented methods use File | Settings | File Templates.
-                //add all info from Residence
-                int x = 1;
+
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                //To change body of implemented methods use File | Settings | File Templates.
-                int x = 1;
             }
         });
     }
@@ -110,7 +113,7 @@ public class RegistrationActivity extends Activity {
 
         UserCreationInterface ri = restAdapter.create(UserCreationInterface.class);
 
-        ri.createUser(this.first_name, this.last_name, this.email, this.password, new Callback<CreateUserResponse>() {
+        ri.createUser(getFirstName(),getLastName(),getEmail(),getPassword(), new Callback<CreateUserResponse>() {
             @Override
             public void success(CreateUserResponse userAndKey, Response response) {
                 createUserAndLogin(userAndKey,response);
@@ -121,8 +124,6 @@ public class RegistrationActivity extends Activity {
                 int x = 1;
             }
         });
-
-
     }
 
     private void createUserAndLogin(CreateUserResponse userAndKey, Response response) {
@@ -130,6 +131,7 @@ public class RegistrationActivity extends Activity {
         user.setLastName(userAndKey.getUser().getLastName());
         user.setEmail(userAndKey.getUser().getEmail());
         user.setEmail(userAndKey.getKey().getKey());
+        user.setId(userAndKey.getUser().getId());
         user.setLoggedIn(true);
         user.commit();
 
@@ -150,8 +152,9 @@ public class RegistrationActivity extends Activity {
 
     public void createResidence() {
 //        if (this.checkPassword()) {
-            Intent myIntent = new Intent(this, CreateResidenceActivity.class);
-            startActivity(myIntent);
+            Intent createResidence = new Intent(this, CreateResidenceActivity.class);
+            createResidence.putExtra("name of residence to be created", getNameOfResidence());
+            startActivity(createResidence);
 //        }
     }
 
@@ -161,7 +164,7 @@ public class RegistrationActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 
-        if (this.first_name.equals("")) {
+        if (this.firstName.equals("")) {
             alertDialogBuilder
                     .setMessage("Name is empty")
                     .setCancelable(true);
@@ -177,7 +180,7 @@ public class RegistrationActivity extends Activity {
                     .setCancelable(true);
             result = false;
 
-        } else if (this.confirm_password.equals("")) {
+        } else if (this.confirmPassword.equals("")) {
             alertDialogBuilder
                     .setMessage("Confirmation Password is empty")
                     .setCancelable(true);
@@ -201,21 +204,21 @@ public class RegistrationActivity extends Activity {
     }
 
 
-    public boolean checkPassword() {             //validates that password i
+    public boolean checkPassword() {             //validates that password viewId
         Boolean result = false;
 
-        if (this.password.equals(this.confirm_password)) {
+        if (this.password.equals(this.confirmPassword)) {
             result = true;
         }
 
         return result;
     }
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -234,41 +237,48 @@ public class RegistrationActivity extends Activity {
         this.password = password;
     }
 
-    public String getConfirm_password() {
-        return confirm_password;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setConfirm_password(String confirm_password) {
-        this.confirm_password = confirm_password;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-    public String getApi_key() {
-        return api_key;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setApi_key(String key) {
-        this.api_key = key;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public String getName_of_residence() {
-        return name_of_residence;
-    }
-
-    public void setName_of_residence(String name_of_residence) {
-        this.name_of_residence = name_of_residence;
-    }
-    public String getUser_id() {
-        return user_id;
+    public String getApiKey() {
+        return apiKey;
     }
 
+    public void setApiKey(String key) {
+        this.apiKey = key;
+    }
+    public String getNameOfResidence() {
+        return nameOfResidence;
+    }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setNameOfResidence(String nameOfResidence) {
+        this.nameOfResidence = nameOfResidence;
+    }
+    public String getUserId() {
+        return userId;
+    }
+
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    public String getJoinResidenceCode() {
+        return joinResidenceCode;
+    }
+
+    public void setJoinResidenceCode(String joinResidenceCode) {
+        this.joinResidenceCode = joinResidenceCode;
     }
 
 

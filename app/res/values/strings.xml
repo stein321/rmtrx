@@ -34,7 +34,7 @@
     <string name="first_and_last_name">Name</string>
     <string name="email">Email</string>
     <string name="number_of_residence">Total Number of Roommates</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="confirmPassword">Confirm Password</string>
     <string name="join_residence_intro">Please enter your residence code below</string>
     <string name="logout_name">Logout</string>
     <string name="name">Name: </string>
@@ -45,12 +45,13 @@
     <string name="Number_left">Spots Left: </string>
     <string name="lastName">Last Name</string>
     <string name="GenerateCode">Generate Invite Code</string>
-    <string name="name_of_residence">Name of Residence</string>
+    <string name="nameOfResidence">Name of Residence</string>
     <string name="Code_of_residence">Code of the residence you would like to join</string>
     <string name="Go">Go</string>
-    <string name="last_name">Last Name</string>
+    <string name="lastName">Last Name</string>
     <string name="residence_name">Residence Name</string>
     <string name="subject">Object</string>
+    <string name="name_of_residence_title">Residence</string>
 
 
 </resources>
