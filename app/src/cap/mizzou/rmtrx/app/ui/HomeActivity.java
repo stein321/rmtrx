@@ -1,6 +1,8 @@
 package cap.mizzou.rmtrx.app.ui;
 
 
+import Models.Key;
+import Models.User;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -82,13 +84,10 @@ public class HomeActivity extends BaseFragmentActivity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                //To change body of implemented methods use File | Settings | File Templates.
                 incorrectLogin();
             }
         }
         );
-//        return login_result;
-//        return true;//comment out
     }
 
     private void incorrectLogin() {
@@ -101,7 +100,7 @@ public class HomeActivity extends BaseFragmentActivity {
         String firstName=user.getFirstName();
         String lastName=user.getLastName();
         String authKey=key.getKey();
-        String id=user.id;
+        String id=user.getId();
 //        SharedPreferences.Editor editor=pref.edit();
         userInfo.setEmail(email);
         userInfo.setFirstName(firstName);
@@ -118,75 +117,8 @@ public class HomeActivity extends BaseFragmentActivity {
         Intent myIntent = new Intent(this, RegistrationActivity.class);
         startActivity(myIntent);
     }
-    public class User {
-        @SerializedName("_id")
-        String id;
-        String email;
-        String password;
-        String firstName;
-        String lastName;
 
-        public String getEmail() {
-            return email;
-        }
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-    }
-    public class Key {
-        @SerializedName("_id")
-        String id;
-        String key;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-    }
     public class ResponseObject {
         Key key;
         User user;

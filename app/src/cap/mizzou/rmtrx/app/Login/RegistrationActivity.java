@@ -1,7 +1,12 @@
 package cap.mizzou.rmtrx.app.Login;
 
+import Models.CreateUserResponse;
+import Models.Key;
+import Models.Residence;
+import Models.User;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.UserInfo;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.ResidenceInteractionInterface;
@@ -39,17 +45,19 @@ public class RegistrationActivity extends Activity {
     private String api_key;
     private String name_of_residence;
     private String user_id;
+    private UserInfo user;
     private SharedPreferences logged_in_status;
     private String radioButtonSelected;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = getIntent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_page);
         getActionBar().setTitle("Register");
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        Context context=getApplicationContext();
+        user=new UserInfo(context);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -87,9 +95,6 @@ public class RegistrationActivity extends Activity {
             }
               sendResidenceInfoToServerToCreateResidence();
         }
-//        if(i == R.id.createResidence) {
-//            createResidence(view);
-//        }
     }
 
     private void sendResidenceInfoToServerToCreateResidence() {
@@ -103,13 +108,13 @@ public class RegistrationActivity extends Activity {
             public void success(Residence residence, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
                 //add all info from Residence
-                int x=1;
+                int x = 1;
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
                 //To change body of implemented methods use File | Settings | File Templates.
-                int x=1;
+                int x = 1;
             }
         });
     }
@@ -123,24 +128,7 @@ public class RegistrationActivity extends Activity {
         ri.createUser(this.first_name, this.last_name, this.email, this.password, new Callback<CreateUserResponse>() {
             @Override
             public void success(CreateUserResponse userAndKey, Response response) {
-                int x = 1;
-
-                setFirst_name(userAndKey.user.firstName);
-                setLast_name(userAndKey.user.lastName);
-                setEmail(userAndKey.user.email);
-                setApi_key(userAndKey.key.getKey());
-                //make class to store SharedPreferences
-
-                SharedPreferences createUser=getApplicationContext().getSharedPreferences("MyPref", 0);
-                SharedPreferences.Editor editor= createUser.edit();
-                editor.putString("first_name",getFirst_name());
-                editor.putString("last_name",getLast_name());
-                editor.putString("email",getEmail());
-                editor.putString("api_key",getApi_key());
-//                editor.putString("user_id", getUser_id());
-                editor.putBoolean("logged_in_status_yo",true);
-                editor.commit();
-                //s
+                createUserAndLogin(userAndKey,response);
             }
 
             @Override
@@ -151,6 +139,16 @@ public class RegistrationActivity extends Activity {
 
 
     }
+
+    private void createUserAndLogin(CreateUserResponse userAndKey, Response response) {
+        user.setFirstName(userAndKey.getUser().getFirstName());
+        user.setLastName(userAndKey.getUser().getLastName());
+        user.setEmail(userAndKey.getUser().getEmail());
+        user.setEmail(userAndKey.getKey().getKey());
+        user.setLoggedInStatus(true);
+        user.commit();
+    }
+
     public void joinResidence() {
 
             Intent myIntent = new Intent(this, JoinResidenceActivity.class);
@@ -164,23 +162,6 @@ public class RegistrationActivity extends Activity {
 //        }
     }
 
-    public void storeDataInSharedPreference() {
-        //saving data to shared preferences
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
-
-        //take attributes and store them in shared preferences
-        editor.putString("first_name", first_name);
-        editor.putString("email", email);
-        editor.putBoolean("logged_in_status_yo", true); //set to logged in
-        editor.commit();
-
-        //test
-        Log.d("test-name_first_last", pref.getString("name", null));
-        Log.d("test-email", pref.getString("email", null));
-
-        return;
-    }
 
     public boolean validateForm() {
         boolean result = true;
@@ -299,103 +280,5 @@ public class RegistrationActivity extends Activity {
 
 
 
-    public class User {
-        @SerializedName("_id")
-        String id;
-        String email;
-        String password;
-        String firstName;
-        String lastName;
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-    }
-
-    public class CreateUserResponse {
-        User user;
-        HomeActivity.Key key;
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-        public HomeActivity.Key getKey() {
-            return key;
-        }
-
-        public void setKey(HomeActivity.Key key) {
-            this.key = key;
-        }
-    }
-    public class Residence {
-        String name;
-        String id;
-        String[] users;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String[] getUsers() {
-            return users;
-        }
-
-        public void setUsers(String[] users) {
-            this.users = users;
-        }
-    }
 
 }

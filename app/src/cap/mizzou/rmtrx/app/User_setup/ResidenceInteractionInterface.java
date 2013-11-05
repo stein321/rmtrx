@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.User_setup;
 
+import Models.Residence;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -12,5 +13,5 @@ public interface ResidenceInteractionInterface {
     void createResidence(
             @Field("name") String nameOfResidence,
             @Field("user_id") String user_id,
-            Callback<RegistrationActivity.Residence> residence);
+            Callback<Residence> residence);
 }
