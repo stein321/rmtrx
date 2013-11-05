@@ -57,7 +57,7 @@ public class HomeActivity extends BaseFragmentActivity {
         String login_to_add = login_name_text.getText().toString();
         String p_word_to_add = p_word_text.getText().toString();
         //stores string as key valued pairs
-        userInfo.setUsername(login_to_add);
+        userInfo.setEmail(login_to_add);
         userInfo.setPassword(p_word_to_add);
 
         //hard coded login info, change to server call
@@ -94,18 +94,12 @@ public class HomeActivity extends BaseFragmentActivity {
     }
 
     private void successfulLogin(Key key, User user) {
-        String email=user.getEmail();
-        String firstName=user.getFirstName();
-        String lastName=user.getLastName();
-        String authKey=key.getKey();
-        String id=user.getId();
-//        SharedPreferences.Editor editor=pref.edit();
-        userInfo.setEmail(email);
-        userInfo.setFirstName(firstName);
-        userInfo.setLastName(lastName);
-        userInfo.setAuthKey(authKey);
+        userInfo.setEmail(user.getEmail());
+        userInfo.setFirstName(user.getFirstName());
+        userInfo.setLastName(user.getLastName());
+        userInfo.setAuthKey(key.getKey());
         userInfo.setLoggedInStatus(true);
-        userInfo.setId(id);
+        userInfo.setId(user.getId());
         userInfo.commit();
         startIntent();
     }

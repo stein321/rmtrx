@@ -41,7 +41,6 @@ import javax.inject.Singleton;
                 MessagesActivity.class,
                 HomeFragment.class,
                 DashboardActivity.class,
-//                DisplayMessageActivity.class,
                 Comment.class,
                 CommentsDataSource.class,
                 MySQLiteHelper.class,
@@ -62,10 +61,4 @@ public final class rmtrxModule {
         return new Bus();
     }
 
-//    @Provides
-//    @Singleton
-//    SharedPreferences pref() {
-//            return getDefaultSharedPreferences();
-//    }
-    //figure this out
 }

@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -40,7 +39,6 @@ public class RegistrationActivity extends Activity {
     private String name_of_residence;
     private String user_id;
     private UserInfo user;
-    private SharedPreferences logged_in_status;
     private String radioButtonSelected;
 
 

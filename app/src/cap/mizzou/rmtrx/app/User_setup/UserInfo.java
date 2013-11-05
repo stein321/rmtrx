@@ -12,10 +12,12 @@ import android.content.SharedPreferences;
  */
 public class UserInfo {
     private SharedPreferences pref;
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
+
     private String id;
     private String authKey;
     private String residenceId;
+    private String residenceName;
     private String firstName;
     private String lastName;
     private String email;
@@ -24,12 +26,14 @@ public class UserInfo {
 
     public UserInfo(Context context) {
             pref=context.getSharedPreferences("MyPref", 0);
-            setFirstName(pref.getString("firstName", firstName));
-            setLastName(pref.getString("lastName", lastName));
-            setEmail(pref.getString("emai",email));
-            setId(pref.getString("id",id));
-            setResidenceId(pref.getString("residenceId", residenceId));
+            setFirstName(pref.getString("firstName", null));
+            setLastName(pref.getString("lastName", null));
+            setEmail(pref.getString("email", null));
+            setId(pref.getString("id", null));
+            setResidenceId(pref.getString("residenceId", null));
+            setResidenceName(pref.getString("residenceName",null));
             setLoggedInStatus(pref.getBoolean("loggedInStatus",false));
+
 }
 
     public void commit() {
@@ -39,6 +43,8 @@ public class UserInfo {
         editor.putString("email",getEmail());
         editor.putString("id",getId());
         editor.putString("residenceId", getResidenceId());
+        editor.putString("residenceName",getResidenceName());
+        editor.putBoolean("loggedInStatus",isLoggedInStatus());
         editor.commit();
     }
 
@@ -107,6 +113,15 @@ public class UserInfo {
     public void setAuthKey(String authKey) {
         this.authKey = authKey;
     }
+
+    public String getResidenceName() {
+        return residenceName;
+    }
+
+    public void setResidenceName(String residenceName) {
+        this.residenceName = residenceName;
+    }
+
 
 
 

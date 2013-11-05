@@ -1,6 +1,8 @@
 package cap.mizzou.rmtrx.app.ui;
 
 import Models.Residence;
+import Models.User;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import cap.mizzou.rmtrx.app.DataAccess.ResidenceDataInterface;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.squareup.otto.Subscribe;
@@ -25,12 +28,15 @@ import retrofit.client.Response;
  * To change this template use File | Settings | File Templates.
  */
 public class DashboardActivity extends BaseFragmentActivity {
+    private UserInfo userInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.merge_empty);
         getSupportActionBar().setTitle("Dashboard");
-
+        Context context=getApplicationContext();
+        userInfo=new UserInfo(context);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Fragment homeFragment = fragmentManager.findFragmentByTag(HomeFragment.TAG);
@@ -43,31 +49,30 @@ public class DashboardActivity extends BaseFragmentActivity {
         }
 
         //Check if ResidenceId is set, and if not try and get it
-        final SharedPreferences preferences =getApplicationContext().getSharedPreferences("MyPref", 0);
-        String residenceId = preferences.getString("residence_id", "");
+//        String residenceId = userInfo.getResidenceId();
 
-        if(residenceId == "") {
-            String userId = preferences.getString("id", "");
-
-            RestAdapter restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-            ResidenceDataInterface restInterface = restAdapter.create(ResidenceDataInterface.class);
-
-            restInterface.getResidence(userId, new Callback<Residence>() {
-                @Override
-                public void success(Residence residence, Response response) {
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("residence_id", residence.getId());
-                }
-
-                @Override
-                public void failure(RetrofitError retrofitError) {
-
-                    int x = 1;
-
-                    //To change body of implemented methods use File | Settings | File Templates.
-                }
-            });
-        }
+//        if(residenceId == "") {
+//            String userId = preferences.getString("id", "");
+//
+//            RestAdapter restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+//            ResidenceDataInterface restInterface = restAdapter.create(ResidenceDataInterface.class);
+//
+//            restInterface.getResidence(userId, new Callback<Residence>() {
+//                @Override
+//                public void success(Residence residence, Response response) {
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putString("residence_id", residence.getId());
+//                }
+//
+//                @Override
+//                public void failure(RetrofitError retrofitError) {
+//
+//                    int x = 1;
+//
+//                    //To change body of implemented methods use File | Settings | File Templates.
+//                }
+//            });
+//        }
     }
 
     @Override
