@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ImageView;
 import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
@@ -55,6 +56,8 @@ public class HomeFragment extends BaseListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -122,6 +125,9 @@ public class HomeFragment extends BaseListFragment {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
                 holder = new ViewHolder();
+                //
+                holder.activityIcon = (ImageView)convertView.findViewById(R.id.activityIcon);
+                //
                 holder.name = (TextView) convertView.findViewById(android.R.id.text1);
                 convertView.setTag(holder);
             } else {
@@ -131,9 +137,11 @@ public class HomeFragment extends BaseListFragment {
             RmtrxActivity rmtrxActivity = getItem(position);
 
 
+
             holder.name.setText(context.getString(rmtrxActivity.resourceId));
-
-
+            //
+            holder.activityIcon.setImageResource(rmtrxActivity.icon);
+            //
             return convertView;
         }
     }
@@ -141,16 +149,23 @@ public class HomeFragment extends BaseListFragment {
     static class ViewHolder {
 
         TextView name;
+        ImageView activityIcon;
     }
 
     public final class RmtrxActivity {
 
         int resourceId;
+        //
+        public int icon;
+        //
         Class<? extends Activity> activityClass;
 
-        public RmtrxActivity(int resourceId,
+        public RmtrxActivity(int resourceId, int icon,
                              Class<? extends Activity> activityClass) {
             this.resourceId = resourceId;
+            //
+            this.icon = icon;
+            //
             this.activityClass = activityClass;
         }
     }
