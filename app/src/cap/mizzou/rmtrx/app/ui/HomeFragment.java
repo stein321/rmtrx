@@ -87,6 +87,7 @@ public class HomeFragment extends BaseListFragment {
 
     }
 
+
     //this lists all the menu items on the dashboard
     public List<RmtrxActivity> getActivities() {
         List<RmtrxActivity> activitiesList = new ArrayList<RmtrxActivity>();
