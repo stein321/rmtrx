@@ -4,7 +4,6 @@ import Models.Residence;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import cap.mizzou.rmtrx.app.ui.DashboardActivity;
 import retrofit.Callback;

@@ -44,16 +44,9 @@ public class HomeActivity extends BaseFragmentActivity {
         EditText login_name_text = (EditText) findViewById(R.id.login_name);
         EditText p_word_text = (EditText) findViewById(R.id.p_word);
 
-        //turns it into a string
         String login_to_add = login_name_text.getText().toString();
         String p_word_to_add = p_word_text.getText().toString();
-
-        //believe this is erroneous
-//        //stores string as key valued pairs
-//        userInfo.setEmail(login_to_add);
-//        userInfo.setPassword(p_word_to_add);
-//
-        checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
+        checkLoginCredentials(login_to_add, p_word_to_add);
     }
 
     public void checkLoginCredentials(String username, String password) {

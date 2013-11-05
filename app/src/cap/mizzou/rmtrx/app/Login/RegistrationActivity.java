@@ -35,9 +35,7 @@ public class RegistrationActivity extends Activity {
     private String password;
     private String confirmPassword;
     private String lastName;
-    private String apiKey;
     private String nameOfResidence;
-    private String userId;
     private UserInfo user;
     private String radioButtonSelected;
     private String joinResidenceCode;
@@ -99,17 +97,16 @@ public class RegistrationActivity extends Activity {
         ri.createUser(getFirstName(),getLastName(),getEmail(),getPassword(), new Callback<CreateUserResponse>() {
             @Override
             public void success(CreateUserResponse userAndKey, Response response) {
-                createUserAndLogin(userAndKey,response);
+                createUserAndLogin(userAndKey);
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                int x = 1;
             }
         });
     }
 
-    private void createUserAndLogin(CreateUserResponse userAndKey, Response response) {
+    private void createUserAndLogin(CreateUserResponse userAndKey) {
         user.setFirstName(userAndKey.getUser().getFirstName());
         user.setLastName(userAndKey.getUser().getLastName());
         user.setEmail(userAndKey.getUser().getEmail());
@@ -145,23 +142,23 @@ public class RegistrationActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
 
-        if (this.firstName.equals("")) {
+        if (getFirstName().equals("")) {
             alertDialogBuilder
                     .setMessage("Name is empty")
                     .setCancelable(true);
             result = false;
-        } else if (this.email.equals("")) {
+        } else if (getEmail().equals("")) {
             alertDialogBuilder
                     .setMessage("Email is empty")
                     .setCancelable(true);
             result = false;
-        } else if (this.password.equals("")) {
+        } else if (getPassword().equals("")) {
             alertDialogBuilder
                     .setMessage("Password is empty")
                     .setCancelable(true);
             result = false;
 
-        } else if (this.confirmPassword.equals("")) {
+        } else if (getConfirmPassword().equals("")) {
             alertDialogBuilder
                     .setMessage("Confirmation Password is empty")
                     .setCancelable(true);
@@ -174,7 +171,7 @@ public class RegistrationActivity extends Activity {
         }
 
         //create alert box if needed and print it
-        if (result == false) {
+        if (!result) {
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
 
@@ -232,13 +229,7 @@ public class RegistrationActivity extends Activity {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    public String getApiKey() {
-        return apiKey;
-    }
 
-    public void setApiKey(String key) {
-        this.apiKey = key;
-    }
     public String getNameOfResidence() {
         return nameOfResidence;
     }
@@ -246,14 +237,7 @@ public class RegistrationActivity extends Activity {
     public void setNameOfResidence(String nameOfResidence) {
         this.nameOfResidence = nameOfResidence;
     }
-    public String getUserId() {
-        return userId;
-    }
 
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
     public String getJoinResidenceCode() {
         return joinResidenceCode;
     }
