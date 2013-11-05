@@ -12,6 +12,7 @@ import android.widget.EditText;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.UserInfo;
 import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
 import com.google.gson.annotations.SerializedName;
 import retrofit.Callback;
@@ -24,42 +25,27 @@ import java.util.Random;
 
 public class HomeActivity extends BaseFragmentActivity {
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private SharedPreferences pref;
     public Boolean logged_in_status;
+    private UserInfo userInfo;
 
-
-    protected boolean login_result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        Context context=getApplicationContext();
+        userInfo =new UserInfo(context);
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
-        logged_in_status=pref.getBoolean("logged_in_status_yo",false);
+        logged_in_status= userInfo.isLoggedInStatus();
         if(logged_in_status==true) {
             startIntent();
         }
-    }
-        //testing
-    @Override
-    public void finish() {
-        // Prepare data intent
-        Intent data = new Intent();
-        // Activity finished ok, return the data
-        setResult(5, data);
-        super.finish();
     }
     public void startIntent() {
         Intent goToDashBoard=new Intent(this,DashboardActivity.class);
         startActivity(goToDashBoard);
     }
     public void sendLoginInfo(View view) {
-
-        //saved to shared preferences
-        pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
-
         //grabs text from form
         EditText login_name_text = (EditText) findViewById(R.id.login_name);
         EditText p_word_text = (EditText) findViewById(R.id.p_word);
@@ -67,18 +53,12 @@ public class HomeActivity extends BaseFragmentActivity {
         //turns it into a string
         String login_to_add = login_name_text.getText().toString();
         String p_word_to_add = p_word_text.getText().toString();
+        //stores string as key valued pairs
+        userInfo.setUsername(login_to_add);
+        userInfo.setPassword(p_word_to_add);
 
-//        //stores string as key valued pairs
-        editor.putString("login_name", login_to_add);
-        editor.putString("p_word", p_word_to_add);
-
-        Context context=getApplicationContext();
         //hard coded login info, change to server call
-        if(true) {
-            checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
-        } else {
-            showNotConnectedAlert();
-        }
+        checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
 
     }
     public void checkLoginCredentials(String username, String password) {
@@ -115,17 +95,18 @@ public class HomeActivity extends BaseFragmentActivity {
 
     private void successfulLogin(Key key, User user) {
         String email=user.getEmail();
-        String first_name=user.getFirstName();
-        String last_name=user.getLastName();
+        String firstName=user.getFirstName();
+        String lastName=user.getLastName();
         String authKey=key.getKey();
 
-         SharedPreferences.Editor editor=pref.edit();
-        editor.putString("email",email);
-        editor.putString("first_name",first_name);
-        editor.putString("last_name",last_name);
-        editor.putString("auth_key", authKey);
-        editor.putBoolean("logged_in_status_yo",true);
-        editor.commit();
+//        SharedPreferences.Editor editor=pref.edit();
+
+        userInfo.setEmail(email);
+        userInfo.setFirstName(firstName);
+        userInfo.setLastName(lastName);
+        userInfo.setAuthKey(authKey);
+        userInfo.setLoggedInStatus(true);
+        userInfo.commit();
         startIntent();
     }
 

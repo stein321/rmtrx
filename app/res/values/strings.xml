@@ -25,7 +25,7 @@
     <string name="newResidence">Create User</string>
     <string name="JoinResidence">Join Residence</string>
     <string name="CreateResidence">Create Residence</string>
-    <string name="first_name">First Name</string>
+    <string name="firstName">First Name</string>
     <string name="first_and_last_name">Name</string>
     <string name="email">Email</string>
     <string name="number_of_residence">Total Number of Roommates</string>
@@ -38,7 +38,7 @@
     <string name="user_list_title">Housemates:</string>
     <string name="code">Code: </string>
     <string name="Number_left">Spots Left: </string>
-    <string name="last_name">Last Name</string>
+    <string name="lastName">Last Name</string>
     <string name="GenerateCode">Generate Invite Code</string>
     <string name="name_of_residence">Name of Residence</string>
     <string name="Code_of_residence">Code of the residence you would like to join</string>
