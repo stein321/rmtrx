@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity;
 import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
-import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;

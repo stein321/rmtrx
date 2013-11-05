@@ -1,7 +1,9 @@
 package cap.mizzou.rmtrx.app;
 
-import android.content.SharedPreferences;
-import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
+import cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity;
+import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
+import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
+import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
@@ -49,8 +51,7 @@ import javax.inject.Singleton;
                 CreateResidenceActivity.class,
                 JoinResidenceActivity.class,
                 LogOutActivity.class,
-                CurrentResidence.class
-                LogOutActivity.class,
+                CurrentResidence.class,
                 FinancesActivity.class,
                 BulletinBoardActivity.class
 
