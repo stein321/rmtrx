@@ -37,7 +37,6 @@ public class RegistrationActivity extends Activity {
     private String confirm_password;
     private String last_name;
     private String api_key;
-    private String user_id;
     private String name_of_residence;
     private String user_id;
     private SharedPreferences logged_in_status;
@@ -88,9 +87,9 @@ public class RegistrationActivity extends Activity {
             }
               sendResidenceInfoToServerToCreateResidence();
         }
-        if(i == R.id.createResidence) {
-            createResidence(view);
-        }
+//        if(i == R.id.createResidence) {
+//            createResidence(view);
+//        }
     }
 
     private void sendResidenceInfoToServerToCreateResidence() {
@@ -130,8 +129,6 @@ public class RegistrationActivity extends Activity {
                 setLast_name(userAndKey.user.lastName);
                 setEmail(userAndKey.user.email);
                 setApi_key(userAndKey.key.getKey());
-                setUser_id(userAndKey.key.getId());
-                setUser_id((userAndKey.user.getId()));
                 //make class to store SharedPreferences
 
                 SharedPreferences createUser=getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -140,7 +137,7 @@ public class RegistrationActivity extends Activity {
                 editor.putString("last_name",getLast_name());
                 editor.putString("email",getEmail());
                 editor.putString("api_key",getApi_key());
-                editor.putString("user_id", getUser_id());
+//                editor.putString("user_id", getUser_id());
                 editor.putBoolean("logged_in_status_yo",true);
                 editor.commit();
                 //s
@@ -284,16 +281,10 @@ public class RegistrationActivity extends Activity {
     public void setApi_key(String key) {
         this.api_key = key;
     }
-    public String getUser_id() {
-        return user_id;
-    }
     public String getName_of_residence() {
         return name_of_residence;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
     public void setName_of_residence(String name_of_residence) {
         this.name_of_residence = name_of_residence;
     }
