@@ -1,14 +1,17 @@
 package cap.mizzou.rmtrx.app.Finances;
 
 
-import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.content.*;
 import android.util.Log;
-import cap.mizzou.rmtrx.app.TestDbActivity.Comment;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,22 +24,13 @@ public class FinancesDB {
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
-    private String[] allCreditColumns = { DatabaseHelper.COLUMN_CREDITID, DatabaseHelper.COLUMN_CREDITROOMATE, DatabaseHelper.COLUMN_CREDITAMOUNT };
-    private String[] allChargeColumns = { DatabaseHelper.COLUMN_CHARGEID, DatabaseHelper.COLUMN_CHARGEROOMATE, DatabaseHelper.COLUMN_CHARGEAMOUNT };
-
-
-    public final static String RmName="Name";
-    public final static String TransactionAmount="Amount";
-    public final static String CreditTable="Credits"; // name of credit table
-    public final static String ChargeTable="Charges"; // name of charge table
-
-    public final static String CreditID="";
-    public final static String ChargeID="";
+    private String[] allTransactionColumns = { DatabaseHelper.COLUMN_TRANSACTIONID, DatabaseHelper.COLUMN_USERID, DatabaseHelper.COLUMN_TRANSACTIONAMOUNT };
 
 
 
     public FinancesDB(Context context){
         dbHelper = new DatabaseHelper(context);
+        // 1. get reference to writable/readable DB
         database = dbHelper.getWritableDatabase();
     }
 
@@ -48,83 +42,69 @@ public class FinancesDB {
         dbHelper.close();
     }
 
-    public Comment createCreditRecord(String roommate, String amount) {
+    public void createTransactionRecord(String userid, double amount) {
+
+
+
+        // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_CREDITROOMATE, roommate);
-        values.put(DatabaseHelper.COLUMN_CREDITAMOUNT, amount);
-        long insertId = database.insert(DatabaseHelper.TABLE_CREDITS, null,
-                values);
-        Cursor cursor = database.query(DatabaseHelper.TABLE_CREDITS,
-                allCreditColumns, DatabaseHelper.COLUMN_CREDITID + " = " + insertId, null,
-                null, null, null);
-        cursor.moveToFirst();
-        Comment newComment = cursorToComment(cursor);
-        cursor.close();
-        return newComment;
+        values.put(dbHelper.COLUMN_USERID, userid);
+        values.put(dbHelper.COLUMN_TRANSACTIONAMOUNT, amount);
+
+        // 3. insert
+        database.insert(dbHelper.TABLE_TRANSACTIONS, // table
+                null, //nullColumnHack
+                values); // key/value -> keys = column names/ values = column values
+
+        // 4. close
+        database.close();
     }
 
-    public long createChargeRecord(String id, String name, String amount){
-        ContentValues values = new ContentValues();
-        values.put(ChargeID, id);
-        values.put(RmName, name);
-        values.put(TransactionAmount, amount);
-        return database.insert(ChargeTable, null, values);
-    }
+    public List getTransactionRecords(String userid){
 
+        List<Double> list=new ArrayList<Double>();
+        //Create query to retrieve all transaction records for specified user_id
+        String query= "SELECT * FROM " + dbHelper.TABLE_TRANSACTIONS + " WHERE " + dbHelper.COLUMN_USERID + "=" + userid + ";";
+        Cursor  cursor = database.rawQuery(query,null);
 
-    public void selectCreditRecord() {
-        String[] cols = new String[] {CreditID, RmName, TransactionAmount};
-        Cursor mCursor = database.query(true, CreditTable,cols,null
-                , null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
+        if (cursor .moveToFirst()) {
 
+            while (cursor.isAfterLast() == false) {
+                double amount = cursor.getDouble(cursor
+                        .getColumnIndex(dbHelper.COLUMN_TRANSACTIONAMOUNT));
 
+                list.add(amount);
+                cursor.moveToNext();
+            }
         }
-        //return mCursor; // iterate to get each value.
-    }
 
-    private Comment cursorToComment(Cursor cursor) {
-        Comment comment = new Comment();
-        comment.setId(cursor.getLong(0));
-        comment.setComment(cursor.getString(1));
-        return comment;
+
+    return list;}
     }
 
 
-//    @Override
-//    protected void onResume() {
-//        datasource.open();
-//        super.onResume();
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        datasource.close();
-//        super.onPause();
-//    }
 
-    public class DatabaseHelper extends SQLiteOpenHelper{
 
-        public static final String TABLE_CREDITS = "Credits";
-        public static final String COLUMN_CREDITID = "_id";
-        public static final String COLUMN_CREDITROOMATE = "Roomate";
-        public static final String COLUMN_CREDITAMOUNT = "Amount";
 
-        public static final String TABLE_CHARGES = "Credits";
-        public static final String COLUMN_CHARGEID = "_id";
-        public static final String COLUMN_CHARGEROOMATE = "Roomate";
-        public static final String COLUMN_CHARGEAMOUNT = "Amount";
 
-        private static final String DATABASE_NAME = "Credit.db";
+    class DatabaseHelper extends SQLiteOpenHelper{
+
+        public static final String TABLE_TRANSACTIONS = "Transactions";
+        public static final String COLUMN_TRANSACTIONID = "_id";
+        public static final String COLUMN_USERID = "User ID";
+        public static final String COLUMN_TRANSACTIONAMOUNT = "Transaction Amount";
+
+
+
+        private static final String DATABASE_NAME = "Transaction.db";
 
         private static final int DATABASE_VERSION = 2;
 
 
         // Database creation sql statement
-        private static final String DATABASE_CREATE_CREDITTABLE = "create table " + TABLE_CREDITS + "(" + COLUMN_CREDITID + " integer primary key autoincrement, " + COLUMN_CREDITROOMATE + " text not null, " + COLUMN_CREDITAMOUNT + " text not null);";
+        private static final String DATABASE_CREATE_TRANSACTIONTABLE = "create table " + TABLE_TRANSACTIONS + "(" + COLUMN_TRANSACTIONID + " integer primary key autoincrement, " + COLUMN_USERID + " text not null, " + COLUMN_TRANSACTIONAMOUNT + " text not null);";
 
-        private static final String DATABASE_CREATE_CHARGETABLE = "create table " + TABLE_CHARGES + "(" + COLUMN_CHARGEID + " integer primary key autoincrement, " + COLUMN_CHARGEROOMATE + " text not null, " + COLUMN_CHARGEAMOUNT + " text not null);";
+
 
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -133,8 +113,8 @@ public class FinancesDB {
         // Method is called during creation of the database
         @Override
         public void onCreate(SQLiteDatabase database) {
-            database.execSQL(DATABASE_CREATE_CREDITTABLE);
-            database.execSQL(DATABASE_CREATE_CHARGETABLE);
+
+            database.execSQL(DATABASE_CREATE_TRANSACTIONTABLE);
         }
 
         // Method is called during an upgrade of the database,
@@ -144,9 +124,9 @@ public class FinancesDB {
             Log.w(DatabaseHelper.class.getName(),
                     "Upgrading database from version " + oldVersion + " to "
                             + newVersion + ", which will destroy all old data");
-            database.execSQL("DROP TABLE IF EXISTS Credits");
-            onCreate(database);
+            database.execSQL("DROP TABLE IF EXISTS Transactions");
+            this.onCreate(database);
         }
 
     }
-}
+

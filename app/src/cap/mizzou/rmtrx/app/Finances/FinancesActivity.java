@@ -1,10 +1,23 @@
 package cap.mizzou.rmtrx.app.Finances;
 
-import android.os.Bundle;
-import cap.mizzou.rmtrx.app.R;
-import android.content.Intent;
-import android.view.View;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
+import cap.mizzou.rmtrx.app.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.DocumentException;
+import android.util.*;
+import org.w3c.dom.*;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +31,7 @@ public class FinancesActivity extends Activity{
     public String name_of_user;
     public String username;
     private String[] other_users;
+    private FinancesDB datasource;
 
 
 
@@ -27,11 +41,12 @@ public class FinancesActivity extends Activity{
         setContentView(R.layout.finances);
         getActionBar().setTitle("Finances");
 
-
+        datasource = new FinancesDB(this);
+        datasource.open();
         accountbalance=getAccountBalance();
 
         //Fills TextView with Account Balance
-        //TextView tv = (TextView) findViewByID(R.id.AccountBalance);
+        //TextView ab = (TextView) findViewByID(R.id.AccountBalance);
     }
 
 
@@ -46,20 +61,22 @@ public class FinancesActivity extends Activity{
     //Generates entire bill in pdf format
 
     }
-
-
     public String getAccountBalance() {
 
-        String ab="";
+        double sum=0;
 
-        //Convert credit amount to double
+        List<Double> list=new ArrayList<Double>();
+        //Retrieves list of
+        list= datasource.getTransactionRecords("Des");
 
-        //Convert charge amount to double
+        for (int i = 0; i < list.size(); i++) {
+              sum=sum + list.get(i);
+        }
 
-        //add amounts together
-
-        //Convert back to string and return
-
+        String ab= String.valueOf(sum);
         return ab;
     }
 }
+
+
+

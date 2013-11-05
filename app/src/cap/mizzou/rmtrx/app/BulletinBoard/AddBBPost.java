@@ -34,13 +34,13 @@ public class AddBBPost extends Activity {
         EditText editText = (EditText) findViewById(R.id.edit_title);
         EditText editText1 = (EditText) findViewById(R.id.edit_message);
         //Pairs title and post message
-        Bundle extras = new Bundle();
+        //Bundle extras = new Bundle();
         String postTitle = editText.getText().toString();
         String postMessage = editText1.getText().toString();
 
-        extras.putString("title", postTitle);
-        extras.putString("message", postMessage);
-        post.putExtras(extras);
+        //extras.putString("title", postTitle);
+        post.putExtra("message", postMessage);
+        //post.putExtras(extras);
         startActivity(post);
 
     }
