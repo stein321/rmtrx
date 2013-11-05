@@ -1,4 +1,4 @@
-package cap.mizzou.rmtrx.app;
+package cap.mizzou.rmtrx.app.User_setup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
