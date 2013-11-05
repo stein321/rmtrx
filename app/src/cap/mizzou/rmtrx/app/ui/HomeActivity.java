@@ -2,6 +2,7 @@ package cap.mizzou.rmtrx.app.ui;
 
 
 import Models.Key;
+import Models.ResponseObject;
 import Models.User;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -21,7 +22,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class HomeActivity extends BaseFragmentActivity {
-    public Boolean logged_in_status;
     private UserInfo userInfo;
 
     @Override
@@ -69,7 +69,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
             @Override
             public void success(ResponseObject authResponse, Response response) {
-                successfulLogin(authResponse.key,authResponse.getUser());
+                successfulLogin(authResponse.getResponse(),authResponse.getUser());
             }
 
             @Override
@@ -103,28 +103,7 @@ public class HomeActivity extends BaseFragmentActivity {
     }
 
 
-    public class ResponseObject {
-        Key key;
-        User user;
 
-        public Key getResponse() {
-            return key;
-        }
-
-        public void setResponse(Key key) {
-            this.key = key;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-
-    }
     private boolean isOnline()
     {
         Context context=getApplicationContext();
