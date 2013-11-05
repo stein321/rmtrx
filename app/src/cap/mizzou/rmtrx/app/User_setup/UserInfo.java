@@ -20,16 +20,16 @@ public class UserInfo {
     private String lastName;
     private String email;
     private String password;
-    private String username;
     private boolean loggedInStatus;
 
     public UserInfo(Context context) {
             pref=context.getSharedPreferences("MyPref", 0);
-            pref.getString("firstName", firstName);
-            pref.getString("lastName", lastName);
-            pref.getString("emai",email);
-            pref.getString("id",id);
-            pref.getString("residenceId", residenceId);
+            setFirstName(pref.getString("firstName", firstName));
+            setLastName(pref.getString("lastName", lastName));
+            setEmail(pref.getString("emai",email));
+            setId(pref.getString("id",id));
+            setResidenceId(pref.getString("residenceId", residenceId));
+            setLoggedInStatus(pref.getBoolean("loggedInStatus",false));
 }
 
     public void commit() {
@@ -40,6 +40,10 @@ public class UserInfo {
         editor.putString("id",getId());
         editor.putString("residenceId", getResidenceId());
         editor.commit();
+    }
+
+    public void clearInfo() {
+        editor.clear().commit();
     }
     public String getId() {
         return id;
@@ -88,13 +92,6 @@ public class UserInfo {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public boolean isLoggedInStatus() {
         return loggedInStatus;

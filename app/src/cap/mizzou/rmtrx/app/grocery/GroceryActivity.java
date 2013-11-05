@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +13,7 @@ import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -34,7 +34,7 @@ public class GroceryActivity extends Activity {
     private View ItemView;
     private RestAdapter restAdapter;
     private GroceryRequestInterface restInterface;
-
+    private UserInfo userInfo;
 
 
     private Boolean setSelectedList;
@@ -50,6 +50,8 @@ public class GroceryActivity extends Activity {
         newItemButton.setImageResource(android.R.drawable.ic_input_add);
         restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         restInterface = restAdapter.create(GroceryRequestInterface.class);
+        Context context=getApplicationContext();
+        userInfo=new UserInfo(context);
         setupCallbacks();
         loadLists();
     }
@@ -107,8 +109,7 @@ public class GroceryActivity extends Activity {
         getContentResolver().insert(GroceryList.ContentUri,
                 GroceryList.contentValues(listName));
 
-        SharedPreferences preferences =getApplicationContext().getSharedPreferences("MyPref", 0);
-        String residenceId = preferences.getString("residence_id", "");
+        String residenceId = userInfo.getResidenceId();
 
 
         restInterface.createList(residenceId, listName, new Callback<GroceryListModel>() {

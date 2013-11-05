@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
+import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.Residence.CurrentResidence;

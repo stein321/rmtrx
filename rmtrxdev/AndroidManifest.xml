@@ -66,7 +66,7 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.Log_out.LogOutActivity"
+                android:name="cap.mizzou.rmtrx.app.LogOut.LogOutActivity"
                 android:label="@string/Logout"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 android:noHistory="true">
