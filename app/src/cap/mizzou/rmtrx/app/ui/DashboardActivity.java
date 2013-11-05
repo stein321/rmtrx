@@ -47,45 +47,6 @@ public class DashboardActivity extends BaseFragmentActivity {
                     .add(android.R.id.content, homeFragment, HomeFragment.TAG)
                     .commit();
         }
-
-        //Check if ResidenceId is set, and if not try and get it
-//        String residenceId = userInfo.getResidenceId();
-
-//        if(residenceId == "") {
-//            String userId = preferences.getString("id", "");
-//
-//            RestAdapter restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-//            ResidenceDataInterface restInterface = restAdapter.create(ResidenceDataInterface.class);
-//
-//            restInterface.getResidence(userId, new Callback<Residence>() {
-//                @Override
-//                public void success(Residence residence, Response response) {
-//                    SharedPreferences.Editor editor = preferences.edit();
-//                    editor.putString("residence_id", residence.getId());
-//                }
-//
-//                @Override
-//                public void failure(RetrofitError retrofitError) {
-//
-//                    int x = 1;
-//
-//                    //To change body of implemented methods use File | Settings | File Templates.
-//                }
-//            });
-//        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 5 && requestCode == 3) {
-            Log.d("Returned_statement", "You did it");
-        }
-    }
-    private boolean isLoginSet() {
-        boolean result=false;
-        SharedPreferences logged_in_status=getApplicationContext().getSharedPreferences("MyPref", 0);
-        result = logged_in_status.getBoolean("logged_in_status_yo", false);
-        return result;
     }
 
     @Override
@@ -94,8 +55,6 @@ public class DashboardActivity extends BaseFragmentActivity {
         getSupportMenuInflater().inflate(R.menu.home, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-
     @Subscribe
     public void onActivitySelected(ActivitySelectedEvent event) {
         Intent intent = new Intent(this, event.activity.activityClass);
