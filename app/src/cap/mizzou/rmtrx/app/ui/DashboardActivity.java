@@ -55,7 +55,7 @@ public class DashboardActivity extends BaseFragmentActivity {
         getSupportMenuInflater().inflate(R.menu.home, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    @Subscribe
+    @Subscribe//Don't delete this. this is important
     public void onActivitySelected(ActivitySelectedEvent event) {
         Intent intent = new Intent(this, event.activity.activityClass);
         startActivity(intent);
