@@ -1,13 +1,16 @@
 package cap.mizzou.rmtrx.app.BulletinBoard;
 
-import android.app.*;
+import android.app.Activity;
 import android.content.Intent;
-import cap.mizzou.rmtrx.app.R;
 import android.os.Bundle;
-import java.util.*;
-import android.widget.*;
-import android.content.*;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+import cap.mizzou.rmtrx.app.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -36,19 +39,21 @@ public class BulletinBoardActivity extends Activity {
 
         posts= new ArrayList<String>();
 
-
-        //Receives data passed with intent
-        Bundle extras = getIntent().getExtras();
-        String title = extras.getString("title");
-        String message = extras.getString("message");
-
-        //Adds messages to ArrayList
-        posts.add(message);
+          //This won't work until you actually pass Extra info with the intent.
+//        //Receives data passed with intent
+//        Intent intent = getIntent();
+//        String test = intent.getStringExtra("message");
+//        Bundle extras = getIntent().getExtras();
+//        String title = extras.getString("title");
+//        String message = extras.getString("message");
+//
+//        //Adds messages to ArrayList
+//        posts.add(message);
 
 
         //Create Adapter
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, posts);
-        // Set The Adapter
+        // Set Adapter
         postlistview.setAdapter(arrayAdapter);
 
         // register onClickListener to handle click events on each item
@@ -69,24 +74,11 @@ public class BulletinBoardActivity extends Activity {
 
     }
 
-
-
     public void addBBPost(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, AddBBPost.class);
         startActivity(intent);
     }
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

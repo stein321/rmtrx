@@ -1,7 +1,7 @@
 package cap.mizzou.rmtrx.app;
 
-import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
-import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
+import android.content.SharedPreferences;
+import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
@@ -50,6 +50,9 @@ import javax.inject.Singleton;
                 JoinResidenceActivity.class,
                 LogOutActivity.class,
                 CurrentResidence.class
+                LogOutActivity.class,
+                FinancesActivity.class,
+                BulletinBoardActivity.class
 
 
         })
@@ -61,4 +64,10 @@ public final class rmtrxModule {
         return new Bus();
     }
 
+//    @Provides
+//    @Singleton
+//    SharedPreferences pref() {
+//            return getDefaultSharedPreferences();
+//    }
+    //figure this out
 }

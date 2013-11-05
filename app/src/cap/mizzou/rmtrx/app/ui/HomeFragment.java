@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity;
+import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
+import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
@@ -88,6 +91,8 @@ public class HomeFragment extends BaseListFragment {
     public List<RmtrxActivity> getActivities() {
         List<RmtrxActivity> activitiesList = new ArrayList<RmtrxActivity>();
         activitiesList.add(new RmtrxActivity(R.string.grocery_list_activity_name, GroceryActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.bulletin_board_activity_name, BulletinBoardActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.finances_activity_name, FinancesActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));

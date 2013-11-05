@@ -50,6 +50,7 @@
     <string name="Go">Go</string>
     <string name="last_name">Last Name</string>
     <string name="residence_name">Residence Name</string>
+    <string name="subject">Object</string>
 
 
 </resources>

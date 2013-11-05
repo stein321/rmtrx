@@ -111,6 +111,12 @@
         <provider android:name="cap.mizzou.rmtrx.app.grocery.GroceryDB" android:authorities="cap.mizzou.rmtrx.app.grocery.GroceryDB">
         </provider>
 
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.FinancesActivity"
+                android:label="@string/financeActivity"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
+                ></activity>
+
     </application>
 
 </manifest>
