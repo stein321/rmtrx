@@ -1,15 +1,10 @@
 package cap.mizzou.rmtrx.app.User_setup;
 
+import Models.Residence;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
-import cap.mizzou.rmtrx.app.R;
-import cap.mizzou.rmtrx.app.Residence.Code;
-import cap.mizzou.rmtrx.app.Residence.Residence;
 import cap.mizzou.rmtrx.app.ui.DashboardActivity;
 import retrofit.Callback;
 import retrofit.RestAdapter;

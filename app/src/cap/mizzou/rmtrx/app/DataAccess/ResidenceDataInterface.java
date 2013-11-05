@@ -1,6 +1,6 @@
 package cap.mizzou.rmtrx.app.DataAccess;
 
-import cap.mizzou.rmtrx.app.Residence.Residence;
+import Models.Residence;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;

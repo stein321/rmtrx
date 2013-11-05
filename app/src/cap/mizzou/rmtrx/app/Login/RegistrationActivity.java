@@ -86,14 +86,7 @@ public class RegistrationActivity extends Activity {
 
         if (this.validateForm()) {
               sendUserInfoToServerToCreateUser();
-//              this.storeDataInSharedPreference();
-            if(this.radioButtonSelected.equals("Create")) {
-                      createResidence();
-            }
-            else if(this.radioButtonSelected.equals("Join")) {
-                      joinResidence();
-            }
-              sendResidenceInfoToServerToCreateResidence();
+//
         }
     }
 
@@ -147,6 +140,14 @@ public class RegistrationActivity extends Activity {
         user.setEmail(userAndKey.getKey().getKey());
         user.setLoggedInStatus(true);
         user.commit();
+
+        if(this.radioButtonSelected.equals("Create")) {
+            createResidence();
+        }
+        else if(this.radioButtonSelected.equals("Join")) {
+            joinResidence();
+        }
+        sendResidenceInfoToServerToCreateResidence();
     }
 
     public void joinResidence() {

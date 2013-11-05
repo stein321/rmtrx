@@ -1,7 +1,7 @@
 package cap.mizzou.rmtrx.app.User_setup;
 
+import Models.Residence;
 import cap.mizzou.rmtrx.app.Residence.Code;
-import cap.mizzou.rmtrx.app.Residence.Residence;
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
