@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
 import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
 import cap.mizzou.rmtrx.app.TestDbActivity.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.core.ui.BaseListFragment;
@@ -21,6 +21,8 @@ import com.squareup.otto.Bus;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+
+//import cap.mizzou.rmtrx.app.SQLite.TestDatabaseActivity;
 
 /**
  * Javadoc needs to be done.

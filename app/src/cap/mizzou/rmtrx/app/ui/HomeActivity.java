@@ -28,6 +28,9 @@ public class HomeActivity extends BaseFragmentActivity {
     public Boolean logged_in_status;
     private UserInfo userInfo;
 
+    protected boolean login_result;
+    private String login_name;  //just for printing to log
+    private String password; //just for printing to log
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +62,32 @@ public class HomeActivity extends BaseFragmentActivity {
 
         //hard coded login info, change to server call
         checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
+//        if (login_result) {
+//            editor.putBoolean("logged_in_status_yo", true);
+//            editor.commit();
+//            Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+//            startActivity(goToDashBoard);
+//        } else {
+//            alertDialogBuilder
+//                    .setMessage("Username and/password incorrect")
+//                    .setCancelable(true);
+//        }
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+//        alertDialog.show();
+        //grabs values out of memory for debugging purposes
+        boolean status = logged_in_status.getBoolean("logged_in_status_yo", false);
+        password = logged_in_status.getString("p_word", null);
+        String User = logged_in_status.getString("login_name", null);
+        //prints values out in the debugger screen
+//        Log.d("test-login", String.valueOf(status));
+//        Log.d("test-pass", password);
+//        Log.d("test-user", User);
+
 
     }
+
     public void checkLoginCredentials(String username, String password) {
 
         RestAdapter restAdapter =

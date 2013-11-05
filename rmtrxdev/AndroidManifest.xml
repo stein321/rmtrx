@@ -34,6 +34,7 @@
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
 
         </activity>
+
         <activity
                 android:name="cap.mizzou.rmtrx.app.Login.sendLoginInfo"
                 android:label="@string/title_activity_send_info"
@@ -89,6 +90,26 @@
                 android:label="@string/dashboardActivity">
 
         </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity"
+                android:label="@string/bulletin_board_activity_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+
+        </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPost"
+                android:label="@string/bb_add_post_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity">
+
+        </activity>
+
+        <activity android:name="cap.mizzou.rmtrx.app.grocery.GroceryActivity" android:label="@string/grocery_list_activity_name">
+        </activity>
+
+        <provider android:name="cap.mizzou.rmtrx.app.grocery.GroceryDB" android:authorities="cap.mizzou.rmtrx.app.grocery.GroceryDB">
+        </provider>
 
     </application>
 

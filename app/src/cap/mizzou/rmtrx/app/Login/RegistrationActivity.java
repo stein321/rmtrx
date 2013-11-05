@@ -13,6 +13,7 @@ import android.widget.TextView;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
+import cap.mizzou.rmtrx.app.User_setup.ResidenceInteractionInterface;
 import cap.mizzou.rmtrx.app.User_setup.UserCreationInterface;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
 import com.google.gson.annotations.SerializedName;
@@ -36,6 +37,8 @@ public class RegistrationActivity extends Activity {
     private String confirm_password;
     private String last_name;
     private String api_key;
+    private String user_id;
+    private String name_of_residence;
     private String user_id;
     private SharedPreferences logged_in_status;
     private String radioButtonSelected;
@@ -72,10 +75,7 @@ public class RegistrationActivity extends Activity {
         this.email = ((EditText) findViewById(R.id.email)).getText().toString();
         this.password = ((EditText) findViewById((R.id.password))).getText().toString();
         this.confirm_password = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
-
         int i = view.getId();
-
-
 
         if (this.validateForm()) {
               sendUserInfoToServerToCreateUser();
@@ -86,7 +86,33 @@ public class RegistrationActivity extends Activity {
             else if(this.radioButtonSelected.equals("Join")) {
                       joinResidence();
             }
+              sendResidenceInfoToServerToCreateResidence();
         }
+        if(i == R.id.createResidence) {
+            createResidence(view);
+        }
+    }
+
+    private void sendResidenceInfoToServerToCreateResidence() {
+        RestAdapter restAdapter =
+                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+
+        ResidenceInteractionInterface ri = restAdapter.create(ResidenceInteractionInterface.class);
+
+        ri.createResidence(this.name_of_residence, this.user_id, new Callback<Residence>() {
+            @Override
+            public void success(Residence residence, Response response) {
+                //To change body of implemented methods use File | Settings | File Templates.
+                //add all info from Residence
+                int x=1;
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+                int x=1;
+            }
+        });
     }
 
     private void sendUserInfoToServerToCreateUser() {
@@ -105,6 +131,7 @@ public class RegistrationActivity extends Activity {
                 setEmail(userAndKey.user.email);
                 setApi_key(userAndKey.key.getKey());
                 setUser_id(userAndKey.key.getId());
+                setUser_id((userAndKey.user.getId()));
                 //make class to store SharedPreferences
 
                 SharedPreferences createUser=getApplicationContext().getSharedPreferences("MyPref", 0);
@@ -260,10 +287,25 @@ public class RegistrationActivity extends Activity {
     public String getUser_id() {
         return user_id;
     }
+    public String getName_of_residence() {
+        return name_of_residence;
+    }
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
+    public void setName_of_residence(String name_of_residence) {
+        this.name_of_residence = name_of_residence;
+    }
+    public String getUser_id() {
+        return user_id;
+    }
+
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
 
 
     public class User {
@@ -333,6 +375,35 @@ public class RegistrationActivity extends Activity {
 
         public void setKey(HomeActivity.Key key) {
             this.key = key;
+        }
+    }
+    public class Residence {
+        String name;
+        String id;
+        String[] users;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String[] getUsers() {
+            return users;
+        }
+
+        public void setUsers(String[] users) {
+            this.users = users;
         }
     }
 
