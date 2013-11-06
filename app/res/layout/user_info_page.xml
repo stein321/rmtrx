@@ -44,16 +44,7 @@
             android:layout_marginTop="50dip"
             android:layout_marginRight="10dip"
             />
-    <TextView
-            android:layout_alignParentLeft="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/user_list_title"
-            android:layout_marginTop="80dip"
-            android:layout_marginLeft="10dip"
-            android:textSize="@dimen/Residence_font_size"
 
-            />
        <!--<ListView-->
               <!--android:layout_alignParentLeft="true"-->
               <!--android:id="@+id/nameList"-->
@@ -78,6 +69,16 @@
             android:layout_marginTop="190dip"
             android:id="@+id/code"
             android:text="@string/codeButtonDirection"
+
+            />
+    <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_list_title"
+            android:layout_marginTop="220dip"
+            android:layout_marginLeft="10dip"
+            android:textSize="@dimen/Residence_font_size"
 
             />
 

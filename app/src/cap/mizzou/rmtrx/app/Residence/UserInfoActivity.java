@@ -52,7 +52,6 @@ public class UserInfoActivity extends Activity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
         });
     }
