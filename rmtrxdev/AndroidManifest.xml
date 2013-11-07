@@ -66,29 +66,28 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.Log_out.LogOutActivity"
+                android:name="cap.mizzou.rmtrx.app.LogOut.LogOutActivity"
                 android:label="@string/Logout"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 android:noHistory="true">
 
 
         </activity>
-        <activity
-                android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceInfo"
-                android:label="@string/SeeResidenceInfo"
-                android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
+        <!--<activity-->
+                <!--android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceI"-->
+                <!--android:label="@string/SeeResidenceInfo"-->
+                <!--android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">-->
 
-        </activity>
+        <!--</activity>-->
         <activity
                 android:name="cap.mizzou.rmtrx.app.Residence.CurrentResidence"
-                android:label="@string/currentResidence"
-              >
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
+                android:label="@string/currentResidence">
 
         </activity>
         <activity
                 android:name="cap.mizzou.rmtrx.app.ui.DashboardActivity"
-                android:label="@string/dashboardActivity"
-                >
+                android:label="@string/dashboardActivity">
 
         </activity>
 
@@ -111,6 +110,12 @@
 
         <provider android:name="cap.mizzou.rmtrx.app.grocery.GroceryDB" android:authorities="cap.mizzou.rmtrx.app.grocery.GroceryDB">
         </provider>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.FinancesActivity"
+                android:label="@string/financeActivity"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
+                ></activity>
 
     </application>
 

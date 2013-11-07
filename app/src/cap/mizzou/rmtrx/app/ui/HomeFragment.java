@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.ImageView;
-import cap.mizzou.rmtrx.app.Log_out.LogOutActivity;
+import cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity;
+import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
+import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
@@ -57,8 +58,6 @@ public class HomeFragment extends BaseListFragment {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -87,11 +86,12 @@ public class HomeFragment extends BaseListFragment {
 
     }
 
-
     //this lists all the menu items on the dashboard
     public List<RmtrxActivity> getActivities() {
         List<RmtrxActivity> activitiesList = new ArrayList<RmtrxActivity>();
         activitiesList.add(new RmtrxActivity(R.string.grocery_list_activity_name, GroceryActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.bulletin_board_activity_name, BulletinBoardActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.finances_activity_name, FinancesActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));
@@ -126,9 +126,6 @@ public class HomeFragment extends BaseListFragment {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
                 holder = new ViewHolder();
-                //
-                holder.activityIcon = (ImageView)convertView.findViewById(R.id.activityIcon);
-                //
                 holder.name = (TextView) convertView.findViewById(android.R.id.text1);
                 convertView.setTag(holder);
             } else {
@@ -138,11 +135,9 @@ public class HomeFragment extends BaseListFragment {
             RmtrxActivity rmtrxActivity = getItem(position);
 
 
-
             holder.name.setText(context.getString(rmtrxActivity.resourceId));
-            //
-            holder.activityIcon.setImageResource(rmtrxActivity.icon);
-            //
+
+
             return convertView;
         }
     }
@@ -150,23 +145,16 @@ public class HomeFragment extends BaseListFragment {
     static class ViewHolder {
 
         TextView name;
-        ImageView activityIcon;
     }
 
     public final class RmtrxActivity {
 
         int resourceId;
-        //
-        public int icon;
-        //
         Class<? extends Activity> activityClass;
 
-        public RmtrxActivity(int resourceId, int icon,
+        public RmtrxActivity(int resourceId,
                              Class<? extends Activity> activityClass) {
             this.resourceId = resourceId;
-            //
-            this.icon = icon;
-            //
             this.activityClass = activityClass;
         }
     }

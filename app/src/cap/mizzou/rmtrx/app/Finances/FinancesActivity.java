@@ -1,13 +1,10 @@
-package cap.mizzou.rmtrx.app.Fianances;
+package cap.mizzou.rmtrx.app.Finances;
 
 import android.os.Bundle;
 import cap.mizzou.rmtrx.app.R;
 import android.content.Intent;
-import android.widget.*;
-import android.content.*;
 import android.view.View;
 import android.app.Activity;
-import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +25,7 @@ public class FinancesActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.finances);
-        getActionBar().setTitle("Fianances");
+        getActionBar().setTitle("Finances");
 
 
         accountbalance=getAccountBalance();
