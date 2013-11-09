@@ -41,9 +41,9 @@ public class FinancesActivity extends Activity{
         setContentView(R.layout.finances);
         getActionBar().setTitle("Finances");
 
-        datasource = new FinancesDB(this);
-        datasource.open();
-        accountbalance=getAccountBalance();
+      //  datasource = new FinancesDB(this);
+       // datasource.open();
+       // accountbalance=getAccountBalance();
 
         //Fills TextView with Account Balance
         //TextView ab = (TextView) findViewByID(R.id.AccountBalance);

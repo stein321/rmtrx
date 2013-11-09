@@ -42,6 +42,7 @@ public class BulletinBoardActivity extends Activity {
           //This won't work until you actually pass Extra info with the intent.
 //        //Receives data passed with intent
           Intent intent = getIntent();
+
           //String message = intent.getExtras("message");
 //        Bundle extras = getIntent().getExtras();
 //        String title = extras.getString("title");
