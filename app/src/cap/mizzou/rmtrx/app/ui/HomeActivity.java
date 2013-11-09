@@ -96,10 +96,10 @@ public class HomeActivity extends BaseFragmentActivity {
     private void grabAllUsersInResidenceAndStoreInfoInDb() {
         ResidenceDataInterface ri = restAdapter.create(ResidenceDataInterface.class);
 
-        ri.getResidence(userInfo.getResidenceId(), new Callback<Residence>() {
+        ri.getResidence(userInfo.getId(), new Callback<Residence>() {
             @Override
             public void success(Residence residence, Response response) {
-                int x=1;
+                saveResidenceToDb(residence);
             }
 
             @Override
@@ -109,6 +109,12 @@ public class HomeActivity extends BaseFragmentActivity {
         });
 
 
+
+    }
+
+    public void saveResidenceToDb(Residence residence) {
+        userInfo.setResidenceId(residence.getId());
+        userInfo.commit();
 
     }
 

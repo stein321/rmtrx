@@ -15,5 +15,6 @@ import retrofit.http.Path;
 public interface ResidenceDataInterface {
 
     @GET("/residence/user/{id}")
-    void getResidence(@Path("id") String residenceId, Callback<Residence> callback);
+    void getResidence(@Path("id") String userId, Callback<Residence> callback);
+
 }
