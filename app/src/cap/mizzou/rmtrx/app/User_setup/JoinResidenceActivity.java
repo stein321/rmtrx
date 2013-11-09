@@ -1,13 +1,16 @@
 package cap.mizzou.rmtrx.app.User_setup;
 
+import Models.Residence;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
-import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.ui.DashboardActivity;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,23 +20,48 @@ import cap.mizzou.rmtrx.app.R;
  * To change this template use File | Settings | File Templates.
  */
 public class JoinResidenceActivity extends Activity {
-    public SharedPreferences residence_info;
+    private UserInfo userInfo;
+    private String residenceCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        String name = intent.getStringExtra(RegistrationActivity.EXTRA_MESSAGE);
-        setContentView(R.layout.join_residence_page);
-        getActionBar().setTitle("Join Residence");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView textView = (TextView) findViewById(R.id.change);
-        textView.setText(name);
+        Bundle info=getIntent().getExtras();
+        setResidenceCode(info.getString("residence code", null));
+        Context context=getApplicationContext();
+        userInfo=new UserInfo(context);
+
+        joinResidenceOnServer();
+    }
+    public void joinResidenceOnServer() {
+        RestAdapter restAdapter =
+                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+        ResidenceCreationInterface ri= restAdapter.create(ResidenceCreationInterface.class);
+
+        ri.joinResidenceWithCode(getResidenceCode(),userInfo.getId(), new Callback<Residence>() {
+            @Override
+            public void success(Residence residence, Response response) {
+                goToDashboard();
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //TODO:print some sort of error such as nonexistent code
+                //TODO: if user is created and doesn't successfully create/join a residence, need to figure out what's next
+            }
+        });
+    }
+    private void goToDashboard() {
+        Intent dashboard = new Intent(this, DashboardActivity.class);
+        startActivity(dashboard);
     }
 
-    public void onClick(View view) {
-        //store information in shared preferences
-
-
+    public String getResidenceCode() {
+        return residenceCode;
     }
+
+    public void setResidenceCode(String residenceCode) {
+        this.residenceCode = residenceCode;
+    }
+
 }

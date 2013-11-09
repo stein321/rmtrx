@@ -19,7 +19,7 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/first_name"
+            android:text="@string/firstName"
             android:layout_marginTop="10dip"
             android:layout_marginRight="10dip"
             android:textSize="@dimen/Residence_font_size"
@@ -28,7 +28,7 @@
             android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/address"
+            android:text="@string/name_of_residence_title"
             android:layout_marginTop="50dip"
             android:layout_marginLeft="10dip"
             android:textSize="@dimen/Residence_font_size"
@@ -36,10 +36,10 @@
             />
     <TextView
             android:layout_alignParentRight="true"
-            android:id="@+id/address"
+            android:id="@+id/residence"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/address"
+            android:text="@string/nameOfResidence"
             android:textSize="@dimen/Residence_font_size"
             android:layout_marginTop="50dip"
             android:layout_marginRight="10dip"
@@ -54,47 +54,32 @@
             android:textSize="@dimen/Residence_font_size"
 
             />
-       <ListView
-              android:layout_alignParentLeft="true"
-              android:id="@+id/nameList"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="160dip"
-              android:layout_marginRight="10dip"
-           />
+       <!--<ListView-->
+              <!--android:layout_alignParentLeft="true"-->
+              <!--android:id="@+id/nameList"-->
+              <!--android:layout_width="wrap_content"-->
+              <!--android:layout_height="wrap_content"-->
+              <!--android:layout_marginTop="160dip"-->
+              <!--android:layout_marginRight="10dip"-->
+           <!--/>-->
 
-
-    <TextView
-              android:layout_alignParentLeft="true"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="10dip"
-              android:layout_marginTop="120dip"
-              android:text="@string/code"
-     />
-    <TextView
-             android:layout_alignParentLeft="true"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="80dip"
-             android:layout_marginTop="120dip"
-             android:id="@+id/code"
-        />
-    <TextView
-            android:layout_alignParentLeft="true"
+    <Button
+            android:id="@+id/generateCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginTop="140dip"
-            android:text="@string/Number_left"
-            />
+            android:text="@string/GenerateCode"
+            android:layout_marginTop="170dip"
+            android:onClick="showCode"/>
     <TextView
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dip"
-            android:layout_marginTop="140dip"
-            android:id="@+id/number_of_people_left"
+            android:layout_marginTop="190dip"
+            android:id="@+id/code"
+            android:text="hello"
 
-        />
+            />
+
+
 </RelativeLayout>

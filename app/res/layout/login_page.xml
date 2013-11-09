@@ -74,6 +74,6 @@
             android:onClick="register"
             android:layout_gravity="center"
             android:textStyle="italic"
-            android:clickable="false"/>
+            android:clickable="true"/>
 
 </LinearLayout>

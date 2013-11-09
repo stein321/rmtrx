@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.User_setup;
 
+import Models.CreateUserResponse;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -21,5 +22,5 @@ public interface UserCreationInterface {
             @Field("last_name") String lastName,
             @Field("email") String email,
             @Field("password") String password,
-            Callback<RegistrationActivity.CreateUserResponse> user);
+            Callback<CreateUserResponse> user);
 }

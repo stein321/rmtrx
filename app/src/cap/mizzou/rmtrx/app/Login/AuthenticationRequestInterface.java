@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.Login;
 
+import Models.ResponseObject;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -17,5 +18,5 @@ public interface AuthenticationRequestInterface {
 
     @FormUrlEncoded
     @POST("/authenticate")
-    void login(@Field("email") String username, @Field("password") String password, Callback<HomeActivity.ResponseObject> user);
+    void login(@Field("email") String username, @Field("password") String password, Callback<ResponseObject> user);
 }
