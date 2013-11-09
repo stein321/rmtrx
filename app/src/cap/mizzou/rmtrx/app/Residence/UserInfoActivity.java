@@ -41,12 +41,12 @@ public class UserInfoActivity extends Activity {
         data=new ResidentDataSource(this);
         data.open();
 
+
         setInfoOnPage();
     }
     //need to be connected to the in
     public void generateCode(View view) {
                  setCode(generateCode());
-        Resident resident=data.addResident("12345","dwqdwqdwq"," 34232423", "dwdwdwe");
 
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();

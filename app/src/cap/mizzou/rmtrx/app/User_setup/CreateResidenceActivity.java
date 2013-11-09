@@ -42,7 +42,7 @@ public class CreateResidenceActivity extends Activity {
         ri.createResidence(getResidenceName(), userInfo.getId(), new Callback<Residence>() {
             @Override
             public void success(Residence residenceResponse, Response response) {
-                goToDashboard();
+                goToDashboard(residenceResponse);
             }
 
             @Override
@@ -52,8 +52,9 @@ public class CreateResidenceActivity extends Activity {
             }
         });
     }
-    private  void goToDashboard() {
+    private  void goToDashboard(Residence residence) {
         userInfo.setResidenceName(residenceName);
+        userInfo.setResidenceId(residence.getId());
         userInfo.commit();
         Intent dashboard=new Intent(this, DashboardActivity.class);
         startActivity(dashboard);

@@ -2,6 +2,7 @@ package cap.mizzou.rmtrx.app.ui;
 
 
 import Models.Key;
+import Models.Residence;
 import Models.ResponseObject;
 import Models.User;
 import android.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import cap.mizzou.rmtrx.app.DataAccess.ResidenceDataInterface;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
@@ -23,6 +25,7 @@ import retrofit.client.Response;
 
 public class HomeActivity extends BaseFragmentActivity {
     private UserInfo userInfo;
+    private RestAdapter restAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class HomeActivity extends BaseFragmentActivity {
         if(userInfo.isLoggedIn()) {
             goToDashBoard();
         }
+        restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
     }
     public void goToDashBoard() {
         Intent goToDashBoard=new Intent(this,DashboardActivity.class);
@@ -51,8 +55,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
     public void checkLoginCredentials(String username, String password) {
 
-        RestAdapter restAdapter =
-                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+
 
         AuthenticationRequestInterface ri = restAdapter.create(AuthenticationRequestInterface.class);
 
@@ -86,9 +89,28 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo.setLoggedIn(true);
         userInfo.setId(user.getId());
         userInfo.commit();
+        grabAllUsersInResidenceAndStoreInfoInDb();
+
         goToDashBoard();
     }
+    private void grabAllUsersInResidenceAndStoreInfoInDb() {
+        ResidenceDataInterface ri = restAdapter.create(ResidenceDataInterface.class);
 
+        ri.getResidence(userInfo.getResidenceId(), new Callback<Residence>() {
+            @Override
+            public void success(Residence residence, Response response) {
+                int x=1;
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                int x=2;
+            }
+        });
+
+
+
+    }
 
     public void register(View view) {
         Intent myIntent = new Intent(this, RegistrationActivity.class);
