@@ -117,6 +117,13 @@
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 ></activity>
 
+        <activity android:name="cap.mizzou.rmtrx.app.ui.SplashActivity"
+                  android:label="@string/app_name"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.NoTitleBar">
+
+        </activity>
+
     </application>
 
 </manifest>
