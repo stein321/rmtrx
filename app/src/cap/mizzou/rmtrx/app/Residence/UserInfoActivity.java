@@ -2,9 +2,13 @@ package cap.mizzou.rmtrx.app.Residence;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.DataAccess.Resident;
+import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
+import cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.ResidenceCreationInterface;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
@@ -24,6 +28,7 @@ import java.util.Random;
  */
 public class UserInfoActivity extends Activity {
     private UserInfo userInfo;
+    private ResidentDataSource data;
     private String code;
 
     @Override
@@ -33,12 +38,15 @@ public class UserInfoActivity extends Activity {
         getActionBar().setTitle("Residence Information");
         Context context=getApplicationContext();
         userInfo=new UserInfo(context);
+        data=new ResidentDataSource(this);
+        data.open();
 
         setInfoOnPage();
     }
     //need to be connected to the in
     public void generateCode(View view) {
                  setCode(generateCode());
+        Resident resident=data.addResident("12345","dwqdwqdwq"," 34232423", "dwdwdwe");
 
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
@@ -67,6 +75,10 @@ public class UserInfoActivity extends Activity {
 
         showNameOfUser.setText(userInfo.getFirstName() + " " + userInfo.getLastName());
         showNameOfResidence.setText(userInfo.getResidenceName());
+    }
+    public void showResidentsList(View view) {
+        Intent showList=new Intent(this, ShowResidentsActivity.class);
+        startActivity(showList);
     }
 
     private String generateCode() {

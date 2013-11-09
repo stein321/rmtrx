@@ -90,6 +90,11 @@
                 android:label="@string/dashboardActivity">
 
         </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity"
+                android:label="@string/residents">
+
+        </activity>
 
         <activity
                 android:name="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity"
