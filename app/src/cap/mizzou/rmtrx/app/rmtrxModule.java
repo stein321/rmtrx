@@ -17,7 +17,7 @@ import cap.mizzou.rmtrx.app.settings.SettingsActivity;
 import cap.mizzou.rmtrx.app.ui.DashboardActivity;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
 import cap.mizzou.rmtrx.app.ui.HomeFragment;
-//import cap.mizzou.rmtrx.app.ui.SplashActivity;
+import cap.mizzou.rmtrx.app.ui.SplashActivity;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
@@ -54,8 +54,8 @@ import javax.inject.Singleton;
                 LogOutActivity.class,
                 CurrentResidence.class,
                 FinancesActivity.class,
-                BulletinBoardActivity.class
-//                SplashActivity.class
+                BulletinBoardActivity.class,
+                SplashActivity.class
 
         })
 public final class rmtrxModule {

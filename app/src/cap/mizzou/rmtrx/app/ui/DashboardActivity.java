@@ -24,7 +24,7 @@ public class DashboardActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.merge_empty);
-        getSupportActionBar().setTitle("Dashboard");
+//        getSupportActionBar().setTitle("Dashboard");
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         Fragment homeFragment = fragmentManager.findFragmentByTag(HomeFragment.TAG);
