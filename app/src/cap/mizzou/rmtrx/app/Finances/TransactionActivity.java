@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
+import java.util.Date;
 
 
 
@@ -21,7 +22,7 @@ public class TransactionActivity extends Activity {
 
    //shared pref.
 
-    private FinancesDB datasource;
+    //private FinancesDB datasource;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +40,14 @@ public class TransactionActivity extends Activity {
         //Grabs credit amount
         EditText amountText = (EditText) findViewById(R.id.TransactionAmount);
 
+        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        String date = dateFormat.format(new Date());
+
+
         //Converts
               Double amount=Double.parseDouble(amountText.getText().toString());
         //Send transaction info to record creation method
-       datasource.createTransactionRecord("Des", amount);
+       //datasource.createTransactionRecord("Des", amount);
 
 
 
