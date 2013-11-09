@@ -31,11 +31,11 @@ public class AddBBPost extends Activity {
 
         Intent post = new Intent(this, BulletinBoardActivity.class);
         //Gets input from text views
-        EditText editText = (EditText) findViewById(R.id.edit_title);
+
         EditText editText1 = (EditText) findViewById(R.id.edit_message);
         //Pairs title and post message
         //Bundle extras = new Bundle();
-        String postTitle = editText.getText().toString();
+
         String postMessage = editText1.getText().toString();
 
         //extras.putString("title", postTitle);

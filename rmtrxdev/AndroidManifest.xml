@@ -106,6 +106,21 @@
 
         </activity>
 
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.FinancesActivity"
+                android:label="@string/bulletin_board_activity_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+
+        </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.TransactionActivity"
+                android:label="@string/bb_add_post_name"
+                android:parentActivityName="cap.mizzou.rmtrx.app.
+                Finances.FinancesActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

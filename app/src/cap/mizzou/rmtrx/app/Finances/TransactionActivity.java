@@ -29,8 +29,8 @@ public class TransactionActivity extends Activity {
         getActionBar().setTitle("Add Transaction");
 
 
-      datasource = new FinancesDB(this);
-      datasource.open();
+     // datasource = new FinancesDB(this);
+     // datasource.open();
 
     }
 

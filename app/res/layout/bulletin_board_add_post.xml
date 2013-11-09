@@ -23,20 +23,16 @@
                 android:id="@+id/button1"
                 android:layout_alignParentStart="false" android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true" android:layout_alignParentTop="true"
-                android:layout_marginTop="47dp"/>
+                android:layout_marginTop="47dp"
+                android:onClick="sendBBPost"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/cancel"
-            android:layout_alignRight="@+id/button1" android:layout_alignBaseline="@+id/edit_message"/>
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="59dp"
-            android:text="Enter Title"
-            android:id="@+id/edit_title"
-            android:layout_alignLeft="@+id/edit_message" android:layout_alignParentTop="true"
-            android:layout_marginTop="18dp"/>
+            android:layout_alignRight="@+id/button1"
+            android:layout_alignBaseline="@+id/edit_message"/>
+
 
 
 </RelativeLayout>
