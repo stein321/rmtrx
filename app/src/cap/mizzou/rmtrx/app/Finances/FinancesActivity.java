@@ -31,7 +31,7 @@ public class FinancesActivity extends Activity{
     public String name_of_user;
     public String username;
     private String[] other_users;
-    private FinancesDB datasource;
+    //private FinancesDB datasource;
 
 
 
@@ -67,7 +67,7 @@ public class FinancesActivity extends Activity{
 
         List<Double> list=new ArrayList<Double>();
         //Retrieves list of
-        list= datasource.getTransactionRecords("Des");
+       // list= datasource.getTransactionRecords("Des");
 
         for (int i = 0; i < list.size(); i++) {
               sum=sum + list.get(i);
