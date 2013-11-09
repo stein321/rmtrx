@@ -81,6 +81,13 @@
             android:textSize="@dimen/Residence_font_size"
 
             />
+    <Button
+            android:id="@+id/showResidents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/showResidents"
+            android:layout_marginTop="300dip"
+            android:onClick="showResidentsList"/>
 
 
 </RelativeLayout>

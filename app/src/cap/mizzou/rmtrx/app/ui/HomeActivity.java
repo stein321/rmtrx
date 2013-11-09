@@ -32,10 +32,10 @@ public class HomeActivity extends BaseFragmentActivity {
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
         if(userInfo.isLoggedIn()) {
-            startIntent();
+            goToDashBoard();
         }
     }
-    public void startIntent() {
+    public void goToDashBoard() {
         Intent goToDashBoard=new Intent(this,DashboardActivity.class);
         startActivity(goToDashBoard);
     }
@@ -86,7 +86,7 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo.setLoggedIn(true);
         userInfo.setId(user.getId());
         userInfo.commit();
-        startIntent();
+        goToDashBoard();
     }
 
 
