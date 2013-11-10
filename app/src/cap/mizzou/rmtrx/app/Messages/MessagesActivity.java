@@ -5,6 +5,7 @@ import Models.Message;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.R;
@@ -32,12 +33,12 @@ public class MessagesActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.resident_list);
+        setContentView(R.layout.messages_list);
         getActionBar().setTitle("Messages");
         getActionBar().setDisplayHomeAsUpEnabled(true);
         userInfo=new UserInfo(this);
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-        displayMessageList();
+//        displayMessageList();
         getMessagesFromServer();
 
     }
@@ -50,10 +51,10 @@ public class MessagesActivity extends ListActivity {
     public void getMessagesFromServer() {
         MessagesDataInterface ri=restAdapter.create(MessagesDataInterface.class);
         
-        ri.getChatLog(userInfo.getResidenceId(),new Callback<ChatLog>() {
+        ri.getChatLog(userInfo.getResidenceId(),new Callback<List<Message>>() {
             @Override
-            public void success(ChatLog chatLog, Response response) {
-//               displayMessageList(chatLog);
+            public void success(List<Message> messages, Response response) {
+               displayMessageList(messages);
             }
 
             @Override
@@ -63,17 +64,33 @@ public class MessagesActivity extends ListActivity {
         });
     }
 
-    private void displayMessageList() {
-        List<Message> messages=new ArrayList<Message>();
-        Message message=new Message();
-        message.setMessage("Hey Mike");
-        message.setDateSent(new Date());
-        message.setId("12345");
-        message.setSenderId("me");
-        messages.add(message);
+    private void displayMessageList(List<Message> listOfMessages) {
+        List<Message> messages=listOfMessages;
+//        Message message=new Message();
+//        message.setMessage("Hey Mike");
+//        message.setDateSent(new Date());
+//        message.setId("12345");
+//        message.setSenderId("me");
+//        messages.add(message);
 
         ArrayAdapter<Message> adapter=new ArrayAdapter<Message>(this,android.R.layout.simple_list_item_1,messages);
         setListAdapter(adapter);
+    }
+
+    public void sendMessageToServer(View view) {
+        MessagesDataInterface ri=restAdapter.create(MessagesDataInterface.class);
+
+        ri.sendMessage(userInfo.getId(),userInfo.getResidenceId(), "Hey Ben", new Callback<Message>() {
+            @Override
+            public void success(Message message, Response response) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
     }
 
 

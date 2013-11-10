@@ -17,7 +17,7 @@ public class Message {
     private String id;
     private String message;
     private String senderId;
-    private Date dateSent;
+    private String dateSent;
 
     public String getId() {
         return id;
@@ -43,11 +43,11 @@ public class Message {
         this.senderId = senderId;
     }
 
-    public Date getDateSent() {
+    public String getDateSent() {
         return dateSent;
     }
 
-    public void setDateSent(Date dateSent) {
+    public void setDateSent(String dateSent) {
         this.dateSent = dateSent;
     }
     public String toString() {

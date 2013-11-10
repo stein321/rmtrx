@@ -31,6 +31,8 @@ public class UserInfoActivity extends Activity {
     private ResidentDataSource data;
     private String code;
 
+    //TODO:make an activity that dumps out the sharedpreferences
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
