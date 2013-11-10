@@ -1,5 +1,7 @@
 package Models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ben
@@ -9,6 +11,7 @@ package Models;
  */
 public class Residence {
     String name;
+    @SerializedName("_id")
     String id;
     String[] users;
 
