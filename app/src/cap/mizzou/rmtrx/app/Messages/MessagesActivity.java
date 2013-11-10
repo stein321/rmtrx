@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
@@ -18,6 +19,7 @@ import retrofit.client.Response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,6 +32,7 @@ public class MessagesActivity extends ListActivity {
     private List<Message> messageList;
     private RestAdapter restAdapter;
     private UserInfo userInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +79,27 @@ public class MessagesActivity extends ListActivity {
         ArrayAdapter<Message> adapter=new ArrayAdapter<Message>(this,android.R.layout.simple_list_item_1,messages);
         setListAdapter(adapter);
     }
+    public void sendMessage(View view) {
+              if(grabMessage()!=null && !grabMessage().isEmpty())
+                sendMessageToServer(grabMessage());
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        getMessagesFromServer();
+    }
 
-    public void sendMessageToServer(View view) {
+    private String grabMessage() {
+        EditText message=(EditText)findViewById(R.id.message);
+        return message.getText().toString();
+    }
+
+
+    public void sendMessageToServer(String message) {
         MessagesDataInterface ri=restAdapter.create(MessagesDataInterface.class);
 
-        ri.sendMessage(userInfo.getId(),userInfo.getResidenceId(), "Hey Ben", new Callback<Message>() {
+        ri.sendMessage(userInfo.getId(),userInfo.getResidenceId(), message, new Callback<Message>() {
             @Override
             public void success(Message message, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
