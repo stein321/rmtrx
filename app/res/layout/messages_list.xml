@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/hello" />
     <EditText
-            android:id="@android:id/message"
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_send"
-            android:onClick="sendMessageToServer"
+            android:onClick="sendMessage"
 
          />
 
