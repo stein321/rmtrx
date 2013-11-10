@@ -63,7 +63,6 @@ public class ResidentDataSource {
         cursor.close();
         return residents;
     }
-
     private Resident cursorToResident(Cursor cursor) {
         Resident resident=new Resident();
         resident.setId(cursor.getLong(0));

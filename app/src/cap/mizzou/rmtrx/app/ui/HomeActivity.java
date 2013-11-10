@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.DataAccess.ResidenceDataInterface;
+import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
@@ -115,7 +116,39 @@ public class HomeActivity extends BaseFragmentActivity {
     public void saveResidenceToDb(Residence residence) {
         userInfo.setResidenceId(residence.getId());
         userInfo.commit();
+        grabUserInfoFromServerAndSaveTodb(residence.getUsers());
+        
 
+    }
+
+    private void grabUserInfoFromServerAndSaveTodb(String[] users) {
+               //TODO: clear db
+          for(int i=0;i<users.length;i++) {
+                sendToServer(users[i]);
+          }
+
+    }
+
+    private void sendToServer(String id) {
+             ResidenceDataInterface ri=restAdapter.create(ResidenceDataInterface.class);
+       ri.getUser(id, new Callback<User>() {
+           @Override
+           public void success(User user, Response response) {
+               saveUserToDB(user);
+           }
+
+           @Override
+           public void failure(RetrofitError retrofitError) {
+               //To change body of implemented methods use File | Settings | File Templates.
+           }
+       });
+    }
+
+    private void saveUserToDB(User user) {
+        ResidentDataSource data=new ResidentDataSource(this);
+        data.open();
+        data.addResident(user.getId(),user.getEmail(),user.getFirstName(),user.getLastName());
+        data.close();
     }
 
     public void register(View view) {
