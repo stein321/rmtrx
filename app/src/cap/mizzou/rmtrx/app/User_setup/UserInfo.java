@@ -26,6 +26,8 @@ public class UserInfo {
 
     public UserInfo(Context context) {
             pref=context.getSharedPreferences("MyPref", 0);
+            editor=pref.edit();
+            setAuthKey(pref.getString("authKey",null));
             setFirstName(pref.getString("firstName", null));
             setLastName(pref.getString("lastName", null));
             setEmail(pref.getString("email", null));
@@ -33,23 +35,13 @@ public class UserInfo {
             setResidenceId(pref.getString("residenceId", null));
             setResidenceName(pref.getString("residenceName",null));
             setLoggedIn(pref.getBoolean("loggedIn", false));
-
-}
-
-    public void commit() {
-        editor=pref.edit();
-        editor.putString("firstName", getFirstName());
-        editor.putString("lastName", getLastName());
-        editor.putString("email",getEmail());
-        editor.putString("id",getId());
-        editor.putString("residenceId", getResidenceId());
-        editor.putString("residenceName",getResidenceName());
-        editor.putBoolean("loggedIn", isLoggedIn());
-        editor.commit();
     }
 
+
+
     public void clearInfo() {
-        editor.clear().commit();
+        editor.clear();
+        editor.commit();
     }
     public String getId() {
         return id;
@@ -57,6 +49,8 @@ public class UserInfo {
 
     public void setId(String id) {
         this.id = id;
+        editor.putString("id",id);
+        editor.commit();
     }
 
     public String getResidenceId() {
@@ -65,6 +59,8 @@ public class UserInfo {
 
     public void setResidenceId(String residenceId) {
         this.residenceId = residenceId;
+        editor.putString("residenceId",residenceId);
+        editor.commit();
     }
 
     public String getFirstName() {
@@ -73,6 +69,8 @@ public class UserInfo {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        editor.putString("firstName",firstName);
+        editor.commit();
     }
 
     public String getLastName() {
@@ -81,6 +79,8 @@ public class UserInfo {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        editor.putString("lastName",lastName);
+        editor.commit();
     }
 
     public String getEmail() {
@@ -89,6 +89,8 @@ public class UserInfo {
 
     public void setEmail(String email) {
         this.email = email;
+        editor.putString("email",email);
+        editor.commit();
     }
     public String getPassword() {
         return password;
@@ -96,6 +98,8 @@ public class UserInfo {
 
     public void setPassword(String password) {
         this.password = password;
+        editor.putString("password",password);
+        editor.commit();
     }
 
 
@@ -105,6 +109,8 @@ public class UserInfo {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+        editor.putBoolean("loggedIn",loggedIn);
+        editor.commit();
     }
     public String getAuthKey() {
         return authKey;
@@ -112,6 +118,8 @@ public class UserInfo {
 
     public void setAuthKey(String authKey) {
         this.authKey = authKey;
+        editor.putString("authKey",authKey);
+        editor.commit();
     }
 
     public String getResidenceName() {
@@ -120,6 +128,8 @@ public class UserInfo {
 
     public void setResidenceName(String residenceName) {
         this.residenceName = residenceName;
+        editor.putString("residenceName",residenceName);
+        editor.commit();
     }
 
 

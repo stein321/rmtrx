@@ -102,6 +102,7 @@ public class RegistrationActivity extends Activity {
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                System.out.print("Failed to create User");
             }
         });
     }
@@ -110,10 +111,9 @@ public class RegistrationActivity extends Activity {
         user.setFirstName(userAndKey.getUser().getFirstName());
         user.setLastName(userAndKey.getUser().getLastName());
         user.setEmail(userAndKey.getUser().getEmail());
-        user.setEmail(userAndKey.getKey().getKey());
+        user.setAuthKey(userAndKey.getKey().getKey());
         user.setId(userAndKey.getUser().getId());
         user.setLoggedIn(true);
-        user.commit();
 
         if(this.radioButtonSelected.equals("Create")) {
             createResidence();

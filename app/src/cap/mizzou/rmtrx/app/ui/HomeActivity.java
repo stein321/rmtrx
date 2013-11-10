@@ -31,8 +31,7 @@ public class HomeActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context context=getApplicationContext();
-        userInfo =new UserInfo(context);
+        userInfo =new UserInfo(this);
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
         if(userInfo.isLoggedIn()) {
@@ -46,23 +45,17 @@ public class HomeActivity extends BaseFragmentActivity {
     }
     public void sendLoginInfo(View view) {
         //grabs text from form
-        EditText login_name_text = (EditText) findViewById(R.id.login_name);
-        EditText p_word_text = (EditText) findViewById(R.id.p_word);
+        EditText username = (EditText) findViewById(R.id.login_name);
+        EditText password = (EditText) findViewById(R.id.p_word);
 
-        String login_to_add = login_name_text.getText().toString();
-        String p_word_to_add = p_word_text.getText().toString();
+        String login_to_add = username.getText().toString();
+        String p_word_to_add = password.getText().toString();
         checkLoginCredentials(login_to_add, p_word_to_add);
     }
 
     public void checkLoginCredentials(String username, String password) {
-
-
-
         AuthenticationRequestInterface ri = restAdapter.create(AuthenticationRequestInterface.class);
-
-
         ri.login(username, password, new Callback<ResponseObject>() {
-
 
             @Override
             public void success(ResponseObject authResponse, Response response) {
@@ -89,11 +82,12 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo.setAuthKey(key.getKey());
         userInfo.setLoggedIn(true);
         userInfo.setId(user.getId());
-        userInfo.commit();
         grabAllUsersInResidenceAndStoreInfoInDb();
-
         goToDashBoard();
     }
+
+
+
     private void grabAllUsersInResidenceAndStoreInfoInDb() {
         ResidenceDataInterface ri = restAdapter.create(ResidenceDataInterface.class);
 
@@ -106,6 +100,7 @@ public class HomeActivity extends BaseFragmentActivity {
             @Override
             public void failure(RetrofitError retrofitError) {
                 int x=2;
+                //TODO:this is failing. not sure why
             }
         });
 
@@ -115,7 +110,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
     public void saveResidenceToDb(Residence residence) {
         userInfo.setResidenceId(residence.getId());
-        userInfo.commit();
+        userInfo.setResidenceName(residence.getName());
         grabUserInfoFromServerAndSaveTodb(residence.getUsers());
         
 
