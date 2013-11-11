@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.EditText;
 import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
@@ -32,7 +33,6 @@ public class MessagesActivity extends ListActivity {
     private List<Message> messageList;
     private RestAdapter restAdapter;
     private UserInfo userInfo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
