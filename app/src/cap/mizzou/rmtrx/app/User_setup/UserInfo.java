@@ -2,6 +2,9 @@ package cap.mizzou.rmtrx.app.User_setup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +16,8 @@ import android.content.SharedPreferences;
 public class UserInfo {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
+    Map<String,?> keys;
+
 
     private String id;
     private String authKey;
@@ -35,6 +40,7 @@ public class UserInfo {
             setResidenceId(pref.getString("residenceId", null));
             setResidenceName(pref.getString("residenceName",null));
             setLoggedIn(pref.getBoolean("loggedIn", false));
+            keys = pref.getAll();
     }
 
 
@@ -42,6 +48,14 @@ public class UserInfo {
     public void clearInfo() {
         editor.clear();
         editor.commit();
+    }
+
+    //just do this to see all of the sharedPreferences in the debug log
+    public void dumpPrefValues() {
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.d("map values", entry.getKey() + ": " +
+                    entry.getValue().toString());
+        }
     }
     public String getId() {
         return id;

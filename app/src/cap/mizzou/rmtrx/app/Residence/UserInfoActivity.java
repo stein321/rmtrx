@@ -42,6 +42,7 @@ public class UserInfoActivity extends Activity {
         userInfo=new UserInfo(context);
         data=new ResidentDataSource(this);
         data.open();
+        userInfo.dumpPrefValues();
 
 
         setInfoOnPage();

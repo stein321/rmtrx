@@ -45,6 +45,7 @@ public class HomeActivity extends BaseFragmentActivity {
     }
     public void sendLoginInfo(View view) {
         //grabs text from form
+
         EditText username = (EditText) findViewById(R.id.login_name);
         EditText password = (EditText) findViewById(R.id.p_word);
 
@@ -82,6 +83,7 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo.setAuthKey(key.getKey());
         userInfo.setLoggedIn(true);
         userInfo.setId(user.getId());
+
         grabAllUsersInResidenceAndStoreInfoInDb();
         goToDashBoard();
     }
