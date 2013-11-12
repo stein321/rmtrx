@@ -25,7 +25,7 @@ public class Transaction {
         return userid;
     }
 
-    public void setUserId(String id) {
+    public void setUserId(String userid) {
         this.userid = userid;
     }
 
@@ -37,6 +37,8 @@ public class Transaction {
         this.amount = amount;
     }
 
-
+    public String toString() {
+        return userid;
+    }
 }
 

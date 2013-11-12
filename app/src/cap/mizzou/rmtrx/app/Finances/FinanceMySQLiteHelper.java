@@ -19,14 +19,14 @@ public class FinanceMySQLiteHelper extends SQLiteOpenHelper{
         public static final String COLUMN_USERID= "userid";
         public static final String COLUMN_AMOUNT = "amount";
 
-        private static final String DATABASE_NAME = "posts.db";
+        private static final String DATABASE_NAME = "transactions.db";
         private static final int DATABASE_VERSION = 1;
 
         // Database creation sql statement
         private static final String DATABASE_CREATE = "create table "
                 + TABLE_TRANSACTIONS + "(" + COLUMN_ID
                 + " integer primary key autoincrement, " + COLUMN_USERID
-                + " text not null"  + COLUMN_AMOUNT
+                + " text not null, "  + COLUMN_AMOUNT
                 + " real not null);";
 
         public FinanceMySQLiteHelper(Context context) {

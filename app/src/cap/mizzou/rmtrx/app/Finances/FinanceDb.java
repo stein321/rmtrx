@@ -52,6 +52,7 @@ public class FinanceDb {
         Transaction newTransaction = cursorToTransaction(cursor);
         cursor.close();
         return newTransaction;
+
     }
 
     public void deleteTransaction(Transaction transaction) {
@@ -61,11 +62,10 @@ public class FinanceDb {
                 + " = " + id, null);
     }
 
-    public List<Transaction> getAllTransactions() {
+    public List<Transaction> getAllTransactions(String userid) {
         List<Transaction> transactions = new ArrayList<Transaction>();
 
-        Cursor cursor = database.query(FinanceMySQLiteHelper.TABLE_TRANSACTIONS,
-                allColumns, null, null, null, null, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM transactions WHERE userid = ?", new String [] {String.valueOf(userid)});
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -82,7 +82,7 @@ public class FinanceDb {
         Transaction transaction = new Transaction();
         transaction.setId(cursor.getLong(0));
         transaction.setUserId(cursor.getString(1));
-        transaction.setAmount(cursor.getDouble(1));
+        transaction.setAmount(cursor.getDouble(2));
         return transaction;
     }
 }
