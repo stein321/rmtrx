@@ -99,26 +99,31 @@
 
         </activity>
 
-        <activity
-                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPost"
-                android:label="@string/bb_add_post_name"
-                android:parentActivityName="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity">
 
-        </activity>
 
-<<<<<<< Temporary merge branch 1
+
+
+
         <activity android:name="cap.mizzou.rmtrx.app.grocery.GroceryActivity" android:label="@string/grocery_list_activity_name">
         </activity>
 
         <provider android:name="cap.mizzou.rmtrx.app.grocery.GroceryDB" android:authorities="cap.mizzou.rmtrx.app.grocery.GroceryDB">
         </provider>
-=======
+
         <activity
-                android:name="cap.mizzou.rmtrx.app.Finances.FinancesActivity"
+                android:name="cap.mizzou.rmtrx.app.Finances.FinanceActivity"
                 android:label="@string/financeActivity"
-                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
-                ></activity>
->>>>>>> Temporary merge branch 2
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+        </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.TransactionActivity"
+                android:label="Transaction"
+                android:parentActivityName="cap.mizzou.rmtrx.app.Finances.FinanceActivity">
+
+        </activity>
+
+
 
     </application>
 

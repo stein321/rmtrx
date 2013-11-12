@@ -1,7 +1,7 @@
 package cap.mizzou.rmtrx.app;
 
 import cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity;
-import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
+import cap.mizzou.rmtrx.app.Finances.FinanceActivity;
 import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
@@ -52,7 +52,7 @@ import javax.inject.Singleton;
                 JoinResidenceActivity.class,
                 LogOutActivity.class,
                 CurrentResidence.class,
-                FinancesActivity.class,
+                FinanceActivity.class,
                 BulletinBoardActivity.class
 
 

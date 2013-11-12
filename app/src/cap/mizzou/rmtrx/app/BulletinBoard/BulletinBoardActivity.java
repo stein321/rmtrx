@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.TestDbActivity.Comment;
+import cap.mizzou.rmtrx.app.TestDbActivity.CommentsDataSource;
 
 import java.util.ArrayList;
+import java.util.List;
+import android.app.ListActivity;
 
 
 /**
@@ -20,68 +21,70 @@ import java.util.ArrayList;
  * Time: 5:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BulletinBoardActivity extends Activity {
+public class BulletinBoardActivity extends ListActivity {
 
 
-    ListView listView ;
-    // Defined Array values to show in ListView
-    ArrayList <String> posts;
-
+    private BulletinBoardDb datasource;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bulletin_board);
         getActionBar().setTitle("Bulletin Board");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get the reference of ListViewAnimals
-        ListView postlistview=(ListView)findViewById(R.id.bblistview);
+        datasource = new BulletinBoardDb(this);
+        datasource.open();
 
-        posts= new ArrayList<String>();
+        List<Post> values = datasource.getAllPosts();
 
-          //This won't work until you actually pass Extra info with the intent.
-//        //Receives data passed with intent
-          Intent intent = getIntent();
+        // Use the SimpleCursorAdapter to show the
+        // elements in a ListView
+        ArrayAdapter<Post> adapter = new ArrayAdapter<Post>(this,
+                android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
 
-          //String message = intent.getExtras("message");
-//        Bundle extras = getIntent().getExtras();
-//        String title = extras.getString("title");
-//        String message = extras.getString("message");
-//
-//        //Adds messages to ArrayList
-         //posts.add(message);
+    }
 
+    // Will be called via the onClick attribute
+    // of the buttons in main.xml
+    public void onClick(View view) {
+        @SuppressWarnings("unchecked")
+        ArrayAdapter<Post> adapter = (ArrayAdapter<Post>) getListAdapter();
+        Post comment;
+        int i = view.getId();
+        if (i == R.id.addPost) {
+            EditText text = (EditText) findViewById(R.id.add_post);
+            String newpost = text.getText().toString();
+            // Save the new comment to the database
+            comment = datasource.createPost(newpost);
 
-        //Create Adapter
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, posts);
-        // Set Adapter
-        postlistview.setAdapter(arrayAdapter);
+            adapter.add(comment);
 
-        // register onClickListener to handle click events on each item
-        postlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            // argument position gives the index of item which is clicked
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
-
-                String selectedpost = posts.get(position);
-                Toast.makeText(getApplicationContext(), "Post Selected: " + selectedpost, Toast.LENGTH_LONG).show();
-
-                Intent display= new Intent(getApplicationContext(), DisplayBBPost.class);
-                display.putExtra("message", selectedpost);
-                startActivity(display);
+        } else if (i == R.id.deletePost) {
+            if (getListAdapter().getCount() > 0) {
+                comment = (Post) getListAdapter().getItem(0);
+                datasource.deletePost(comment);
+                adapter.remove(comment);
             }
-        });
 
-
-
+        }
+        adapter.notifyDataSetChanged();
     }
 
-    public void addBBPost(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, AddBBPost.class);
-        startActivity(intent);
+    @Override
+    protected void onResume() {
+        datasource.open();
+        super.onResume();
     }
+
+    @Override
+    protected void onPause() {
+        datasource.close();
+        super.onPause();
+    }
+
 }
-
 
 
 

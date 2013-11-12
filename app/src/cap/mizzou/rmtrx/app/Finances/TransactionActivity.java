@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
 import java.util.Date;
+import android.widget.ArrayAdapter;
+import android.app.ListActivity;
 
 
 
@@ -22,7 +24,7 @@ public class TransactionActivity extends Activity {
 
    //shared pref.
 
-    //private FinancesDB datasource;
+    private FinanceDb datasource;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,29 +32,39 @@ public class TransactionActivity extends Activity {
         getActionBar().setTitle("Add Transaction");
 
 
-     // datasource = new FinancesDB(this);
-     // datasource.open();
+       // datasource = new FinanceDb(this);
+       // datasource.open();
 
     }
 
 
     public void sendTransaction(View v){
-        //Grabs credit amount
+
+
+        //Grabs transaction amount
         EditText amountText = (EditText) findViewById(R.id.TransactionAmount);
 
-        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
-        String date = dateFormat.format(new Date());
+        //Converts text to double
+        Double amount=Double.parseDouble(amountText.getText().toString());
+        //Sends transaction info to record creation method
+        Transaction trans = datasource.createTransaction("0231",amount);
 
 
-        //Converts
-              Double amount=Double.parseDouble(amountText.getText().toString());
-        //Send transaction info to record creation method
-       //datasource.createTransactionRecord("Des", amount);
+       }
 
-
-
-
+    @Override
+    protected void onResume() {
+        datasource.open();
+        super.onResume();
     }
 
+    @Override
+    protected void onPause() {
+        datasource.close();
+        super.onPause();
+    }
 
 }
+
+
+
