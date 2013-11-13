@@ -1,15 +1,17 @@
 package cap.mizzou.rmtrx.app.Finances;
 
-import android.content.Intent;
+import android.app.ListActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.TextView;
-import cap.mizzou.rmtrx.app.R;
-import android.app.ListActivity;
+import android.widget.*;
 
-import java.util.List;
+import cap.mizzou.rmtrx.app.R;
+
+import java.util.*;
+
+
+import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,12 +25,23 @@ public class FinanceActivity extends ListActivity {
     private FinanceDb datasource;
     private double accountbalance;
     private String abText;
+    TextView tv;
+    private UserInfo userinfo;
+    private String userid;
+
+    private Spinner spinner;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.finances);
         getActionBar().setTitle("Finances");
+
+        userinfo= new UserInfo(this);
+        userid=userinfo.getId();
+
+
 
 
 
@@ -37,28 +50,55 @@ public class FinanceActivity extends ListActivity {
 
 
 
-
-         accountbalance=getAccountBalance("0231");
+         //Gets total account balance
+         accountbalance=getAccountBalance("Jim");
+         //Converts double to String
          abText= String.valueOf(accountbalance);
-
-        TextView tv= (TextView)findViewById(R.id.account_balance);
-
+         abText= "$" + abText;
+         //Grabs Texview
+        tv= (TextView)findViewById(R.id.account_balance);
+         //Fills Textview with accountbalance
         tv.setText(abText);
+
+
+        //Spinner
+        spinner = (Spinner) findViewById(R.id.other_roommates);
+        //TODO Ben: Change hardcode to roommate objects
+        List<String> list = new ArrayList<String>();
+        list.add("Ryan");
+        list.add("Jim");
+        list.add("Brad");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
 
 }
     public void addTransaction(View v){
-        @SuppressWarnings("unchecked")
 
         Transaction transaction;
+        spinner = (Spinner) findViewById(R.id.other_roommates);
 
 
-            EditText amountText = (EditText) findViewById(R.id.transaction_amount);
-            //Converts text to double
-            Double amount=Double.parseDouble(amountText.getText().toString());
-            //Sends transaction info to record creation method
-            transaction=datasource.createTransaction("0231", amount);
+        EditText amountText = (EditText) findViewById(R.id.transaction_amount);
+        //Converts text to double
+        Double amount=Double.parseDouble(amountText.getText().toString());
+
+        //Spinner selection
+        String roomateUserId=String.valueOf(spinner.getSelectedItem());
+
+
+        amountText.setText("");
+        //Sends transaction info to record creation method
+        transaction=datasource.createTransaction(roomateUserId, amount);
 
         //add toast message
+        Context context = getApplicationContext();
+        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserId + "'s Account.";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     public double getAccountBalance(String userid){

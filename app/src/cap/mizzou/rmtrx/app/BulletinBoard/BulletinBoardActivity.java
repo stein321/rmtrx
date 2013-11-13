@@ -1,17 +1,13 @@
 package cap.mizzou.rmtrx.app.BulletinBoard;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
-import cap.mizzou.rmtrx.app.TestDbActivity.Comment;
-import cap.mizzou.rmtrx.app.TestDbActivity.CommentsDataSource;
 
-import java.util.ArrayList;
 import java.util.List;
-import android.app.ListActivity;
 
 
 /**

@@ -5,23 +5,31 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/account_balance"
+            android:layout_gravity="center"/>
+
     <LinearLayout
             android:id="@+id/group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:id="@+id/account_balance"
-            android:layout_gravity="center"/>
+
 
     <EditText android:id="@+id/transaction_amount"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:inputType="numberDecimal"
+              android:inputType="numberDecimal|numberSigned"
             />
 
+        <Spinner
+                android:id="@+id/other_roommates"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
     <Button
             android:id="@+id/addTransaction"
             android:layout_width="wrap_content"
@@ -42,7 +50,7 @@
             android:text="Generate Bill"
             android:onClick="onClick"/>
 
-        </LinearLayout>
+
 
     <ListView
             android:id="@android:id/list"
