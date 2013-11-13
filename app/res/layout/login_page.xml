@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:androidbootstrap="http://schemas.android.com/apk/res-auto"
+              xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -51,7 +53,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:password="true"/>
+              android:password="true"
+              android:inputType="text"/>
 
     <Button
             android:layout_width="wrap_content"
@@ -75,5 +78,13 @@
             android:layout_gravity="center"
             android:textStyle="italic"
             android:clickable="true"/>
+    <com.beardedhen.androidbootstrap.BootstrapButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Default"
+            androidbootstrap:type="default"
+            androidbootstrap:icon_left="fa-heart"
+            android:layout_margin="10dp"
+            />
 
 </LinearLayout>

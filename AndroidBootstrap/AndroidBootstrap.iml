@@ -13,10 +13,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Project SDK" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="core-libs" level="project" />
-    <orderEntry type="module" module-name="AndroidBootstrap" exported="" />
+    <orderEntry type="module" module-name="viewpagerindicator" exported="" />
   </component>
 </module>
 
