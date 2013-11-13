@@ -29,8 +29,7 @@ public class CreateResidenceActivity extends Activity {
         super.onCreate(savedInstanceState);
         Bundle info=getIntent().getExtras();
         setResidenceName(info.getString("name of residence to be created", "default res"));
-        Context context=getApplicationContext();
-        userInfo=new UserInfo(context);
+        userInfo=new UserInfo(this);
         createResidenceOnServer();
     }
 
@@ -42,7 +41,8 @@ public class CreateResidenceActivity extends Activity {
         ri.createResidence(getResidenceName(), userInfo.getId(), new Callback<Residence>() {
             @Override
             public void success(Residence residenceResponse, Response response) {
-                goToDashboard();
+                goToDashboard(residenceResponse);
+                 //TODO: show mike, this is getting back a null ID
             }
 
             @Override
@@ -52,9 +52,9 @@ public class CreateResidenceActivity extends Activity {
             }
         });
     }
-    private  void goToDashboard() {
-        userInfo.setResidenceName(residenceName);
-        userInfo.commit();
+    private  void goToDashboard(Residence residence) {
+        userInfo.setResidenceName(residence.getName());
+        userInfo.setResidenceId(residence.getId());
         Intent dashboard=new Intent(this, DashboardActivity.class);
         startActivity(dashboard);
     }

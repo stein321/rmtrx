@@ -29,8 +29,9 @@ public class LogOutActivity extends Activity {  //make sure to delete all  TestD
     }
     private void clearStoredUserInfo() {
         //TODO:clear local DB
-        userInfo.setLoggedIn(false);
-        userInfo.commit();
+        userInfo.clearInfo();
+//        userInfo.setLoggedIn(false);
+//        userInfo.commit();
     }
     private void goToLoginPage() {
         Intent goToLoginPageIntent = new Intent(this, HomeActivity.class);

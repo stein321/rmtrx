@@ -80,7 +80,7 @@
 
         <!--</activity>-->
         <activity
-                android:name="cap.mizzou.rmtrx.app.Residence.CurrentResidence"
+                android:name="cap.mizzou.rmtrx.app.Residence.UserInfoActivity"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 android:label="@string/currentResidence">
 
@@ -88,6 +88,11 @@
         <activity
                 android:name="cap.mizzou.rmtrx.app.ui.DashboardActivity"
                 android:label="@string/dashboardActivity">
+
+        </activity>
+        <activity
+                android:name="cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity"
+                android:label="@string/residents">
 
         </activity>
 

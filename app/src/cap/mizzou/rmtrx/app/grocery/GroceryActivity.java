@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.grocery;
 
+import Models.GroceryListModel;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -581,31 +582,5 @@ public class GroceryActivity extends Activity {
                 return true;
         }
         return false;
-    }
-
-    public class GroceryListModel {
-        String listName;
-        List<GroceryListItemModel> items;
-    }
-
-    public class GroceryListItemModel {
-        String itemName;
-        boolean itemStatus;
-
-        public String getItemName() {
-            return itemName;
-        }
-
-        public void setItemName(String itemName) {
-            this.itemName = itemName;
-        }
-
-        public boolean isItemStatus() {
-            return itemStatus;
-        }
-
-        public void setItemStatus(boolean itemStatus) {
-            this.itemStatus = itemStatus;
-        }
     }
 }

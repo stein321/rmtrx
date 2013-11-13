@@ -1,222 +1,176 @@
 package cap.mizzou.rmtrx.app.ui;
 
 
+import Models.Key;
+import Models.Residence;
 import Models.ResponseObject;
+import Models.User;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import cap.mizzou.rmtrx.app.DataAccess.ResidenceDataInterface;
+import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
+import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
-import com.google.gson.annotations.SerializedName;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-
 public class HomeActivity extends BaseFragmentActivity {
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    private SharedPreferences logged_in_status;
-
-    protected boolean login_result;
-    private String login_name;  //just for printing to log
-    private String password; //just for printing to log
+    private UserInfo userInfo;
+    private RestAdapter restAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        SharedPreferences user_name = getSharedPreferences();
+        userInfo =new UserInfo(this);
         setContentView(R.layout.activity_login);
-
+        getActionBar().setTitle("Login");
+        if(userInfo.isLoggedIn()) {
+            goToDashBoard();
+        }
+        restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
     }
-
-    @Override
-    public void finish() {
-        // Prepare data intent
-        Intent data = new Intent();
-        data.putExtra("returnKey1", "Swinging on a star. ");
-        data.putExtra("returnKey2", "You could be better then you are. ");
-        // Activity finished ok, return the data
-        setResult(5, data);
-        super.finish();
-    }
-    public void startIntent() {
+    public void goToDashBoard() {
         Intent goToDashBoard=new Intent(this,DashboardActivity.class);
         startActivity(goToDashBoard);
     }
     public void sendLoginInfo(View view) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        //saved to shared preferences
-        this.logged_in_status = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = this.logged_in_status.edit();
-
         //grabs text from form
-        EditText login_name_text = (EditText) findViewById(R.id.login_name);
-        EditText p_word_text = (EditText) findViewById(R.id.p_word);
 
-        //turns it into a string
-        String login_to_add = login_name_text.getText().toString();
-        String p_word_to_add = p_word_text.getText().toString();
+        EditText username = (EditText) findViewById(R.id.login_name);
+        EditText password = (EditText) findViewById(R.id.p_word);
 
-//        //stores string as key valued pairs
-        editor.putString("login_name", login_to_add);
-        editor.putString("p_word", p_word_to_add);
-
-        //hard coded login info, change to server call
-        checkLoginCredentials(login_to_add, p_word_to_add);   //should set login_result to true or false
-//        if (login_result) {
-//            editor.putBoolean("logged_in_status_yo", true);
-//            editor.commit();
-//            Intent goToDashBoard=new Intent(this,DashboardActivity.class);
-//            startActivity(goToDashBoard);
-//        } else {
-//            alertDialogBuilder
-//                    .setMessage("Username and/password incorrect")
-//                    .setCancelable(true);
-//        }
-//        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-//        alertDialog.show();
-        //grabs values out of memory for debugging purposes
-        boolean status = logged_in_status.getBoolean("logged_in_status_yo", false);
-        password = logged_in_status.getString("p_word", null);
-        String User = logged_in_status.getString("login_name", null);
-        //prints values out in the debugger screen
-//        Log.d("test-login", String.valueOf(status));
-//        Log.d("test-pass", password);
-//        Log.d("test-user", User);
-
-
+        String login_to_add = username.getText().toString();
+        String p_word_to_add = password.getText().toString();
+        checkLoginCredentials(login_to_add, p_word_to_add);
     }
 
     public void checkLoginCredentials(String username, String password) {
-
-        RestAdapter restAdapter =
-                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-
         AuthenticationRequestInterface ri = restAdapter.create(AuthenticationRequestInterface.class);
+        ri.login(username, password, new Callback<ResponseObject>() {
 
-
-        ri.login(username, password,new Callback<Models.ResponseObject>() {
             @Override
-            public void success(Models.ResponseObject responseObject, Response response) {
-                startIntent();
+            public void success(ResponseObject authResponse, Response response) {
+                successfulLogin(authResponse.getResponse(),authResponse.getUser());
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                incorrectLogin();
             }
-        });
-//        return login_result;
-//        return true;//comment out
+        }
+        );
     }
 
+    private void incorrectLogin() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Wrong login").create().show();
+    }
+
+    private void successfulLogin(Key key, User user) {
+        userInfo.setEmail(user.getEmail());
+        userInfo.setFirstName(user.getFirstName());
+        userInfo.setLastName(user.getLastName());
+        userInfo.setAuthKey(key.getKey());
+        userInfo.setLoggedIn(true);
+        userInfo.setId(user.getId());
+
+        grabAllUsersInResidenceAndStoreInfoInDb();
+        goToDashBoard();
+    }
+
+
+
+    private void grabAllUsersInResidenceAndStoreInfoInDb() {
+        ResidenceDataInterface ri = restAdapter.create(ResidenceDataInterface.class);
+
+        ri.getResidence(userInfo.getId(), new Callback<Residence>() {
+            @Override
+            public void success(Residence residence, Response response) {
+                saveResidenceToDb(residence);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                int x=2;
+                //TODO:this is failing. not sure why
+            }
+        });
+
+
+
+    }
+
+    public void saveResidenceToDb(Residence residence) {
+        userInfo.setResidenceId(residence.getId());
+        userInfo.setResidenceName(residence.getName());
+        grabUserInfoFromServerAndSaveTodb(residence.getUsers());
+        
+
+    }
+
+    private void grabUserInfoFromServerAndSaveTodb(String[] users) {
+               //TODO: clear db
+          for(int i=0;i<users.length;i++) {
+                sendToServer(users[i]);
+          }
+
+    }
+
+    private void sendToServer(String id) {
+             ResidenceDataInterface ri=restAdapter.create(ResidenceDataInterface.class);
+       ri.getUser(id, new Callback<User>() {
+           @Override
+           public void success(User user, Response response) {
+               saveUserToDB(user);
+           }
+
+           @Override
+           public void failure(RetrofitError retrofitError) {
+               //To change body of implemented methods use File | Settings | File Templates.
+           }
+       });
+    }
+
+    private void saveUserToDB(User user) {
+        ResidentDataSource data=new ResidentDataSource(this);
+        data.open();
+        data.addResident(user.getId(),user.getEmail(),user.getFirstName(),user.getLastName());
+        data.close();
+    }
 
     public void register(View view) {
         Intent myIntent = new Intent(this, RegistrationActivity.class);
         startActivity(myIntent);
     }
-    public class User {
-        @SerializedName("_id")
-        String id;
-        String email;
-        String password;
-        String firstName;
-        String lastName;
 
-        public String getEmail() {
-            return email;
+
+
+    private boolean isOnline()
+    {
+        Context context=getApplicationContext();
+        try
+        {
+            ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            return cm.getActiveNetworkInfo().isConnectedOrConnecting();
         }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-    }
-    public class AuthResponse {
-        @SerializedName("_id")
-        String id;
-        String key;
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
+        catch (Exception e)
+        {
+            return false;
         }
     }
-    public class ResponseObject {
-        AuthResponse response;
-        User user;
-
-        public AuthResponse getResponse() {
-            return response;
-        }
-
-        public void setResponse(AuthResponse response) {
-            this.response = response;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-
+    private void showNotConnectedAlert() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Not online").create().show();
     }
-
-
 
 }

@@ -2,8 +2,13 @@ package cap.mizzou.rmtrx.app.Residence;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.DataAccess.Resident;
+import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
+import cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.ResidenceCreationInterface;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
@@ -21,11 +26,12 @@ import java.util.Random;
  * Time: 10:14 AM
  * To change this template use File | Settings | File Templates.
  */
-public class CurrentResidence extends Activity {
+public class UserInfoActivity extends Activity {
     private UserInfo userInfo;
-
-//    private ListView nameList;
+    private ResidentDataSource data;
     private String code;
+
+    //TODO:make an activity that dumps out the sharedpreferences
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,29 +40,37 @@ public class CurrentResidence extends Activity {
         getActionBar().setTitle("Residence Information");
         Context context=getApplicationContext();
         userInfo=new UserInfo(context);
+        data=new ResidentDataSource(this);
+        data.open();
+        userInfo.dumpPrefValues();
+
 
         setInfoOnPage();
     }
-    public void showCode() {
-                 String code_to_display=generateCode();
-                 TextView show_code=(TextView)findViewById(R.id.code);
+    //need to be connected to the in
+    public void generateCode(View view) {
+                 setCode(generateCode());
 
-                show_code.setText(code_to_display);
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         ResidenceCreationInterface ri= restAdapter.create(ResidenceCreationInterface.class);
 
-        ri.saveResidenceCode(code_to_display,userInfo.getResidenceId(), new Callback<Code>() {
+        ri.saveResidenceCode(code,userInfo.getResidenceId(), new Callback<Code>() {
             @Override
             public void success(Code code, Response response) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                setNewCodeOnPage();
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                //To change body of implemented methods use File | Settings | File Templates.
             }
         });
+    }
+
+    private void setNewCodeOnPage() {
+        TextView show_code=(TextView)findViewById(R.id.code);
+
+        show_code.setText(getCode());
     }
     private void setInfoOnPage() {
         TextView showNameOfUser=(TextView)findViewById(R.id.user_name);   //hard code for now
@@ -64,6 +78,10 @@ public class CurrentResidence extends Activity {
 
         showNameOfUser.setText(userInfo.getFirstName() + " " + userInfo.getLastName());
         showNameOfResidence.setText(userInfo.getResidenceName());
+    }
+    public void showResidentsList(View view) {
+        Intent showList=new Intent(this, ShowResidentsActivity.class);
+        startActivity(showList);
     }
 
     private String generateCode() {
@@ -80,4 +98,12 @@ public class CurrentResidence extends Activity {
 
         return code;
         }
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
 }
