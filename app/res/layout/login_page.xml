@@ -79,12 +79,12 @@
             android:textStyle="italic"
             android:clickable="true"/>
     <!-- basic text-->
-    <com.beardedhen.androidbootstrap.FontAwesomeText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fontawesometext:icon="fa-github"
-            android:layout_margin="10dp"
-            android:textSize="32sp"
-            />
+    <!--<com.beardedhen.androidbootstrap.FontAwesomeText-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--fontawesometext:icon="fa-github"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:textSize="32sp"-->
+            <!--/>-->
 
 </LinearLayout>
