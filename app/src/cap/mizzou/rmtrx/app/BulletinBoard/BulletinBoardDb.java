@@ -27,7 +27,7 @@ public class BulletinBoardDb {
     private SQLiteDatabase database;
     private BBMySQLiteHelper dbHelper;
     private String[] allColumns = { BBMySQLiteHelper.COLUMN_ID,
-            BBMySQLiteHelper.COLUMN_POST };
+            BBMySQLiteHelper.COLUMN_POST};
 
     public BulletinBoardDb(Context context) {
         dbHelper = new BBMySQLiteHelper(context);
@@ -41,9 +41,11 @@ public class BulletinBoardDb {
         dbHelper.close();
     }
 
-    public Post createPost(String post) {
+    public Post createPost(String userid, String title, String details) {
         ContentValues values = new ContentValues();
-        values.put(BBMySQLiteHelper.COLUMN_POST, post);
+
+        values.put(BBMySQLiteHelper.COLUMN_POST, title);
+
         long insertId = database.insert(BBMySQLiteHelper.TABLE_POSTS, null,
                 values);
         Cursor cursor = database.query(BBMySQLiteHelper.TABLE_POSTS,
@@ -57,7 +59,7 @@ public class BulletinBoardDb {
 
     public void deletePost(Post post) {
         long id = post.getId();
-        System.out.println("Comment deleted with id: " + id);
+        System.out.println("Post deleted with id: " + id);
         database.delete(BBMySQLiteHelper.TABLE_POSTS, BBMySQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
@@ -82,7 +84,8 @@ public class BulletinBoardDb {
     private Post cursorToPost(Cursor cursor) {
         Post comment = new Post();
         comment.setId(cursor.getLong(0));
-        comment.setPost(cursor.getString(1));
+        comment.setPostTitle(cursor.getString(1));
+
         return comment;
     }
 }

@@ -99,6 +99,13 @@
 
         </activity>
 
+        <activity
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPostActivity"
+                android:label="Add Bulletin Board Post"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.BulletinBoard.AddBBPostActivity">
+
+        </activity>
+
 
 
 

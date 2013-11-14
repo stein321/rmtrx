@@ -16,7 +16,10 @@ public class BBMySQLiteHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_POSTS = "posts";
     public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_USERID= "userid";
     public static final String COLUMN_POST = "post";
+    public static final String COLUMN_POSTDETAILS = "details";
+
 
     private static final String DATABASE_NAME = "posts.db";
     private static final int DATABASE_VERSION = 1;

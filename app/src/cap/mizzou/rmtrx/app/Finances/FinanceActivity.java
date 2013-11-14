@@ -51,7 +51,7 @@ public class FinanceActivity extends ListActivity {
 
 
          //Gets total account balance
-         accountbalance=getAccountBalance("Jim");
+         accountbalance=getAccountBalance(userid);
          //Converts double to String
          abText= String.valueOf(accountbalance);
          abText= "$" + abText;

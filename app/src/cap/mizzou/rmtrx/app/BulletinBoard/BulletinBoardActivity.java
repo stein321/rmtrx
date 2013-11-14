@@ -3,11 +3,16 @@ package cap.mizzou.rmtrx.app.BulletinBoard;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
-
+import android.widget.*;
 import java.util.List;
+import android.content.Intent;
+import android.app.*;
+import android.content.DialogInterface;
+
 
 
 /**
@@ -21,6 +26,8 @@ public class BulletinBoardActivity extends ListActivity {
 
 
     private BulletinBoardDb datasource;
+    private PostListAdapter postListAdapter;
+    private Post currentpost;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,41 +39,46 @@ public class BulletinBoardActivity extends ListActivity {
         datasource = new BulletinBoardDb(this);
         datasource.open();
 
+
+
         List<Post> values = datasource.getAllPosts();
 
-        // Use the SimpleCursorAdapter to show the
-        // elements in a ListView
-        ArrayAdapter<Post> adapter = new ArrayAdapter<Post>(this,
-                android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
+        postListAdapter = new PostListAdapter(getApplicationContext(), R.layout.post_list_item, values);
+
+        setListAdapter(postListAdapter);
+
+
+
+        this.getListView().setClickable(true);
+        this.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                //show post details
+            }});
+
+
+
 
     }
 
-    // Will be called via the onClick attribute
-    // of the buttons in main.xml
+    //starts the addPost activity
     public void onClick(View view) {
-        @SuppressWarnings("unchecked")
-        ArrayAdapter<Post> adapter = (ArrayAdapter<Post>) getListAdapter();
-        Post comment;
-        int i = view.getId();
-        if (i == R.id.addPost) {
-            EditText text = (EditText) findViewById(R.id.add_post);
-            String newpost = text.getText().toString();
-            // Save the new comment to the database
-            comment = datasource.createPost(newpost);
 
-            adapter.add(comment);
-
-        } else if (i == R.id.deletePost) {
-            if (getListAdapter().getCount() > 0) {
-                comment = (Post) getListAdapter().getItem(0);
-                datasource.deletePost(comment);
-                adapter.remove(comment);
-            }
-
+        Intent addpost= new Intent(this, AddBBPostActivity.class);
+        startActivity(addpost);
         }
-        adapter.notifyDataSetChanged();
+
+    public void deletePost(View view){
+        ImageButton button = (ImageButton) view;
+        currentpost = (Post) button.getTag();
+        datasource.deletePost(currentpost);
+
+        postListAdapter.removePost(currentpost);
+        postListAdapter.notifyDataSetChanged();
+
+        //showDialog(1);
     }
+
 
     @Override
     protected void onResume() {
@@ -79,6 +91,33 @@ public class BulletinBoardActivity extends ListActivity {
         datasource.close();
         super.onPause();
     }
+
+
+    private Dialog createDialogRemoveConfirm() {
+        return new AlertDialog.Builder(getApplicationContext())
+                //.setIcon(R.drawable.trashbin_icon)
+                .setTitle("Remove?")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        handleRemoveConfirm();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+    }
+
+
+    protected void handleRemoveConfirm() {
+
+        datasource.deletePost(currentpost);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int i) {
+
+                return createDialogRemoveConfirm();
+
+        }
 
 }
 

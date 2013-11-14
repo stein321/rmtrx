@@ -10,7 +10,10 @@ package cap.mizzou.rmtrx.app.BulletinBoard;
 public class Post {
 
         private long id;
-        private String post;
+        private String userid;
+        private String postTitle;
+        private String postDetails;
+
 
         public long getId() {
             return id;
@@ -20,18 +23,34 @@ public class Post {
             this.id = id;
         }
 
-        public String getPost() {
-            return post;
+         public String getUserId() {
+            return userid;
         }
 
-        public void setPost(String post) {
-            this.post = post;
+        public void setUserId(String userid) {
+            this.userid = userid;
+        }
+
+        public String getPostTitle() {
+            return postTitle;
+        }
+
+        public void setPostTitle(String title) {
+            this.postTitle = title;
+        }
+
+        public String getPostDetails() {
+            return postDetails;
+        }
+
+        public void setPostDetails(String details) {
+            this.postDetails = details;
         }
 
         // Will be used by the ArrayAdapter in the ListView
         @Override
         public String toString() {
-            return post;
+            return postTitle;
         }
     }
 

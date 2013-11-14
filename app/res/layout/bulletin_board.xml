@@ -2,34 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              >
 
-    <LinearLayout
-            android:id="@+id/group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-        <EditText android:id="@+id/add_post"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:inputType="text"
-                />
-
-        <Button
+<Button
                 android:id="@+id/addPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add"
                 android:onClick="onClick"/>
 
-        <Button
-                android:id="@+id/deletePost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete First"
-                android:onClick="onClick"/>
 
-    </LinearLayout>
+
 
     <ListView
             android:id="@android:id/list"
