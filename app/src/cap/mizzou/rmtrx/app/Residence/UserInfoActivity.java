@@ -42,7 +42,7 @@ public class UserInfoActivity extends Activity {
         userInfo=new UserInfo(context);
         data=new ResidentDataSource(this);
         data.open();
-        userInfo.dumpPrefValues();
+//        userInfo.dumpPrefValues();
 
 
         setInfoOnPage();
@@ -55,7 +55,7 @@ public class UserInfoActivity extends Activity {
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         ResidenceCreationInterface ri= restAdapter.create(ResidenceCreationInterface.class);
 
-        ri.saveResidenceCode(code,userInfo.getResidenceId(), new Callback<Code>() {
+        ri.saveResidenceCode(userInfo.getResidenceId(),getCode(), new Callback<Code>() {
             @Override
             public void success(Code code, Response response) {
                 setNewCodeOnPage();
@@ -103,7 +103,7 @@ public class UserInfoActivity extends Activity {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.code = "123";
     }
 
 }

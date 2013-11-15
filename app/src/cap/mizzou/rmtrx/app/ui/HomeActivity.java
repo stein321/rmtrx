@@ -31,7 +31,7 @@ public class HomeActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userInfo =new UserInfo(this);
+        userInfo = new UserInfo(this);
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
         if(userInfo.isLoggedIn()) {
@@ -40,18 +40,13 @@ public class HomeActivity extends BaseFragmentActivity {
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
     }
     public void goToDashBoard() {
-        Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+        Intent goToDashBoard=new Intent(this, DashboardActivity.class);
         startActivity(goToDashBoard);
     }
     public void sendLoginInfo(View view) {
-        //grabs text from form
-
-        EditText username = (EditText) findViewById(R.id.login_name);
+        EditText userName = (EditText) findViewById(R.id.login_name);
         EditText password = (EditText) findViewById(R.id.p_word);
-
-        String login_to_add = username.getText().toString();
-        String p_word_to_add = password.getText().toString();
-        checkLoginCredentials(login_to_add, p_word_to_add);
+        checkLoginCredentials(userName.getText().toString(), password.getText().toString());
     }
 
     public void checkLoginCredentials(String username, String password) {
@@ -77,6 +72,12 @@ public class HomeActivity extends BaseFragmentActivity {
     }
 
     private void successfulLogin(Key key, User user, Residence residence) {
+        setUserInfo(key, user, residence);
+        grabAllUsersInResidenceAndStoreInfoInDb(residence);
+        goToDashBoard();
+    }
+
+    private void setUserInfo(Key key, User user, Residence residence) {
         userInfo.setEmail(user.getEmail());
         userInfo.setFirstName(user.getFirstName());
         userInfo.setLastName(user.getLastName());
@@ -85,11 +86,7 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo.setId(user.getId());
         userInfo.setResidenceId(residence.getId());
         userInfo.setResidenceName(residence.getName());
-
-        grabAllUsersInResidenceAndStoreInfoInDb(residence);
-        goToDashBoard();
     }
-
 
 
     private void grabAllUsersInResidenceAndStoreInfoInDb(Residence residence) {

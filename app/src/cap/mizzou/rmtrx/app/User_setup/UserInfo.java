@@ -51,12 +51,12 @@ public class UserInfo {
     }
 
     //just do this to see all of the sharedPreferences in the debug log
-    public void dumpPrefValues() {
-        for(Map.Entry<String,?> entry : keys.entrySet()){
-            Log.d("map values", entry.getKey() + ": " +
-                    entry.getValue().toString());
-        }
-    }
+//    public void dumpPrefValues() {
+//        for(Map.Entry<String,?> entry : keys.entrySet()){
+//            Log.d("map values", entry.getKey() + ": " +
+//                    entry.getValue().toString());
+//        }
+//    }
     public String getId() {
         return id;
     }

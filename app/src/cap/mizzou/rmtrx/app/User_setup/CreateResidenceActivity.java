@@ -21,51 +21,18 @@ import retrofit.client.Response;
 
 public class CreateResidenceActivity extends Activity {
 
-    private String residenceName;
-    private UserInfo userInfo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle info=getIntent().getExtras();
-        setResidenceName(info.getString("name of residence to be created", "default res"));
-        userInfo=new UserInfo(this);
-        createResidenceOnServer();
+        goToDashboard();
     }
 
-    private void createResidenceOnServer() {
-        RestAdapter restAdapter =
-                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-        ResidenceCreationInterface ri= restAdapter.create(ResidenceCreationInterface.class);
 
-        ri.createResidence(getResidenceName(), userInfo.getId(), new Callback<Residence>() {
-            @Override
-            public void success(Residence residenceResponse, Response response) {
-                goToDashboard(residenceResponse);
-                 //TODO: show mike, this is getting back a null ID
-            }
+    private  void goToDashboard() {
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
-                //TODO:display an error
-                //check if maybe not connected to the internet
-            }
-        });
-    }
-    private  void goToDashboard(Residence residence) {
-        userInfo.setResidenceName(residence.getName());
-        userInfo.setResidenceId(residence.getId());
         Intent dashboard=new Intent(this, DashboardActivity.class);
         startActivity(dashboard);
-    }
-
-
-    public String getResidenceName() {
-        return residenceName;
-    }
-
-    public void setResidenceName(String residenceName) {
-        this.residenceName = residenceName;
     }
 
 

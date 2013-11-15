@@ -1,7 +1,6 @@
 package cap.mizzou.rmtrx.app.Login;
 
-import Models.CreateUserResponse;
-import Models.Residence;
+import Models.UserAndResidenceResponse;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,7 +13,6 @@ import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
-import cap.mizzou.rmtrx.app.User_setup.ResidenceInteractionInterface;
 import cap.mizzou.rmtrx.app.User_setup.UserCreationInterface;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -31,10 +29,11 @@ import retrofit.client.Response;
 public class RegistrationActivity extends Activity {
 
     private String firstName;
+    private String lastName;
     private String email;
+
     private String password;
     private String confirmPassword;
-    private String lastName;
     private String nameOfResidence;
     private UserInfo user;
     private String radioButtonSelected;
@@ -59,11 +58,11 @@ public class RegistrationActivity extends Activity {
 
         TextView textToBeChanged=(TextView)findViewById(R.id.code_or_name_title);
 
-        if(viewId ==R.id.JoinRadioButton) {
+        if(viewId == R.id.JoinRadioButton) {
             textToBeChanged.setText("Code of the residence you would like to join");
             radioButtonSelected="Join";
         }
-        else if(viewId ==R.id.CreateRadioButton) {
+        else if(viewId == R.id.CreateRadioButton) {
             textToBeChanged.setText("Name of Residence");
             radioButtonSelected="Create";
 
@@ -71,33 +70,55 @@ public class RegistrationActivity extends Activity {
 
     }
     public void onClick(View view) {
-        if(viewId ==R.id.JoinRadioButton) {
-            setJoinResidenceCode(((EditText) findViewById(R.id.code_or_name)).getText().toString());
-        } else if(viewId ==R.id.CreateRadioButton) {
-            setNameOfResidence(((EditText) findViewById(R.id.code_or_name)).getText().toString());
+        setObjectProperties();
+        if(validateForm()) {
+            if(viewId == R.id.JoinRadioButton) {
+                setJoinResidenceCode(((EditText) findViewById(R.id.code_or_name)).getText().toString());
+                createUserAndJoinResidence();
+            }
+            else if(viewId == R.id.CreateRadioButton) {
+                setNameOfResidence(((EditText) findViewById(R.id.code_or_name)).getText().toString());
+                createUserAndResidence();
+            }
         }
+    }
 
+    private void setObjectProperties() {
         setFirstName(((EditText) findViewById(R.id.firstName)).getText().toString());
         setLastName(((EditText) findViewById(R.id.lastName)).getText().toString());
         setEmail(((EditText) findViewById(R.id.email)).getText().toString());
         setPassword(((EditText) findViewById((R.id.password))).getText().toString());
         setConfirmPassword(((EditText) findViewById(R.id.confirmPassword)).getText().toString());
-
-        if (this.validateForm()) {
-              sendUserInfoToServerToCreateUser();
-        }
     }
 
-    private void sendUserInfoToServerToCreateUser() {
+    private void createUserAndJoinResidence() {
         RestAdapter restAdapter =
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
 
         UserCreationInterface ri = restAdapter.create(UserCreationInterface.class);
 
-        ri.createUser(getFirstName(),getLastName(),getEmail(),getPassword(), new Callback<CreateUserResponse>() {
+        ri.createUserAndJoinResidence(getFirstName(), getLastName(), getEmail(), getPassword(), getJoinResidenceCode(), new Callback<UserAndResidenceResponse>() {
             @Override
-            public void success(CreateUserResponse userAndKey, Response response) {
-                createUserAndLogin(userAndKey);
+            public void success(UserAndResidenceResponse userAndResidenceAndKey, Response response) {
+                createUserAndLogin(userAndResidenceAndKey);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                System.out.print("Failed to create User");
+            }
+        });
+    }
+    private void createUserAndResidence() {
+        RestAdapter restAdapter =
+                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+
+        UserCreationInterface ri = restAdapter.create(UserCreationInterface.class);
+
+        ri.createUserAndResidence(getFirstName(), getLastName(), getEmail(), getPassword(), getNameOfResidence(), new Callback<UserAndResidenceResponse>() {
+            @Override
+            public void success(UserAndResidenceResponse userAndResidenceAndKey, Response response) {
+                createUserAndLogin(userAndResidenceAndKey);
             }
 
             @Override
@@ -107,24 +128,28 @@ public class RegistrationActivity extends Activity {
         });
     }
 
-    private void createUserAndLogin(CreateUserResponse userAndKey) {
-        user.setFirstName(userAndKey.getUser().getFirstName());
-        user.setLastName(userAndKey.getUser().getLastName());
-        user.setEmail(userAndKey.getUser().getEmail());
-        user.setAuthKey(userAndKey.getKey().getKey());
-        user.setId(userAndKey.getUser().getId());
-        user.setLoggedIn(true);
-
-        if(this.radioButtonSelected.equals("Create")) {
+    private void createUserAndLogin(UserAndResidenceResponse userInfoAndKey) {
+        setUserInfo(userInfoAndKey);
+        if( this.radioButtonSelected.equals("Create") ) {
             createResidence();
         }
-        else if(this.radioButtonSelected.equals("Join")) {
+        else if( this.radioButtonSelected.equals("Join") ) {
             joinResidence();
         }
     }
 
-    public void joinResidence() {
+    private void setUserInfo(UserAndResidenceResponse userInfoAndKey) {
+        user.setFirstName(userInfoAndKey.getUser().getFirstName());
+        user.setLastName(userInfoAndKey.getUser().getLastName());
+        user.setEmail(userInfoAndKey.getUser().getEmail());
+        user.setAuthKey(userInfoAndKey.getKey().getKey());
+        user.setId(userInfoAndKey.getUser().getId());
+        user.setResidenceName(userInfoAndKey.getResidence().getName());
+        user.setResidenceName(userInfoAndKey.getResidence().getId());
+        user.setLoggedIn(true);
+    }
 
+    public void joinResidence() {
             Intent joinResidenceIntent = new Intent(this, JoinResidenceActivity.class);
             joinResidenceIntent.putExtra("residence code",getJoinResidenceCode());
             startActivity(joinResidenceIntent);
@@ -132,7 +157,6 @@ public class RegistrationActivity extends Activity {
 
     public void createResidence() {
             Intent createResidence = new Intent(this, CreateResidenceActivity.class);
-            createResidence.putExtra("name of residence to be created", getNameOfResidence());
             startActivity(createResidence);
     }
 
@@ -147,23 +171,27 @@ public class RegistrationActivity extends Activity {
                     .setMessage("Name is empty")
                     .setCancelable(true);
             result = false;
-        } else if (getEmail().equals("")) {
+        }
+        else if (getEmail().equals("")) {
             alertDialogBuilder
                     .setMessage("Email is empty")
                     .setCancelable(true);
             result = false;
-        } else if (getPassword().equals("")) {
+        }
+        else if (getPassword().equals("")) {
             alertDialogBuilder
                     .setMessage("Password is empty")
                     .setCancelable(true);
             result = false;
 
-        } else if (getConfirmPassword().equals("")) {
+        }
+        else if (getConfirmPassword().equals("")) {
             alertDialogBuilder
                     .setMessage("Confirmation Password is empty")
                     .setCancelable(true);
             result = false;
-        } else if (!this.checkPassword()) {
+        }
+        else if (!this.checkPassword()) {
             alertDialogBuilder
                     .setMessage("Passwords Don't Match")
                     .setCancelable(true);
@@ -178,6 +206,7 @@ public class RegistrationActivity extends Activity {
             // show it
             alertDialog.show();
         }
+
         return result;
     }
 
@@ -245,8 +274,4 @@ public class RegistrationActivity extends Activity {
     public void setJoinResidenceCode(String joinResidenceCode) {
         this.joinResidenceCode = joinResidenceCode;
     }
-
-
-
-
 }

@@ -7,9 +7,10 @@ package Models;
  * Time: 8:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class CreateUserResponse {
+public class UserAndResidenceResponse {
     User user;
     Key key;
+    Residence residence;
 
     public User getUser() {
         return user;
@@ -26,4 +27,12 @@ public class CreateUserResponse {
     public void setKey(Key key) {
         this.key = key;
     }
+    public Residence getResidence() {
+        return residence;
+    }
+
+    public void setResidence(Residence residence) {
+        this.residence = residence;
+    }
+
 }
