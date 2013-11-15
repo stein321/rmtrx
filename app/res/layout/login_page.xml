@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:androidbootstrap="http://schemas.android.com/apk/res-auto"
-              xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -53,8 +51,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:password="true"
-              android:inputType="text"/>
+              android:password="true"/>
 
     <Button
             android:layout_width="wrap_content"
@@ -78,13 +75,5 @@
             android:layout_gravity="center"
             android:textStyle="italic"
             android:clickable="true"/>
-    <!-- basic text-->
-    <!--<com.beardedhen.androidbootstrap.FontAwesomeText-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--fontawesometext:icon="fa-github"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:textSize="32sp"-->
-            <!--/>-->
 
 </LinearLayout>
