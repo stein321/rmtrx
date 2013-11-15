@@ -18,5 +18,5 @@ public interface AuthenticationRequestInterface {
 
     @FormUrlEncoded
     @POST("/authenticate")
-    void login(@Field("email") String username, @Field("password") String password, Callback<ResponseObject> user);
+    void login(@Field("email") String username, @Field("password") String password, Callback<ResponseObject> callback);
 }

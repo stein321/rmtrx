@@ -13,7 +13,7 @@ public class Residence {
     String name;
     @SerializedName("_id")
     String id;
-    String[] users;
+    User[] users;
 
     public String getName() {
         return name;
@@ -31,11 +31,11 @@ public class Residence {
         this.id = id;
     }
 
-    public String[] getUsers() {
+    public User[] getUsers() {
         return users;
     }
 
-    public void setUsers(String[] users) {
+    public void setUsers(User[] users) {
         this.users = users;
     }
 }

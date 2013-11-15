@@ -18,6 +18,6 @@ public interface ResidenceDataInterface {
     @GET("/residence/user/{id}")
     void getResidence(@Path("id") String userId, Callback<Residence> callback);
 
-    @GET("/user/{userId}")
+    @GET("/user/{id}")
     void getUser(@Path("id") String userId, Callback<User> callback);
 }

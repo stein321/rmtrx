@@ -10,6 +10,7 @@ package Models;
 public class ResponseObject {
     private Key key;
     private User user;
+    private Residence residence;
 
     public Key getResponse() {
         return key;
@@ -25,6 +26,13 @@ public class ResponseObject {
 
     public void setUser(User user) {
         this.user = user;
+    }
+    public Residence getResidence() {
+        return residence;
+    }
+
+    public void setResidence(Residence residence) {
+        this.residence = residence;
     }
 
 
