@@ -14,6 +14,7 @@ import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.JoinResidenceActivity;
 import cap.mizzou.rmtrx.app.User_setup.UserCreationInterface;
+import cap.mizzou.rmtrx.app.ui.DashboardActivity;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -72,11 +73,11 @@ public class RegistrationActivity extends Activity {
     public void onClick(View view) {
         setObjectProperties();
         if(validateForm()) {
-            if(viewId == R.id.JoinRadioButton) {
+            if(radioButtonSelected.equals("Join")) {
                 setJoinResidenceCode(((EditText) findViewById(R.id.code_or_name)).getText().toString());
                 createUserAndJoinResidence();
             }
-            else if(viewId == R.id.CreateRadioButton) {
+            else if(radioButtonSelected.equals("Create")) {
                 setNameOfResidence(((EditText) findViewById(R.id.code_or_name)).getText().toString());
                 createUserAndResidence();
             }
@@ -100,7 +101,7 @@ public class RegistrationActivity extends Activity {
         ri.createUserAndJoinResidence(getFirstName(), getLastName(), getEmail(), getPassword(), getJoinResidenceCode(), new Callback<UserAndResidenceResponse>() {
             @Override
             public void success(UserAndResidenceResponse userAndResidenceAndKey, Response response) {
-                createUserAndLogin(userAndResidenceAndKey);
+                saveUserLocallyAndLogin(userAndResidenceAndKey);
             }
 
             @Override
@@ -118,7 +119,7 @@ public class RegistrationActivity extends Activity {
         ri.createUserAndResidence(getFirstName(), getLastName(), getEmail(), getPassword(), getNameOfResidence(), new Callback<UserAndResidenceResponse>() {
             @Override
             public void success(UserAndResidenceResponse userAndResidenceAndKey, Response response) {
-                createUserAndLogin(userAndResidenceAndKey);
+                saveUserLocallyAndLogin(userAndResidenceAndKey);
             }
 
             @Override
@@ -128,14 +129,10 @@ public class RegistrationActivity extends Activity {
         });
     }
 
-    private void createUserAndLogin(UserAndResidenceResponse userInfoAndKey) {
+    private void saveUserLocallyAndLogin(UserAndResidenceResponse userInfoAndKey) {
         setUserInfo(userInfoAndKey);
-        if( this.radioButtonSelected.equals("Create") ) {
-            createResidence();
-        }
-        else if( this.radioButtonSelected.equals("Join") ) {
-            joinResidence();
-        }
+        Intent dashboard=new Intent(this, DashboardActivity.class);
+        startActivity(dashboard);
     }
 
     private void setUserInfo(UserAndResidenceResponse userInfoAndKey) {
