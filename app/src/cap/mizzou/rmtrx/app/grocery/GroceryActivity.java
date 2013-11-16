@@ -228,7 +228,10 @@ public class GroceryActivity extends Activity {
         Cursor cursor = getLists();
 
         if (!cursor.moveToFirst()) {
-            addList("Add List");
+//            addList("Add List");
+
+            Dialog dialog = onCreateDialog(2);
+            dialog.show();
             cursor = getLists();
         }
 
