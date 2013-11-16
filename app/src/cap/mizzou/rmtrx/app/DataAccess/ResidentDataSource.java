@@ -49,6 +49,9 @@ public class ResidentDataSource {
         cursor.close();
         return newResident;
     }
+    public void truncate() {
+        database.execSQL("delete  from " + TABLE_RESIDENTS);
+    }
 
     public List<Resident> getAllResidents() {
             List<Resident> residents=new ArrayList<Resident>();

@@ -57,7 +57,7 @@ public class Resident {
     }
 
     public String toString() {
-        return userID;
+        return getEmail();
     }
 
 

@@ -25,6 +25,7 @@ import java.util.List;
 
 public class GroceryActivity extends Activity {
 
+    //TODO: If the grocery db is empty, prompt the user to create a list
     public static final String AUTHORITY = "cap.mizzou.rmtrx.app.grocery.GroceryDB";
 
     private Spinner listSpinner;

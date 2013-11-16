@@ -97,7 +97,10 @@ public class UserInfoActivity extends Activity {
            }
 
         return code;
-        }
+    }
+    public void truncateTable(View view) {
+        data.truncate();
+    }
     public String getCode() {
         return code;
     }
