@@ -1,5 +1,7 @@
 package Models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ben
@@ -8,6 +10,10 @@ package Models;
  * To change this template use File | Settings | File Templates.
  */
 public class GroceryListItemModel {
+
+
+    @SerializedName("_id")
+    String id;
     String itemName;
     boolean itemStatus;
 
@@ -26,4 +32,12 @@ public class GroceryListItemModel {
     public void setItemStatus(boolean itemStatus) {
         this.itemStatus = itemStatus;
     }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

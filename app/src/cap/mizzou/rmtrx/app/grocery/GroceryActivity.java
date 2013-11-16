@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -71,14 +73,33 @@ public class GroceryActivity extends Activity {
 
     private void addItem() {
         String text = newItemEditText.getText().toString();
+        GroceryRequestInterface ri=restAdapter.create(GroceryRequestInterface.class);
+
+        String selectionClause= GroceryList.Columns.SERVICE_ID + " = ?" ;
+        String[] args= {String.valueOf(listSpinner.getSelectedItemId())};
+
+        Cursor cursor=getContentResolver().query(GroceryList.ContentUri,null,selectionClause,args,null);
+        int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
+        if(cursor != null) {
+//            while(cursor.moveToNext()) {
+//                Log.d("List Id",cursor.getString(index));
+//            }
+//            Log.d("list id", "so this happened");
+
+        }
+//        ri.addItemToList(userInfo.getResidenceId(),listSpinner.getSelectedItem() ,text);
+
+
         if (TextUtils.isEmpty(text))
             return;
         getContentResolver().insert(
                 GroceryItem.ContentUri,
                 GroceryItem.contentValues((int) listSpinner.getSelectedItemId(),
                         newItemEditText.getText().toString()));
+
+
         newItemEditText.setText("");
-    }
+    };
 
 
 
@@ -107,17 +128,13 @@ public class GroceryActivity extends Activity {
     }
 
     public void addList(String listName) {
-        clearDefaultSelected();
-        getContentResolver().insert(GroceryList.ContentUri,
-                GroceryList.contentValues(listName));
+        saveListToLocalDB(listName);
 
-        String residenceId = userInfo.getResidenceId();
-
-
-        restInterface.createList(residenceId, listName, new Callback<GroceryListModel>() {
+        restInterface.createList(userInfo.getResidenceId(), listName, new Callback<GroceryListModel>() {
             @Override
             public void success(GroceryListModel groceryListModel, Response response) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                updateListInLocalDb(groceryListModel.getId());
+
             }
 
             @Override
@@ -125,9 +142,39 @@ public class GroceryActivity extends Activity {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
         });
+
     }
 
+    private void updateListInLocalDb(String serviceId) {
+        ContentValues contentValues= new ContentValues();
+        contentValues.put(GroceryList.Columns.SERVICE_ID,serviceId);
+        int idOfList = getLastInsertedListId();
+        String selectionArgs[]={String.valueOf(idOfList)};
+        String selectionCause= GroceryList.Columns._ID + " = ? ";
+        getContentResolver().update(GroceryList.ContentUri, contentValues, selectionCause, selectionArgs);
+    }
 
+    private void saveListToLocalDB(String listName) {
+       ContentValues contentValues=new ContentValues();
+       contentValues.put(GroceryList.Columns.SERVICE_ID, "");
+       contentValues.put(GroceryList.Columns.NAME,listName);
+
+//     clearDefaultSelected();
+       getContentResolver().insert(GroceryList.ContentUri, contentValues);
+    }
+    private int getLastInsertedListId() {
+        int id;
+        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+        if(cursor == null) {
+            return -1;
+        }
+        else {
+            cursor.moveToLast();
+            int index=cursor.getColumnIndex(GroceryList.Columns._ID);
+            id=cursor.getInt(index);
+        }
+        return id;
+    }
 
     public void deleteList() {
         getContentResolver()
