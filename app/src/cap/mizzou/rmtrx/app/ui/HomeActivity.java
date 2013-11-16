@@ -95,7 +95,7 @@ public class HomeActivity extends BaseFragmentActivity {
         User[] users=residence.getUsers();
         for(User user : users) {
             data.open();
-            data.addResident(user.getId(),user.getEmail(),user.getFirstName(),user.getLastName());
+            data.addResident(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName());
             data.close();
         }
     }

@@ -1,6 +1,5 @@
 package cap.mizzou.rmtrx.app.Messages;
 
-import Models.ChatLog;
 import Models.Message;
 import android.app.ListActivity;
 import android.os.Bundle;
@@ -8,8 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.EditText;
-import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import retrofit.Callback;
@@ -17,8 +14,6 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,12 +28,14 @@ public class MessagesActivity extends ListActivity {
     private List<Message> messageList;
     private RestAdapter restAdapter;
     private UserInfo userInfo;
+    private EditText messageEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messages_list);
         getActionBar().setTitle("Messages");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        messageEditText =(EditText)findViewById(R.id.message);
         userInfo=new UserInfo(this);
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
 //        displayMessageList();
@@ -69,12 +66,12 @@ public class MessagesActivity extends ListActivity {
 
     private void displayMessageList(List<Message> listOfMessages) {
         List<Message> messages=listOfMessages;
-//        Message message=new Message();
-//        message.setMessage("Hey Mike");
-//        message.setDateSent(new Date());
-//        message.setId("12345");
-//        message.setSenderId("me");
-//        messages.add(message);
+//        Message messageEditText=new Message();
+//        messageEditText.setMessage("Hey Mike");
+//        messageEditText.setDateSent(new Date());
+//        messageEditText.setId("12345");
+//        messageEditText.setSenderId("me");
+//        messages.add(messageEditText);
 
         ArrayAdapter<Message> adapter=new ArrayAdapter<Message>(this,android.R.layout.simple_list_item_1,messages);
         setListAdapter(adapter);
@@ -87,12 +84,16 @@ public class MessagesActivity extends ListActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        clearMessageBox();
         getMessagesFromServer();
     }
 
+    private void clearMessageBox() {
+          messageEditText.setText("");
+    }
+
     private String grabMessage() {
-        EditText message=(EditText)findViewById(R.id.message);
-        return message.getText().toString();
+        return messageEditText.getText().toString();
     }
 
 
