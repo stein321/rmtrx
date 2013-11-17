@@ -98,16 +98,18 @@ public class GroceryActivity extends Activity {
 
 
         newItemEditText.setText("");
-//        String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
+        String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
         sendItemToServer(itemName,"52883fa6f124544fd8000001");
     }
     private String getListServiceId(String id) {
         String selectionClause= GroceryList.Columns._ID + " = ? ";
         String selectionArgs[]={id};
-        Cursor cursor=getContentResolver().query(GroceryList.ContentUri, new String[]{GroceryList.Columns.SERVICE_ID},selectionClause,selectionArgs,null);
+        Cursor cursor=getContentResolver().query(GroceryList.ContentUri, null,null,null,null);
         cursor.moveToFirst();
         int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
-        return cursor.getString(1);
+        Log.d("This should work",cursor.getString(0));
+        return "hello";
+
     }
 
     private void sendItemToServer(String itemName, String listId) {
@@ -196,6 +198,18 @@ public class GroceryActivity extends Activity {
         String selectionArgs[]={String.valueOf(idOfList)};
         String selectionClause= GroceryList.Columns._ID + " = ? ";
         getContentResolver().update(GroceryList.ContentUri, contentValues, selectionClause, selectionArgs);
+        Cursor cursor=getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+        cursor.moveToNext();
+        while(cursor!=null) {
+            Log.d("cursor string 0",cursor.getString(0));
+            Log.d("cursor string 1",cursor.getString(1));
+            Log.d("cursor string 2",cursor.getString(2));
+            Log.d("cursor string 3",cursor.getString(3));
+            Log.d("cursor string 4",cursor.getString(4));
+            Log.d("cursor string 5",cursor.getString(5));
+            cursor.moveToNext();
+
+        }
     }
 
     private void saveListToLocalDB(String listName) {
