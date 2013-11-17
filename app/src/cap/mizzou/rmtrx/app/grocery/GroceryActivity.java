@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.grocery;
 
+import Models.GroceryListItemModel;
 import Models.GroceryListModel;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -72,8 +73,7 @@ public class GroceryActivity extends Activity {
 
 
     private void addItem() {
-        String text = newItemEditText.getText().toString();
-        GroceryRequestInterface ri=restAdapter.create(GroceryRequestInterface.class);
+        String itemName = newItemEditText.getText().toString();
 
         String selectionClause= GroceryList.Columns.SERVICE_ID + " = ?" ;
         String[] args= {String.valueOf(listSpinner.getSelectedItemId())};
@@ -87,10 +87,9 @@ public class GroceryActivity extends Activity {
 //            Log.d("list id", "so this happened");
 
         }
-//        ri.addItemToList(userInfo.getResidenceId(),listSpinner.getSelectedItem() ,text);
 
 
-        if (TextUtils.isEmpty(text))
+        if (TextUtils.isEmpty(itemName))
             return;
         getContentResolver().insert(
                 GroceryItem.ContentUri,
@@ -99,15 +98,59 @@ public class GroceryActivity extends Activity {
 
 
         newItemEditText.setText("");
-    };
+//        String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
+        sendItemToServer(itemName,"52883fa6f124544fd8000001");
+    }
+    private String getListServiceId(String id) {
+        String selectionClause= GroceryList.Columns._ID + " = ? ";
+        String selectionArgs[]={id};
+        Cursor cursor=getContentResolver().query(GroceryList.ContentUri, new String[]{GroceryList.Columns.SERVICE_ID},selectionClause,selectionArgs,null);
+        cursor.moveToFirst();
+        int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
+        return cursor.getString(1);
+    }
 
+    private void sendItemToServer(String itemName, String listId) {
+        restInterface.addItemToList(userInfo.getResidenceId(), listId, itemName, new Callback<GroceryListItemModel>() {
+            @Override
+            public void success(GroceryListItemModel groceryListItemModel, Response response) {
+                updateItemInLocalDb(groceryListItemModel.getId());
+            }
 
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+    }
+
+    private void updateItemInLocalDb(String id) {
+        ContentValues contentValues= new ContentValues();
+        contentValues.put(GroceryItem.Columns.ServiceId,id);
+        int idOfItem = getLastInsertedItemId();
+        String selectionArgs[]={String.valueOf(idOfItem)};
+        String selectionCause=GroceryItem.Columns._ID + " = ? ";
+        getContentResolver().update(GroceryItem.ContentUri,contentValues,selectionCause,selectionArgs);
+    }
+
+    private int getLastInsertedItemId() {
+        int id;
+        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+        if(cursor == null) {
+            return -1;
+        }
+        else {
+            cursor.moveToLast();
+            int index=cursor.getColumnIndex(GroceryItem.Columns._ID);
+            id=cursor.getInt(index);
+        }
+        return id;
+    }
 
 
     public void deleteItem() {
         getContentResolver().delete(
-                ContentUris.withAppendedId(GroceryItem.ContentUri,
-                        ItemView.getId()), null, null);
+                ContentUris.withAppendedId(GroceryItem.ContentUri, ItemView.getId()), null, null);
         loadSelectedList();
     }
 
@@ -149,9 +192,10 @@ public class GroceryActivity extends Activity {
         ContentValues contentValues= new ContentValues();
         contentValues.put(GroceryList.Columns.SERVICE_ID,serviceId);
         int idOfList = getLastInsertedListId();
+        Log.d("id_of_list", String.valueOf(idOfList));
         String selectionArgs[]={String.valueOf(idOfList)};
-        String selectionCause= GroceryList.Columns._ID + " = ? ";
-        getContentResolver().update(GroceryList.ContentUri, contentValues, selectionCause, selectionArgs);
+        String selectionClause= GroceryList.Columns._ID + " = ? ";
+        getContentResolver().update(GroceryList.ContentUri, contentValues, selectionClause, selectionArgs);
     }
 
     private void saveListToLocalDB(String listName) {
@@ -275,8 +319,6 @@ public class GroceryActivity extends Activity {
         Cursor cursor = getLists();
 
         if (!cursor.moveToFirst()) {
-//            addList("Add List");
-
             Dialog dialog = onCreateDialog(2);
             dialog.show();
             cursor = getLists();
