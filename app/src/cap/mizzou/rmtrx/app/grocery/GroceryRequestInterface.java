@@ -30,4 +30,13 @@ public interface GroceryRequestInterface {
             @Field("list_id") String listId,
             @Field("item_name") String itemName,
             Callback<GroceryListItemModel> callback);
+
+    @FormUrlEncoded
+    @POST("")
+    void checkBox(
+            @Field("residene_id") String residenceId,
+            @Field("list_id") String listId,
+            @Field("itemStatus") Boolean isChecked,
+            Callback<GroceryListItemModel> callback
+    );
 }
