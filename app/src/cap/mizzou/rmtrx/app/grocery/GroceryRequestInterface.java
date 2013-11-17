@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.grocery;
 
+import Models.GroceryListItemModel;
 import Models.GroceryListModel;
 import retrofit.Callback;
 import retrofit.http.Field;
@@ -21,4 +22,21 @@ public interface GroceryRequestInterface {
             @Field("residence_id") String residenceId ,
             @Field("list_name") String listName,
             Callback<GroceryListModel> callback);
+
+    @FormUrlEncoded
+    @POST("/list/item")
+    void addItemToList(
+            @Field("residence_id") String residenceId,
+            @Field("list_id") String listId,
+            @Field("item_name") String itemName,
+            Callback<GroceryListItemModel> callback);
+
+    @FormUrlEncoded
+    @POST("")
+    void checkBox(
+            @Field("residene_id") String residenceId,
+            @Field("list_id") String listId,
+            @Field("itemStatus") Boolean isChecked,
+            Callback<GroceryListItemModel> callback
+    );
 }

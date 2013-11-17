@@ -89,12 +89,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Go"
             android:onClick="onClick"/>
-    <!--<Button-->
-            <!--android:id="@+id/createResidence"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/CreateResidence"-->
-            <!--android:onClick="onClick"/>-->
+
 
 
 </LinearLayout>

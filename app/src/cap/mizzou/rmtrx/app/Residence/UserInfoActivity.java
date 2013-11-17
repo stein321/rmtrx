@@ -97,7 +97,11 @@ public class UserInfoActivity extends Activity {
            }
 
         return code;
-        }
+    }
+    public void truncateTable(View view) {
+        data.truncate();
+        this.deleteDatabase("grocery.db");
+    }
     public String getCode() {
         return code;
     }

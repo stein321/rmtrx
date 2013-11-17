@@ -2,9 +2,9 @@
 <resources>
 
     <declare-styleable name="FrameworkRoot.Theme">
-        <!-- The preferred padding along the start edge of list items. -->
+        <!-- The preferred padding along the start edge of list groceryListItems. -->
         <attr name="listPreferredItemPaddingStart" format="dimension"/>
-        <!-- The preferred padding along the end edge of list items. -->
+        <!-- The preferred padding along the end edge of list groceryListItems. -->
         <attr name="listPreferredItemPaddingEnd" format="dimension"/>
 
         <!-- The spacing along the top of an expandable list parent item-->

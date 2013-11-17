@@ -22,6 +22,7 @@ public final class GroceryList
 		public static final String DEFAULT = "is_default";
 		public static final String CreatedDate = "created";
 		public static final String ModifiedDate = "modified";
+        public static final String SERVICE_ID = "service_id";
     }
     //public static final String DEFAULT_SORT_ORDER = Columns.NAME;
 
@@ -29,6 +30,7 @@ public final class GroceryList
     public static final String CREATE_STATEMENT =
 		"CREATE TABLE " + TableName + " ("
 		+ Columns._ID + " INTEGER PRIMARY KEY,"
+        + Columns.SERVICE_ID + " TEXT, "
 		+ Columns.NAME + " TEXT,"
 		+ Columns.DEFAULT + " INTEGER,"
 		+ Columns.CreatedDate + " INTEGER,"

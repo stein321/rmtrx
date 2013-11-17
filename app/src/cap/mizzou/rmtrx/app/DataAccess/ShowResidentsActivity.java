@@ -2,6 +2,7 @@ package cap.mizzou.rmtrx.app.DataAccess;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import cap.mizzou.rmtrx.app.R;
 
@@ -29,6 +30,8 @@ public class ShowResidentsActivity extends ListActivity {
        ArrayAdapter<Resident> adapter=new ArrayAdapter<Resident>(this,android.R.layout.simple_list_item_1,values);
        setListAdapter(adapter);
     }
+
+
 
     @Override
     protected void onResume() {

@@ -1,15 +1,18 @@
 package cap.mizzou.rmtrx.app.grocery;
 
+import Models.GroceryListItemModel;
 import Models.GroceryListModel;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -23,115 +26,9 @@ import retrofit.client.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-import cap.mizzou.rmtrx.app.grocery.GroceryItem.Sort;
-
-
 public class GroceryActivity extends Activity {
 
-    /*
-
-
-    public enum SortMode {
-        Alphabetical, Age, Youth;
-    }
-
-
-
-    public class SortComplex {
-        private SortMode sortMode;
-        private Sort sort;
-
-        SortComplex(SortMode sortMode) {
-            this.sortMode = sortMode;
-            setSortByMode();
-        }
-
-
-
-        public void setSortByMode() {
-            switch (checkMode) {
-                case Integrated:
-                    switch (sortMode) {
-                        case Alphabetical:
-                            sort = Sort.name;
-                            break;
-                        case Age:
-                            sort = Sort.age;
-                            break;
-                        case Youth:
-                            sort = Sort.youth;
-                            break;
-                    }
-                    break;
-                default:
-                    switch (sortMode) {
-                        case Alphabetical:
-                            sort = Sort.status_name;
-                            break;
-                        case Age:
-                            sort = Sort.status_age;
-                            break;
-                        case Youth:
-                            sort = Sort.status_youth;
-                            break;
-                    }
-                    break;
-            }
-        }
-
-        public SortMode sortMode() {
-            return sortMode;
-        }
-
-
-
-        public boolean setSortModeByMenuItemId(int menuItemId) {
-            SortMode oldSortMode = sortMode;
-            switch (menuItemId) {
-                case R.id.menu_sort_name:
-                    sortMode = SortMode.Alphabetical;
-                    break;
-                case R.id.menu_sort_youth:
-                    sortMode = SortMode.Youth;
-                    break;
-                case R.id.menu_sort_age:
-                    sortMode = SortMode.Age;
-                    break;
-            }
-            setSortByMode();
-            return sortMode != oldSortMode;
-        }
-
-
-
-        public int getSortModeMenuId() {
-            switch (sortMode) {
-                case Alphabetical:
-                    return R.id.menu_sort_name;
-                case Youth:
-                    return R.id.menu_sort_youth;
-                case Age:
-                    return R.id.menu_sort_age;
-            }
-            return R.id.menu_sort_name;
-        }
-
-
-
-        @Override
-        public String toString() {
-            return sort.toString();
-        }
-
-    }
-
-    */
-
-
-
-
-
-
+    //TODO: If the grocery db is empty, prompt the user to create a list
     public static final String AUTHORITY = "cap.mizzou.rmtrx.app.grocery.GroceryDB";
 
     private Spinner listSpinner;
@@ -176,23 +73,86 @@ public class GroceryActivity extends Activity {
 
 
     private void addItem() {
-        String text = newItemEditText.getText().toString();
-        if (TextUtils.isEmpty(text))
+        String itemName = newItemEditText.getText().toString();
+
+        String selectionClause= GroceryList.Columns.SERVICE_ID + " = ?" ;
+        String[] args= {String.valueOf(listSpinner.getSelectedItemId())};
+
+        Cursor cursor=getContentResolver().query(GroceryList.ContentUri,null,selectionClause,args,null);
+        int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
+        if(cursor != null) {
+//            while(cursor.moveToNext()) {
+//                Log.d("List Id",cursor.getString(index));
+//            }
+//            Log.d("list id", "so this happened");
+
+        }
+
+
+        if (TextUtils.isEmpty(itemName))
             return;
         getContentResolver().insert(
                 GroceryItem.ContentUri,
                 GroceryItem.contentValues((int) listSpinner.getSelectedItemId(),
                         newItemEditText.getText().toString()));
+
+
         newItemEditText.setText("");
+        String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
+        sendItemToServer(itemName,listId);
+    }
+    private String getListServiceId(String id) {
+        String selectionClause= GroceryList.Columns._ID + " = ? ";
+        String selectionArgs[]={id};
+        String projection[]={GroceryList.Columns.SERVICE_ID};
+        Cursor cursor=getContentResolver().query(GroceryList.ContentUri,projection ,selectionClause, selectionArgs,null);
+        cursor.moveToFirst();
+        int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
+        return cursor.getString(index);
+
     }
 
+    private void sendItemToServer(String itemName, String listId) {
+        restInterface.addItemToList(userInfo.getResidenceId(), listId, itemName, new Callback<GroceryListItemModel>() {
+            @Override
+            public void success(GroceryListItemModel groceryListItemModel, Response response) {
+                updateItemInLocalDb(groceryListItemModel.getId());
+            }
 
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+    }
+
+    private void updateItemInLocalDb(String id) {
+        ContentValues contentValues= new ContentValues();
+        contentValues.put(GroceryItem.Columns.ServiceId,id);
+        int idOfItem = getLastInsertedItemId();
+        String selectionArgs[]={String.valueOf(idOfItem)};
+        String selectionCause=GroceryItem.Columns._ID + " = ? ";
+        getContentResolver().update(GroceryItem.ContentUri,contentValues,selectionCause,selectionArgs);
+    }
+
+    private int getLastInsertedItemId() {
+        int id;
+        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+        if(cursor == null) {
+            return -1;
+        }
+        else {
+            cursor.moveToLast();
+            int index=cursor.getColumnIndex(GroceryItem.Columns._ID);
+            id=cursor.getInt(index);
+        }
+        return id;
+    }
 
 
     public void deleteItem() {
         getContentResolver().delete(
-                ContentUris.withAppendedId(GroceryItem.ContentUri,
-                        ItemView.getId()), null, null);
+                ContentUris.withAppendedId(GroceryItem.ContentUri, ItemView.getId()), null, null);
         loadSelectedList();
     }
 
@@ -213,17 +173,13 @@ public class GroceryActivity extends Activity {
     }
 
     public void addList(String listName) {
-        clearDefaultSelected();
-        getContentResolver().insert(GroceryList.ContentUri,
-                GroceryList.contentValues(listName));
+        saveListToLocalDB(listName);
 
-        String residenceId = userInfo.getResidenceId();
-
-
-        restInterface.createList(residenceId, listName, new Callback<GroceryListModel>() {
+        restInterface.createList(userInfo.getResidenceId(), listName, new Callback<GroceryListModel>() {
             @Override
             public void success(GroceryListModel groceryListModel, Response response) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                updateListInLocalDb(groceryListModel.getId());
+
             }
 
             @Override
@@ -231,9 +187,52 @@ public class GroceryActivity extends Activity {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
         });
+
     }
 
+    private void updateListInLocalDb(String serviceId) {
+        ContentValues contentValues= new ContentValues();
+        contentValues.put(GroceryList.Columns.SERVICE_ID,serviceId);
+        int idOfList = getLastInsertedListId();
+        Log.d("id_of_list", String.valueOf(idOfList));
+        String selectionArgs[]={String.valueOf(idOfList)};
+        String selectionClause= GroceryList.Columns._ID + " = ? ";
+        getContentResolver().update(GroceryList.ContentUri, contentValues, selectionClause, selectionArgs);
+//        Cursor cursor=getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+//        cursor.moveToNext();
+//        while(cursor!=null) {
+//            Log.d("cursor string 0",cursor.getString(0));
+//            Log.d("cursor string 1",cursor.getString(1));
+//            Log.d("cursor string 2",cursor.getString(2));
+//            Log.d("cursor string 3",cursor.getString(3));
+//            Log.d("cursor string 4",cursor.getString(4));
+//            Log.d("cursor string 5",cursor.getString(5));
+//            cursor.moveToNext();
+//
+//        }
+    }
 
+    private void saveListToLocalDB(String listName) {
+       ContentValues contentValues=new ContentValues();
+       contentValues.put(GroceryList.Columns.SERVICE_ID, "");
+       contentValues.put(GroceryList.Columns.NAME,listName);
+
+//     clearDefaultSelected();
+       getContentResolver().insert(GroceryList.ContentUri, contentValues);
+    }
+    private int getLastInsertedListId() {
+        int id;
+        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+        if(cursor == null) {
+            return -1;
+        }
+        else {
+            cursor.moveToLast();
+            int index=cursor.getColumnIndex(GroceryList.Columns._ID);
+            id=cursor.getInt(index);
+        }
+        return id;
+    }
 
     public void deleteList() {
         getContentResolver()
@@ -334,7 +333,8 @@ public class GroceryActivity extends Activity {
         Cursor cursor = getLists();
 
         if (!cursor.moveToFirst()) {
-            addList("Add List");
+            Dialog dialog = onCreateDialog(2);
+            dialog.show();
             cursor = getLists();
         }
 
@@ -368,7 +368,7 @@ public class GroceryActivity extends Activity {
 
     private final int DeleteItemText = 1;
     private final int ListAddText = 2;
-    private final int SortListText = 3;
+    //
     private final int DeleteListText = 4;
     //
 
@@ -429,27 +429,6 @@ public class GroceryActivity extends Activity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int id) {
-                                dialog.cancel();
-                            }
-                        });
-                dialog = builder.create();
-                break;
-
-            case SortListText:
-                builder = new AlertDialog.Builder(GroceryActivity.this);
-                builder.setMessage("Sort?").setCancelable(true)
-                        .setPositiveButton("A-Z",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id)
-                                    {
-                                        //sort
-                                        dialog.dismiss();
-                                    }
-                                }).setNegativeButton("Old-New",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id)
-                            {
-                            //sort
                                 dialog.cancel();
                             }
                         });
@@ -543,7 +522,7 @@ public class GroceryActivity extends Activity {
 
 
     private final int AddListMenu = 1;
-    private final int SortListMenu = 2;
+
     private final int DeleteCheckedMenu = 4;
     private final int UncheckAllMenu = 5;
     private final int DeleteListMenu = 6;
@@ -554,8 +533,6 @@ public class GroceryActivity extends Activity {
         menu.add(0, DeleteCheckedMenu, 0, "Delete Checked");
         menu.add(0, UncheckAllMenu, 0, "Uncheck All");
         menu.add(0, DeleteListMenu, 0, "Delete List");
-        menu.add(0, SortListMenu, 0, "Sort List");
-
         return true;
     }
 
@@ -569,9 +546,7 @@ public class GroceryActivity extends Activity {
             case DeleteListMenu:
                 showDialog(DeleteListText);
                 return true;
-            case SortListMenu:
-                showDialog(SortListText);
-                return true;
+
             case DeleteCheckedMenu:
                 deleteCheckedEntries();
                 loadSelectedList();

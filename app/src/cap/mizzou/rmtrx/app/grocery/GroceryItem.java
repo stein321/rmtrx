@@ -18,6 +18,7 @@ public class GroceryItem
 		public static final class Columns implements BaseColumns
         {
 			public static final String ListID = "list_id";
+            public static final String ServiceId="service_id";
 			public static final String NAME = "name";
 			public static final String IsChecked = "is_checked";
 			public static final String CreatedDate = "created";
@@ -59,6 +60,7 @@ public class GroceryItem
         "CREATE TABLE " + TableName + " ("
         + Columns._ID + " INTEGER PRIMARY KEY,"
         + Columns.ListID + " INTEGER,"
+        + Columns.ServiceId + " TEXT, "
         + Columns.NAME + " TEXT,"
         + Columns.IsChecked + " INTEGER,"
         + Columns.CreatedDate + " INTEGER,"
