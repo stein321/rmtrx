@@ -99,16 +99,16 @@ public class GroceryActivity extends Activity {
 
         newItemEditText.setText("");
         String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
-        sendItemToServer(itemName,"52883fa6f124544fd8000001");
+        sendItemToServer(itemName,listId);
     }
     private String getListServiceId(String id) {
         String selectionClause= GroceryList.Columns._ID + " = ? ";
         String selectionArgs[]={id};
-        Cursor cursor=getContentResolver().query(GroceryList.ContentUri, null,null,null,null);
+        String projection[]={GroceryList.Columns.SERVICE_ID};
+        Cursor cursor=getContentResolver().query(GroceryList.ContentUri,projection ,selectionClause, selectionArgs,null);
         cursor.moveToFirst();
         int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
-        Log.d("This should work",cursor.getString(0));
-        return "hello";
+        return cursor.getString(index);
 
     }
 
