@@ -13,7 +13,7 @@
             android:allowBackup="true"
             android:icon="@drawable/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/ThemeGreen">
+            android:theme="@style/RmtrxTheme">
         <activity
                 android:name="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 android:label="@string/app_name">
@@ -91,8 +91,8 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity"
-                android:label="@string/residents">
+                android:name="cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity">
+                <!--android:label="@string/residents">-->
 
         </activity>
 

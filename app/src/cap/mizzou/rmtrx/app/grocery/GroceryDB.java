@@ -116,15 +116,15 @@ public class GroceryDB extends ContentProvider {
         if(contentType == GroceryList.ContentType) {
             qb.setTables(GroceryList.TableName);
             qb.setProjectionMap(GroceryListProjectionMap);
-            if (TextUtils.isEmpty(sortOrder)) {
+            /*if (TextUtils.isEmpty(sortOrder)) {
             	sortOrder = GroceryList.DEFAULT_SORT_ORDER;
-            }
+            }*/
         } else if(contentType == GroceryItem.ContentType) {
             qb.setTables(GroceryItem.TableName);
             qb.setProjectionMap(GroceryItemProjectionMap);
-            if (TextUtils.isEmpty(sortOrder)) {
+            /*if (TextUtils.isEmpty(sortOrder)) {
             	sortOrder = GroceryItem.DEFAULT_SORT_ORDER;
-            }
+            }*/
         } else {}
 
 

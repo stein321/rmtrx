@@ -55,12 +55,12 @@ import javax.inject.Singleton;
                 UserInfoActivity.class,
                 FinancesActivity.class,
                 BulletinBoardActivity.class,
-                SplashActivity.class
+                SplashActivity.class,
                 BulletinBoardActivity.class,
-                Resident.class,
-                ResidentDataSource.class,
-                ShowResidentsActivity.class,
-                UserSQLHelper.class
+//                Resident.class,
+//                ResidentDataSource.class,
+//                ShowResidentsActivity.class,
+//                UserSQLHelper.class
 
 
         })

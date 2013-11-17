@@ -14,6 +14,8 @@ import cap.mizzou.rmtrx.app.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.SurfaceView;
+import android.app.ActionBar;
 
 public class SplashActivity extends Activity {
     private long splashTime = 4000; //4 seconds
@@ -23,6 +25,12 @@ public class SplashActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
+
+
+
+        SurfaceView v = (SurfaceView) findViewById(R.id.surfaceView);
+        GifRun w = new  GifRun();
+        w.LoadGif(v, this, R.drawable.loader);
 
         TimerTask task = new TimerTask()
         {

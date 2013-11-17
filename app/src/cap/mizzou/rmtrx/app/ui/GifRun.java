@@ -1,4 +1,3 @@
-// Created by JeffMeJones@gmail.com
 package cap.mizzou.rmtrx.app.ui;
 
 
@@ -20,15 +19,13 @@ public class GifRun implements Runnable, Callback {
 	public SurfaceHolder mSurfaceHolder ;
 	boolean surfaceExists;
 	
-	public void LoadGiff(SurfaceView v, android.content.Context theTHIS, int R_drawable)
+	public void LoadGif(SurfaceView v, android.content.Context theTHIS, int R_drawable)
 	{		
-		//InputStream Raw= context.getResources().openRawResource(R.drawable.image001);
 	       mSurfaceHolder = v.getHolder();
 	       mSurfaceHolder.addCallback(this);
 	       decode = new GIFDecode();
 	       decode.read(theTHIS.getResources().openRawResource(R_drawable));
 	       ind = 0;
-			// decode.
 			gifCount = decode.getFrameCount();
 			bmb = decode.getFrame(0);
 			surfaceExists=true;
@@ -43,8 +40,7 @@ public class GifRun implements Runnable, Callback {
 				
 					Canvas rCanvas = mSurfaceHolder.lockCanvas();
 					rCanvas.drawBitmap(bmb, 0, 0, new Paint());
-					//ImageView im = (ImageView) findViewById(R.id.imageView1);
-					//im.setImageBitmap(bmb);
+
 					
 					mSurfaceHolder.unlockCanvasAndPost(rCanvas);
 					bmb = decode.next();
