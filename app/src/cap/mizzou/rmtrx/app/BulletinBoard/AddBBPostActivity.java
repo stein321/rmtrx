@@ -24,7 +24,7 @@ public class AddBBPostActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_post);
-        getActionBar().setTitle("Add Post");
+        getActionBar().setTitle("Bulletin Board");
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         datasource = new BulletinBoardDb(this);

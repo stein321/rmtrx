@@ -1,5 +1,7 @@
 package cap.mizzou.rmtrx.app.Finances;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Desi
@@ -7,11 +9,14 @@ package cap.mizzou.rmtrx.app.Finances;
  * Time: 3:50 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Transaction {
+public class Transaction implements Serializable {
 
     private long id;
     private String userid;
     private double amount;
+    private String nature;
+    private String date;
+    private String from;
 
     public long getId() {
         return id;
@@ -35,6 +40,30 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getNature() {
+        return nature;
+    }
+
+    public void setNature(String nature) {
+        this.nature = nature;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
     }
 
     public String toString() {

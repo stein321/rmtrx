@@ -24,12 +24,16 @@ public class PostListAdapter extends BaseAdapter {
     private int layoutResourceId;
     private Context context;
     private UserInfo userinfo;
+    private String userid;
 
     private final List<Post> posts;
+
 
     public PostListAdapter(final Context context, final int itemResId,
                            final List<Post> items) {
         this.posts = items;
+        this.userinfo=new UserInfo(context);
+        this.userid=userinfo.getId();
     }
 
     public int getCount() {
@@ -52,6 +56,7 @@ public class PostListAdapter extends BaseAdapter {
         final Post post = this.posts.get(position);
         View itemView = null;
 
+
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) parent.getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,16 +65,32 @@ public class PostListAdapter extends BaseAdapter {
             itemView = convertView;
         }
 
-        // Set the text of the row
+        // Set the text of the post (title)
         TextView txtId = (TextView) itemView.findViewById(R.id.post_title);
         txtId.setText(post.getPostTitle());
 
 
 
-        // Remember the row for each button so that we can refer to
+        // Remember the post for each button so that we can refer to
         // it when the button is clicked
-        ImageButton imgButton = (ImageButton) itemView.findViewById(R.id.delete_button);
-        imgButton.setTag(post);
+
+        //Displays delete and edit button on posts that the currrent user created
+
+        //Edit button
+        Button editButton = (Button) itemView.findViewById(R.id.edit_button);
+        editButton.setTag(post);
+        //Delete button
+        ImageButton deleteButton = (ImageButton) itemView.findViewById(R.id.delete_button);
+        deleteButton.setTag(post);
+
+        deleteButton.setVisibility(View.VISIBLE);
+        editButton.setVisibility(View.VISIBLE);
+         if(!(post.getUserId().equals(userid))){
+             deleteButton.setVisibility(View.GONE);
+             editButton.setVisibility(View.GONE);
+         }
+
+
 
         return itemView;
 

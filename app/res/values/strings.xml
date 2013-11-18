@@ -11,7 +11,8 @@
     <string name="db_attempt_name">DB Test</string>
 
     <string name="bulletin_board_activity_name">Bulletin Board</string>
-    <string name="bb_add_post_name">Add Post</string>
+    <string name="bb_add_post_activity_name">Add Post</string>
+    <string name="bb_edit_post_activity_name">Edit Post</string>
 
     <string name="finances_activity_name">Finances</string>
 

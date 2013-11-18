@@ -26,8 +26,8 @@ public class BulletinBoardDb {
     // Database fields
     private SQLiteDatabase database;
     private BBMySQLiteHelper dbHelper;
-    private String[] allColumns = { BBMySQLiteHelper.COLUMN_ID,
-            BBMySQLiteHelper.COLUMN_POST};
+    private String[] allColumns = { BBMySQLiteHelper.COLUMN_ID, BBMySQLiteHelper.COLUMN_USERID,
+            BBMySQLiteHelper.COLUMN_POST, BBMySQLiteHelper.COLUMN_POSTDETAILS };
 
     public BulletinBoardDb(Context context) {
         dbHelper = new BBMySQLiteHelper(context);
@@ -41,11 +41,15 @@ public class BulletinBoardDb {
         dbHelper.close();
     }
 
+    public void drop(){
+        dbHelper.onUpgrade(database, 1, 2);
+    }
+
     public Post createPost(String userid, String title, String details) {
         ContentValues values = new ContentValues();
-
+        values.put(BBMySQLiteHelper.COLUMN_USERID, userid);
         values.put(BBMySQLiteHelper.COLUMN_POST, title);
-
+        values.put(BBMySQLiteHelper.COLUMN_POSTDETAILS, details);
         long insertId = database.insert(BBMySQLiteHelper.TABLE_POSTS, null,
                 values);
         Cursor cursor = database.query(BBMySQLiteHelper.TABLE_POSTS,
@@ -59,9 +63,13 @@ public class BulletinBoardDb {
 
     public void deletePost(Post post) {
         long id = post.getId();
-        System.out.println("Post deleted with id: " + id);
+        //System.out.println("Post deleted with id: " + id);
         database.delete(BBMySQLiteHelper.TABLE_POSTS, BBMySQLiteHelper.COLUMN_ID
                 + " = " + id, null);
+    }
+
+    public void updatePost(Post post){
+        long id = post.getId();
     }
 
     public List<Post> getAllPosts() {
@@ -81,10 +89,18 @@ public class BulletinBoardDb {
         return comments;
     }
 
+    public void editPost(ContentValues cv, long rowid){
+
+        database.update(BBMySQLiteHelper.TABLE_POSTS, cv, "_id=" + rowid, null);
+    }
+
+
     private Post cursorToPost(Cursor cursor) {
         Post comment = new Post();
         comment.setId(cursor.getLong(0));
-        comment.setPostTitle(cursor.getString(1));
+        comment.setUserId(cursor.getString(1));
+        comment.setPostTitle(cursor.getString(2));
+        comment.setPostDetails(cursor.getString(3));
 
         return comment;
     }

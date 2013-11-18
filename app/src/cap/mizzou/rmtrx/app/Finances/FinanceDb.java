@@ -25,7 +25,7 @@ public class FinanceDb {
     private SQLiteDatabase database;
     private FinanceMySQLiteHelper dbHelper;
     private String[] allColumns = { FinanceMySQLiteHelper.COLUMN_ID, FinanceMySQLiteHelper.COLUMN_USERID,
-            FinanceMySQLiteHelper.COLUMN_AMOUNT };
+            FinanceMySQLiteHelper.COLUMN_AMOUNT, FinanceMySQLiteHelper.COLUMN_NATURE, FinanceMySQLiteHelper.COLUMN_DATE };
 
     public FinanceDb(Context context) {
         dbHelper = new FinanceMySQLiteHelper(context);
@@ -39,10 +39,17 @@ public class FinanceDb {
         dbHelper.close();
     }
 
-    public Transaction createTransaction(String userid, double amount) {
+    public void drop(){
+        dbHelper.onUpgrade(database, 1, 2);
+    }
+
+    public Transaction createTransaction(String userid, double amount, String nature, String date) {
         ContentValues values = new ContentValues();
         values.put(FinanceMySQLiteHelper.COLUMN_USERID, userid);
         values.put(FinanceMySQLiteHelper.COLUMN_AMOUNT, amount);
+        values.put(FinanceMySQLiteHelper.COLUMN_NATURE, nature);
+        values.put(FinanceMySQLiteHelper.COLUMN_DATE, date);
+       // values.put(FinanceMySQLiteHelper.COLUMN_FROMUSER, from);
         long insertId = database.insert(FinanceMySQLiteHelper.TABLE_TRANSACTIONS, null,
                 values);
         Cursor cursor = database.query(FinanceMySQLiteHelper.TABLE_TRANSACTIONS,
@@ -83,6 +90,9 @@ public class FinanceDb {
         transaction.setId(cursor.getLong(0));
         transaction.setUserId(cursor.getString(1));
         transaction.setAmount(cursor.getDouble(2));
+        transaction.setNature(cursor.getString(3));
+        transaction.setDate(cursor.getString(4));
+       // transaction.setFrom(cursor.getString(5));
         return transaction;
     }
 }

@@ -1,6 +1,7 @@
 package cap.mizzou.rmtrx.app.BulletinBoard;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +40,9 @@ public class BulletinBoardActivity extends ListActivity {
         datasource = new BulletinBoardDb(this);
         datasource.open();
 
+        //drops database table
+        //datasource.drop();
+
 
 
         List<Post> values = datasource.getAllPosts();
@@ -48,12 +52,18 @@ public class BulletinBoardActivity extends ListActivity {
         setListAdapter(postListAdapter);
 
 
-
+        //when an list item is clicked
         this.getListView().setClickable(true);
         this.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
                 //show post details
+                Context context = getApplicationContext();
+                Post post = (Post) getListAdapter().getItem(position);
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, post.getPostDetails(), duration);
+                toast.show();
             }});
 
 
@@ -68,6 +78,20 @@ public class BulletinBoardActivity extends ListActivity {
         startActivity(addpost);
         }
 
+    public void editPost(View view){
+        Button button = (Button) view;
+        currentpost = (Post) button.getTag();
+
+        Intent edit= new Intent(this, EditBBPostActivity.class);
+        startActivity(edit);
+
+        edit.putExtra("postToEdit", currentpost);
+        startActivity(edit);
+        //postListAdapter.notifyDataSetChanged();
+
+        //showDialog(1);
+    }
+
     public void deletePost(View view){
         ImageButton button = (ImageButton) view;
         currentpost = (Post) button.getTag();
@@ -75,6 +99,11 @@ public class BulletinBoardActivity extends ListActivity {
 
         postListAdapter.removePost(currentpost);
         postListAdapter.notifyDataSetChanged();
+
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, "Post Deleted", duration);
+        toast.show();
 
         //showDialog(1);
     }

@@ -20,6 +20,7 @@
 
     <EditText android:id="@+id/transaction_amount"
               android:layout_width="wrap_content"
+              android:hint="Enter Amount"
               android:layout_height="wrap_content"
               android:inputType="numberDecimal|numberSigned"
             />
@@ -30,6 +31,13 @@
                 android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+    <EditText android:id="@+id/transaction_nature"
+              android:layout_width="wrap_content"
+              android:hint="Enter Nature of Transaction"
+              android:layout_height="wrap_content"
+              android:inputType="text"
+            />
     <Button
             android:id="@+id/addTransaction"
             android:layout_width="wrap_content"
@@ -48,7 +56,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="14dp"
             android:text="Generate Bill"
-            android:onClick="onClick"/>
+            android:onClick="generateBill"/>
 
 
 

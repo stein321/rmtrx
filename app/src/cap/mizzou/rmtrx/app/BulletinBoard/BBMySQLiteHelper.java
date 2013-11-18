@@ -22,12 +22,13 @@ public class BBMySQLiteHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "posts.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database creation sql statement
     private static final String DATABASE_CREATE = "create table "
             + TABLE_POSTS + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_POST
+            + " integer primary key autoincrement, " + COLUMN_USERID
+            + " text not null, " + COLUMN_POST + " text not null, " + COLUMN_POSTDETAILS
             + " text not null);";
 
     public BBMySQLiteHelper(Context context) {

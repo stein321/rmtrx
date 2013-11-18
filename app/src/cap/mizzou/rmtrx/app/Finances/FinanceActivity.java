@@ -2,10 +2,12 @@ package cap.mizzou.rmtrx.app.Finances;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-
+import android.text.format.*;
+import cap.mizzou.rmtrx.app.BulletinBoard.AddBBPostActivity;
 import cap.mizzou.rmtrx.app.R;
 
 import java.util.*;
@@ -49,6 +51,10 @@ public class FinanceActivity extends ListActivity {
         datasource.open();
 
 
+        //drops database table
+        /*
+        datasource.drop();
+          */
 
          //Gets total account balance
          accountbalance=getAccountBalance(userid);
@@ -81,20 +87,24 @@ public class FinanceActivity extends ListActivity {
 
 
         EditText amountText = (EditText) findViewById(R.id.transaction_amount);
+        EditText natureText = (EditText) findViewById(R.id.transaction_nature);
         //Converts text to double
         Double amount=Double.parseDouble(amountText.getText().toString());
-
+        String nature=natureText.getText().toString();
         //Spinner selection
         String roomateUserId=String.valueOf(spinner.getSelectedItem());
+        //Retrieves current time and date
+        String currentdate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
 
+        //Nature of transaction
 
         amountText.setText("");
         //Sends transaction info to record creation method
-        transaction=datasource.createTransaction(roomateUserId, amount);
+        transaction=datasource.createTransaction(roomateUserId, amount, nature, currentdate);
 
         //add toast message
         Context context = getApplicationContext();
-        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserId + "'s Account.";
+        CharSequence text ="Transaction of $" + amount + " was added to " + roomateUserId + "'s Account on " + transaction.getDate() + ". " + transaction.getNature();
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -110,6 +120,12 @@ public class FinanceActivity extends ListActivity {
         }
 
         return ab;
+    }
+
+    public void generateBill(View view){
+
+        Intent generatebill= new Intent(this, GenerateBillActivity.class);
+        startActivity(generatebill);
     }
 
     @Override
