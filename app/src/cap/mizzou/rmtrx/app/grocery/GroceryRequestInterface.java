@@ -43,7 +43,8 @@ public interface GroceryRequestInterface {
             @Field("residence_id") String residenceId,
             @Field("list_id") String listId,
             Callback<Void> callback);
-    @FormUrlEncoded
+
+
     @DELETE("/residence/{residence_id}/list/{list_id}/item/{item_id}")
     void deleteItem(
             @Path("residence_id") String residenceId,
