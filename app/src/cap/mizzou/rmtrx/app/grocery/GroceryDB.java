@@ -66,10 +66,10 @@ public class GroceryDB extends ContentProvider {
         GroceryItemProjectionMap = new HashMap<String, String>();
         GroceryItemProjectionMap.put(GroceryItem.Columns._ID, GroceryItem.Columns._ID);
         GroceryItemProjectionMap.put(GroceryItem.Columns.NAME, GroceryItem.Columns.NAME);
-        GroceryItemProjectionMap.put(GroceryItem.Columns.IsChecked, GroceryItem.Columns.IsChecked);
-        GroceryItemProjectionMap.put(GroceryItem.Columns.CreatedDate, GroceryItem.Columns.CreatedDate);
-        GroceryItemProjectionMap.put(GroceryItem.Columns.ModifiedDate, GroceryItem.Columns.ModifiedDate);
-        GroceryItemProjectionMap.put(GroceryItem.Columns.ServiceId,GroceryItem.Columns.ServiceId);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.IS_CHECKED, GroceryItem.Columns.IS_CHECKED);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.CREATED_DATE, GroceryItem.Columns.CREATED_DATE);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.MODIFIED_DATE, GroceryItem.Columns.MODIFIED_DATE);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.SERVICE_ID,GroceryItem.Columns.SERVICE_ID);
     }
 
 
@@ -191,12 +191,12 @@ public class GroceryDB extends ContentProvider {
 	        break;
         case GetItem:
 
-	        if (!values.containsKey(GroceryItem.Columns.CreatedDate)) {
-	            values.put(GroceryItem.Columns.CreatedDate, now);
+	        if (!values.containsKey(GroceryItem.Columns.CREATED_DATE)) {
+	            values.put(GroceryItem.Columns.CREATED_DATE, now);
 	        }
 
-	        if (!values.containsKey(GroceryItem.Columns.ModifiedDate)) {
-	            values.put(GroceryItem.Columns.ModifiedDate, now);
+	        if (!values.containsKey(GroceryItem.Columns.MODIFIED_DATE)) {
+	            values.put(GroceryItem.Columns.MODIFIED_DATE, now);
 	        }
 
 	        if (!values.containsKey(GroceryItem.Columns.NAME)) {
@@ -204,8 +204,8 @@ public class GroceryDB extends ContentProvider {
 	            values.put(GroceryItem.Columns.NAME, r.getString(android.R.string.untitled));
 	        }
 
-            if (!values.containsKey(GroceryItem.Columns.IsChecked)) {
-                values.put(GroceryItem.Columns.IsChecked, 0);
+            if (!values.containsKey(GroceryItem.Columns.IS_CHECKED)) {
+                values.put(GroceryItem.Columns.IS_CHECKED, 0);
             }
 
 	       	rowId = db.insert(GroceryItem.TableName, GroceryItem.Columns.NAME, values);

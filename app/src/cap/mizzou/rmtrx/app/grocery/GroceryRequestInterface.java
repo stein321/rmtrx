@@ -3,9 +3,7 @@ package cap.mizzou.rmtrx.app.grocery;
 import Models.GroceryListItemModel;
 import Models.GroceryListModel;
 import retrofit.Callback;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
+import retrofit.http.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,11 +30,25 @@ public interface GroceryRequestInterface {
             Callback<GroceryListItemModel> callback);
 
     @FormUrlEncoded
-    @POST("")
+    @PUT("/list/item")
     void checkBox(
-            @Field("residene_id") String residenceId,
+            @Field("residence_id") String residenceId,
             @Field("list_id") String listId,
-            @Field("itemStatus") Boolean isChecked,
-            Callback<GroceryListItemModel> callback
-    );
+            @Field("item_id") String itemId,
+            @Field("item_status") String isChecked,
+            Callback<GroceryListItemModel> callback);
+    @FormUrlEncoded
+    @DELETE("/list")
+    void deleteList(
+            @Field("residence_id") String residenceId,
+            @Field("list_id") String listId,
+            Callback<Void> callback);
+    @FormUrlEncoded
+    @DELETE("/list/item")
+    void deleteItem(
+            @Field("residence_id") String residenceId,
+            @Field("list_id") String listId,
+            @Field("item_id") String itemId,
+            Callback<Void> callback);
+
 }

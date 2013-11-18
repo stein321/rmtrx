@@ -28,7 +28,6 @@ import java.util.List;
 
 public class GroceryActivity extends Activity {
 
-    //TODO: If the grocery db is empty, prompt the user to create a list
     public static final String AUTHORITY = "cap.mizzou.rmtrx.app.grocery.GroceryDB";
 
     private Spinner listSpinner;
@@ -40,9 +39,12 @@ public class GroceryActivity extends Activity {
     private RestAdapter restAdapter;
     private GroceryRequestInterface restInterface;
     private UserInfo userInfo;
-
-
     private Boolean setSelectedList;
+
+    private String listIdLocal;
+    private String listIdOnServer;
+    private String itemIdLocal;
+    private String itemIdOnServer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class GroceryActivity extends Activity {
 
     public Cursor getItems() {
         return managedQuery(GroceryItem.ContentUri, GroceryItem.PROJECTION,
-                GroceryItem.Columns.ListID + "=?", new String[]{new Long(
+                GroceryItem.Columns.LIST_ID + "=?", new String[]{new Long(
                 listSpinner.getSelectedItemId()).toString()}, null);
     }
 
@@ -80,13 +82,7 @@ public class GroceryActivity extends Activity {
 
         Cursor cursor=getContentResolver().query(GroceryList.ContentUri,null,selectionClause,args,null);
         int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
-        if(cursor != null) {
-//            while(cursor.moveToNext()) {
-//                Log.d("List Id",cursor.getString(index));
-//            }
-//            Log.d("list id", "so this happened");
 
-        }
 
 
         if (TextUtils.isEmpty(itemName))
@@ -99,7 +95,7 @@ public class GroceryActivity extends Activity {
 
         newItemEditText.setText("");
         String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
-        sendItemToServer(itemName,listId);
+        sendItemToServer(itemName, listId);
     }
     private String getListServiceId(String id) {
         String selectionClause= GroceryList.Columns._ID + " = ? ";
@@ -109,7 +105,24 @@ public class GroceryActivity extends Activity {
         cursor.moveToFirst();
         int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
         return cursor.getString(index);
+    }
+    private String getItemServiceId(String id) {
+        String selectionClause= GroceryItem.Columns._ID + " = ? ";
+        String selectionArgs[]={id};
+        String projection[]={GroceryItem.Columns.SERVICE_ID};
+        Cursor cursor=getContentResolver().query(GroceryItem.ContentUri,projection ,selectionClause, selectionArgs,null);
 
+        int index=cursor.getColumnIndex(GroceryItem.Columns.SERVICE_ID);
+        while(cursor!= null) {
+        cursor.moveToNext();
+        String message=cursor.getString(0);
+        String message1=cursor.getString(1);
+        String message2=cursor.getString(2);
+        String message3=cursor.getString(3);
+        String message4=cursor.getString(4);
+        }
+
+        return cursor.getString(index);
     }
 
     private void sendItemToServer(String itemName, String listId) {
@@ -126,13 +139,28 @@ public class GroceryActivity extends Activity {
         });
     }
 
-    private void updateItemInLocalDb(String id) {
+
+
+    private void updateItemInLocalDb(String serviceItemId) {
         ContentValues contentValues= new ContentValues();
-        contentValues.put(GroceryItem.Columns.ServiceId,id);
+        contentValues.put(GroceryItem.Columns.SERVICE_ID,serviceItemId);
         int idOfItem = getLastInsertedItemId();
         String selectionArgs[]={String.valueOf(idOfItem)};
-        String selectionCause=GroceryItem.Columns._ID + " = ? ";
-        getContentResolver().update(GroceryItem.ContentUri,contentValues,selectionCause,selectionArgs);
+        String selectionClause=GroceryItem.Columns._ID + " = ? ";
+        int mCursor= getContentResolver().update(GroceryItem.ContentUri, contentValues, selectionClause, selectionArgs);
+//        Cursor cursor=getContentResolver().query(GroceryItem.ContentUri,null,selectionClause,selectionArgs,null);
+//        cursor.moveToNext();
+//        while(cursor!=null) {
+//            cursor.moveToFirst();
+//            String message=cursor.getString(0);
+//            Log.d("cursor string 1",cursor.getString(1));
+//            Log.d("cursor string 2",cursor.getString(2));
+//            Log.d("cursor string 3",cursor.getString(3));
+//            Log.d("cursor string 4",cursor.getString(4));
+//            Log.d("cursor string 5",cursor.getString(5));
+
+//
+//        }
     }
 
     private int getLastInsertedItemId() {
@@ -154,23 +182,60 @@ public class GroceryActivity extends Activity {
         getContentResolver().delete(
                 ContentUris.withAppendedId(GroceryItem.ContentUri, ItemView.getId()), null, null);
         loadSelectedList();
+        deleteItemOnServer(ItemView.getId());
+
     }
 
+    private void deleteItemOnServer(int itemViewId) {
+        String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
+        String itemId=getItemServiceId(String.valueOf(itemViewId));
 
+        restInterface.deleteItem(userInfo.getResidenceId(),listId,itemId, new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
+    }
 
 
     public void setItemChecked(int id, Boolean isChecked) {
         getContentResolver().update(
                 ContentUris.withAppendedId(GroceryItem.ContentUri, id),
                 GroceryItem.contentValues(isChecked), null, null);
+       String itemId = getItemServiceId(String.valueOf(id));
+       setItemCheckedOnServer(itemId, String.valueOf(isChecked));
+
     }
 
+    private void setItemCheckedOnServer(String itemId,String isChecked) {
+        String listServiceId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
+//        Log.d("Item ID is", itemId);
+        restInterface.checkBox(userInfo.getResidenceId(),listServiceId,itemId, "true", new Callback<GroceryListItemModel>() {
+            @Override
+            public void success(GroceryListItemModel groceryListItemModel, Response response) {
+                Log.d("itemCheckedOnServer", "success");
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+    }
 
 
     public Cursor getLists() {
         return managedQuery(GroceryList.ContentUri, GroceryList.PROJECTION,
                 null, null, null);
     }
+
 
     public void addList(String listName) {
         saveListToLocalDB(listName);
@@ -191,6 +256,7 @@ public class GroceryActivity extends Activity {
     }
 
     private void updateListInLocalDb(String serviceId) {
+        listIdOnServer=serviceId;
         ContentValues contentValues= new ContentValues();
         contentValues.put(GroceryList.Columns.SERVICE_ID,serviceId);
         int idOfList = getLastInsertedListId();
@@ -216,8 +282,7 @@ public class GroceryActivity extends Activity {
        ContentValues contentValues=new ContentValues();
        contentValues.put(GroceryList.Columns.SERVICE_ID, "");
        contentValues.put(GroceryList.Columns.NAME,listName);
-
-//     clearDefaultSelected();
+        clearDefaultSelected();
        getContentResolver().insert(GroceryList.ContentUri, contentValues);
     }
     private int getLastInsertedListId() {
@@ -231,6 +296,7 @@ public class GroceryActivity extends Activity {
             int index=cursor.getColumnIndex(GroceryList.Columns._ID);
             id=cursor.getInt(index);
         }
+        listIdLocal= String.valueOf(id);
         return id;
     }
 
@@ -238,14 +304,30 @@ public class GroceryActivity extends Activity {
         getContentResolver()
                 .delete(
                         GroceryItem.ContentUri,
-                        GroceryItem.Columns.ListID + "=?",
+                        GroceryItem.Columns.LIST_ID + "=?",
                         new String[]{new Long(listSpinner.getSelectedItemId())
                                 .toString()});
         getContentResolver().delete(
                 ContentUris.withAppendedId(GroceryList.ContentUri, listSpinner
                         .getSelectedItemId()), null, null);
+        deleteListOnServer(listSpinner.getSelectedItemId());
     }
 
+    private void deleteListOnServer(long selectedItemId) {
+        String.valueOf(selectedItemId);
+        String id=getListServiceId(String.valueOf(selectedItemId));
+        restInterface.deleteList(userInfo.getResidenceId(),id, new Callback<Void>() {
+            @Override
+            public void success(Void aVoid, Response response) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+    }
 
 
     public List <Integer> getCheckedItemIds()
@@ -254,7 +336,7 @@ public class GroceryActivity extends Activity {
         List <Integer> checkedItemIds = new ArrayList <Integer>();
         if(items.moveToFirst())	{
             int idColumn = items.getColumnIndex(GroceryItem.Columns._ID);
-            int checkedColumn = items.getColumnIndex(GroceryItem.Columns.IsChecked);
+            int checkedColumn = items.getColumnIndex(GroceryItem.Columns.IS_CHECKED);
             do {
                 if(items.getInt(checkedColumn) == 1) {
                     checkedItemIds.add(new Integer(items.getInt(idColumn)));
@@ -509,7 +591,7 @@ public class GroceryActivity extends Activity {
 
             CheckBox checkBox = (CheckBox) view.findViewById(R.id.ItemCheckBox);
             checkBox.setChecked(cur.getInt(cur
-                    .getColumnIndex(GroceryItem.Columns.IsChecked)) == 1);
+                    .getColumnIndex(GroceryItem.Columns.IS_CHECKED)) == 1);
             checkBox.setOnClickListener(listener);
         }
 
