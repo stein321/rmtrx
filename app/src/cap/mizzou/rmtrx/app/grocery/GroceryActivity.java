@@ -77,14 +77,6 @@ public class GroceryActivity extends Activity {
     private void addItem() {
         String itemName = newItemEditText.getText().toString();
 
-        String selectionClause= GroceryList.Columns.SERVICE_ID + " = ?" ;
-        String[] args= {String.valueOf(listSpinner.getSelectedItemId())};
-
-        Cursor cursor=getContentResolver().query(GroceryList.ContentUri,null,selectionClause,args,null);
-        int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
-
-
-
         if (TextUtils.isEmpty(itemName))
             return;
         getContentResolver().insert(
@@ -94,6 +86,8 @@ public class GroceryActivity extends Activity {
 
 
         newItemEditText.setText("");
+
+        //get serviceIdOfTheList
         String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
         sendItemToServer(itemName, listId);
     }
@@ -106,21 +100,19 @@ public class GroceryActivity extends Activity {
         int index=cursor.getColumnIndex(GroceryList.Columns.SERVICE_ID);
         return cursor.getString(index);
     }
-    private String getItemServiceId(String id) {
+    private String getItemServiceId(String id) {   //should return the serviceId when sent the localid
+        String projection[]={GroceryItem.Columns.SERVICE_ID};
         String selectionClause= GroceryItem.Columns._ID + " = ? ";
         String selectionArgs[]={id};
-        String projection[]={GroceryItem.Columns.SERVICE_ID};
-        Cursor cursor=getContentResolver().query(GroceryItem.ContentUri,projection ,selectionClause, selectionArgs,null);
+
+
+        Cursor cursor=getContentResolver().query(GroceryItem.ContentUri,null ,selectionClause, selectionArgs,null);
 
         int index=cursor.getColumnIndex(GroceryItem.Columns.SERVICE_ID);
-        while(cursor!= null) {
-        cursor.moveToNext();
+        cursor.moveToFirst();
         String message=cursor.getString(0);
-        String message1=cursor.getString(1);
-        String message2=cursor.getString(2);
-        String message3=cursor.getString(3);
-        String message4=cursor.getString(4);
-        }
+         message=cursor.getString(1);
+        message=cursor.getString(2);
 
         return cursor.getString(index);
     }
@@ -148,6 +140,12 @@ public class GroceryActivity extends Activity {
         String selectionArgs[]={String.valueOf(idOfItem)};
         String selectionClause=GroceryItem.Columns._ID + " = ? ";
         int mCursor= getContentResolver().update(GroceryItem.ContentUri, contentValues, selectionClause, selectionArgs);
+
+        String[] ids= {serviceItemId};
+        Cursor cursor=getContentResolver().query(GroceryItem.ContentUri,null,GroceryItem.Columns.SERVICE_ID + " = ?",ids,null);
+          cursor.moveToFirst();
+        String ID= cursor.getString(0);
+
 //        Cursor cursor=getContentResolver().query(GroceryItem.ContentUri,null,selectionClause,selectionArgs,null);
 //        cursor.moveToNext();
 //        while(cursor!=null) {
@@ -163,19 +161,7 @@ public class GroceryActivity extends Activity {
 //        }
     }
 
-    private int getLastInsertedItemId() {
-        int id;
-        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,GroceryItem.Columns.CREATED_DATE);
-        if(cursor == null) {
-            return -1;
-        }
-        else {
-            cursor.moveToLast();
-            int index=cursor.getColumnIndex(GroceryItem.Columns._ID);
-            id=cursor.getInt(index);
-        }
-        return id;
-    }
+
 
 
     public void deleteItem() {
@@ -209,15 +195,15 @@ public class GroceryActivity extends Activity {
         getContentResolver().update(
                 ContentUris.withAppendedId(GroceryItem.ContentUri, id),
                 GroceryItem.contentValues(isChecked), null, null);
-       String itemId = getItemServiceId(String.valueOf(id));
-       setItemCheckedOnServer(itemId, String.valueOf(isChecked));
+        String itemServiceId=getItemServiceId(String.valueOf(id));
+
+       setItemCheckedOnServer(itemServiceId, String.valueOf(isChecked));
 
     }
 
     private void setItemCheckedOnServer(String itemId,String isChecked) {
         String listServiceId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
-//        Log.d("Item ID is", itemId);
-        restInterface.checkBox(userInfo.getResidenceId(),listServiceId,itemId, "true", new Callback<GroceryListItemModel>() {
+        restInterface.checkBox(userInfo.getResidenceId(),listServiceId,itemId, isChecked, new Callback<GroceryListItemModel>() {
             @Override
             public void success(GroceryListItemModel groceryListItemModel, Response response) {
                 Log.d("itemCheckedOnServer", "success");
@@ -283,6 +269,19 @@ public class GroceryActivity extends Activity {
             id=cursor.getInt(index);
         }
         listIdLocal= String.valueOf(id);
+        return id;
+    }
+    private int getLastInsertedItemId() {
+        int id;
+        Cursor cursor = getContentResolver().query(GroceryItem.ContentUri,null,null,null,GroceryItem.Columns.CREATED_DATE);
+        if(cursor == null) {
+            return -1;
+        }
+        else {
+            cursor.moveToLast();
+            int index=cursor.getColumnIndex(GroceryItem.Columns._ID);
+            id=cursor.getInt(index);
+        }
         return id;
     }
 
