@@ -165,7 +165,7 @@ public class GroceryActivity extends Activity {
 
     private int getLastInsertedItemId() {
         int id;
-        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,GroceryItem.Columns.CREATED_DATE);
         if(cursor == null) {
             return -1;
         }
@@ -287,7 +287,7 @@ public class GroceryActivity extends Activity {
     }
     private int getLastInsertedListId() {
         int id;
-        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,null);
+        Cursor cursor = getContentResolver().query(GroceryList.ContentUri,null,null,null,GroceryList.Columns.CreatedDate);
         if(cursor == null) {
             return -1;
         }
