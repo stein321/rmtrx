@@ -104,16 +104,9 @@ public class GroceryActivity extends Activity {
         String projection[]={GroceryItem.Columns.SERVICE_ID};
         String selectionClause= GroceryItem.Columns._ID + " = ? ";
         String selectionArgs[]={id};
-
-
         Cursor cursor=getContentResolver().query(GroceryItem.ContentUri,null ,selectionClause, selectionArgs,null);
-
         int index=cursor.getColumnIndex(GroceryItem.Columns.SERVICE_ID);
         cursor.moveToFirst();
-        String message=cursor.getString(0);
-         message=cursor.getString(1);
-        message=cursor.getString(2);
-
         return cursor.getString(index);
     }
 
@@ -167,16 +160,15 @@ public class GroceryActivity extends Activity {
     public void deleteItem() {
         getContentResolver().delete(
                 ContentUris.withAppendedId(GroceryItem.ContentUri, ItemView.getId()), null, null);
+        deleteItemOnServer(String.valueOf(ItemView.getId()));
         loadSelectedList();
-        deleteItemOnServer(ItemView.getId());
 
     }
 
-    private void deleteItemOnServer(int itemViewId) {
+    private void deleteItemOnServer(String id) {
         String listId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
-        String itemId=getItemServiceId(String.valueOf(itemViewId));
 
-        restInterface.deleteItem(userInfo.getResidenceId(),listId,itemId, new Callback<Void>() {
+        restInterface.deleteItem(userInfo.getResidenceId(), listId, id, new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
                 //To change body of implemented methods use File | Settings | File Templates.
@@ -203,7 +195,7 @@ public class GroceryActivity extends Activity {
 
     private void setItemCheckedOnServer(String itemId,String isChecked) {
         String listServiceId=getListServiceId(String.valueOf(listSpinner.getSelectedItemId()));
-        restInterface.checkBox(userInfo.getResidenceId(),listServiceId,itemId, isChecked, new Callback<GroceryListItemModel>() {
+        restInterface.checkBox(userInfo.getResidenceId(), listServiceId, itemId, isChecked, new Callback<GroceryListItemModel>() {
             @Override
             public void success(GroceryListItemModel groceryListItemModel, Response response) {
                 Log.d("itemCheckedOnServer", "success");
@@ -337,15 +329,18 @@ public class GroceryActivity extends Activity {
     public void deleteCheckedEntries() {
         List <Integer> checkedItemIds = getCheckedItemIds();
         for(Integer id: checkedItemIds) {
+            String serverId=getItemServiceId(String.valueOf(id.intValue()));
+            deleteItemOnServer(serverId);                //TODO: This is where I stopped
             getContentResolver().delete(
                     ContentUris.withAppendedId(GroceryItem.ContentUri,
                             id.intValue()), null, null);
+
         }
     }
 
 
 
-    public void uncheckAll() {
+    public void uncheckAll() {     //TODO:uncheck all
         List <Integer> checkedItemIds = getCheckedItemIds();
         for(Integer id: checkedItemIds) {
             setItemChecked(id, false);
