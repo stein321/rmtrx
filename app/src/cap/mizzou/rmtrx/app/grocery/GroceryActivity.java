@@ -160,7 +160,7 @@ public class GroceryActivity extends Activity {
     public void deleteItem() {
         getContentResolver().delete(
                 ContentUris.withAppendedId(GroceryItem.ContentUri, ItemView.getId()), null, null);
-        deleteItemOnServer(String.valueOf(ItemView.getId()));
+        deleteItemOnServer(getListServiceId(String.valueOf(ItemView.getId())));
         loadSelectedList();
 
     }
@@ -330,7 +330,7 @@ public class GroceryActivity extends Activity {
         List <Integer> checkedItemIds = getCheckedItemIds();
         for(Integer id: checkedItemIds) {
             String serverId=getItemServiceId(String.valueOf(id.intValue()));
-            deleteItemOnServer(serverId);                //TODO: This is where I stopped
+            deleteItemOnServer(serverId);
             getContentResolver().delete(
                     ContentUris.withAppendedId(GroceryItem.ContentUri,
                             id.intValue()), null, null);
