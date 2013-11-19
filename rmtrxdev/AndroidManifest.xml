@@ -104,8 +104,15 @@
         </activity>
 
         <activity
-                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPost"
-                android:label="@string/bb_add_post_name"
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPostActivity"
+                android:label="Add BB Post"
+                android:parentActivityName="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity">
+
+        </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.EditBBPostActivity"
+                android:label="Add BB Post"
                 android:parentActivityName="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity">
 
         </activity>
@@ -117,10 +124,16 @@
         </provider>
 
         <activity
-                android:name="cap.mizzou.rmtrx.app.Finances.FinancesActivity"
+                android:name="cap.mizzou.rmtrx.app.Finances.FinanceActivity"
                 android:label="@string/financeActivity"
-                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
-                ></activity>
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+            </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.GenerateBillActivity"
+                android:label="@string/financeActivity"
+                android:parentActivityName="cap.mizzou.rmtrx.app.Finances.FinanceActivity">
+        </activity>
 
     </application>
 

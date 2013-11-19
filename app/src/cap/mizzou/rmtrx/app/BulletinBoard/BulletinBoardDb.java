@@ -42,7 +42,7 @@ public class BulletinBoardDb {
     }
 
     public void drop(){
-        dbHelper.onUpgrade(database, 1, 2);
+        dbHelper.onUpgrade(database, 2, 3);
     }
 
     public Post createPost(String userid, String title, String details) {
@@ -61,15 +61,32 @@ public class BulletinBoardDb {
         return newPost;
     }
 
+    public void createLike(long postid, String name) {
+        ContentValues values = new ContentValues();
+        values.put(BBMySQLiteHelper.COLUMN_POSTID, postid);
+        values.put(BBMySQLiteHelper.COLUMN_NAME, name);
+        long insertId = database.insert(BBMySQLiteHelper.TABLE_LIKES, null,
+                values);
+
+    }
+
     public void deletePost(Post post) {
         long id = post.getId();
         //System.out.println("Post deleted with id: " + id);
         database.delete(BBMySQLiteHelper.TABLE_POSTS, BBMySQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
+     //TODO
+    public void deleteLike(Post post, String fname) {
+        long id = post.getId();
+        //System.out.println("Post deleted with id: " + id);
+        database.delete(BBMySQLiteHelper.TABLE_LIKES, BBMySQLiteHelper.COLUMN_POSTID
+                + " = " + id + " and " + BBMySQLiteHelper.COLUMN_NAME + " = " + fname, null);
+    }
 
     public void updatePost(Post post){
         long id = post.getId();
+
     }
 
     public List<Post> getAllPosts() {
@@ -89,6 +106,23 @@ public class BulletinBoardDb {
         return comments;
     }
 
+    public List<String> getAlllikes(long postid) {
+        List<String> likes = new ArrayList<String>();
+
+        Cursor cursor = database.rawQuery("SELECT * FROM likes WHERE postid = " +postid, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+
+            likes.add(cursorToLike(cursor));
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return likes;
+    }
+
+
     public void editPost(ContentValues cv, long rowid){
 
         database.update(BBMySQLiteHelper.TABLE_POSTS, cv, "_id=" + rowid, null);
@@ -103,5 +137,9 @@ public class BulletinBoardDb {
         comment.setPostDetails(cursor.getString(3));
 
         return comment;
+    }
+
+    private String cursorToLike(Cursor cursor) {
+       return cursor.getString(2);
     }
 }

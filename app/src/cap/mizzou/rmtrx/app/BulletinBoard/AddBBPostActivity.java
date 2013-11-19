@@ -47,7 +47,7 @@ public class AddBBPostActivity extends Activity {
         String postDetails = details.getText().toString();
 
         // Save the new comment to the database
-        comment = datasource.createPost(userid, postTitle, postDetails);
+        comment = datasource.createPost("37536483758", postTitle, postDetails);
 
 
         Intent goback= new Intent(this, BulletinBoardActivity.class);

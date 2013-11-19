@@ -82,13 +82,22 @@ public class PostListAdapter extends BaseAdapter {
         //Delete button
         ImageButton deleteButton = (ImageButton) itemView.findViewById(R.id.delete_button);
         deleteButton.setTag(post);
+        //CheckBox
+        CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.check);
+        checkBox.setTag(post);
 
         deleteButton.setVisibility(View.VISIBLE);
         editButton.setVisibility(View.VISIBLE);
+        checkBox.setVisibility(View.VISIBLE);
          if(!(post.getUserId().equals(userid))){
              deleteButton.setVisibility(View.GONE);
              editButton.setVisibility(View.GONE);
+
          }
+        else{
+             checkBox.setVisibility(View.GONE);
+         }
+
 
 
 

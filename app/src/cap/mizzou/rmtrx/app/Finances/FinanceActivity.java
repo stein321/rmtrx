@@ -34,6 +34,7 @@ public class FinanceActivity extends ListActivity {
     private Spinner spinner;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,7 @@ public class FinanceActivity extends ListActivity {
 
         //Spinner
         spinner = (Spinner) findViewById(R.id.other_roommates);
-        //TODO Ben: Change hardcode to roommate objects
+        //TODO Ben: Change hardcode to actual roommate info; SPINNER WILL HAVE THE NAMES OF THE OTHER ROOMMATES
         List<String> list = new ArrayList<String>();
         list.add("Ryan");
         list.add("Jim");
@@ -99,6 +100,7 @@ public class FinanceActivity extends ListActivity {
         //Nature of transaction
 
         amountText.setText("");
+        natureText.setText("");
         //Sends transaction info to record creation method
         transaction=datasource.createTransaction(roomateUserId, amount, nature, currentdate);
 
@@ -109,6 +111,34 @@ public class FinanceActivity extends ListActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    public void addGroupTransaction(View view){
+        Transaction transaction;
+
+        EditText amountText = (EditText) findViewById(R.id.transaction_amount);
+        EditText natureText = (EditText) findViewById(R.id.transaction_nature);
+        //Converts text to double
+        Double totalamount=Double.parseDouble(amountText.getText().toString());
+        String nature=natureText.getText().toString();
+        String currentdate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+
+
+        //Gets number of roommates from the amount of spinner items
+        int numberofroommates=spinner.getAdapter().getCount() + 1;
+
+        double divisor=(double) numberofroommates;
+
+        double amount= totalamount/divisor;
+        //TODO: Hardcoded info, CHANGE TO ACTUAL OTHER ROOMMATE USERIDS
+        transaction=datasource.createTransaction("Ryan", amount, nature, currentdate);
+        transaction=datasource.createTransaction("Jim", amount, nature, currentdate);
+        transaction=datasource.createTransaction("Brad", amount, nature, currentdate);
+
+        transaction=datasource.createTransaction(userid, amount, nature, currentdate);
+
+        amountText.setText("");
+        natureText.setText("");
     }
 
     public double getAccountBalance(String userid){
