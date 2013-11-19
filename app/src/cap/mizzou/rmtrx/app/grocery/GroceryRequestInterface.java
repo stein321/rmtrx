@@ -37,11 +37,11 @@ public interface GroceryRequestInterface {
             @Field("item_id") String itemId,
             @Field("item_status") String isChecked,
             Callback<GroceryListItemModel> callback);
-    @FormUrlEncoded
-    @DELETE("/list")
+
+    @DELETE("/residence/{residence_id}/list/{list_id}")
     void deleteList(
-            @Field("residence_id") String residenceId,
-            @Field("list_id") String listId,
+            @Path("residence_id") String residenceId,
+            @Path("list_id") String listId,
             Callback<Void> callback);
 
 

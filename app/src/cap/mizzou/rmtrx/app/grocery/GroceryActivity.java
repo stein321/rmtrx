@@ -278,6 +278,7 @@ public class GroceryActivity extends Activity {
     }
 
     public void deleteList() {
+        deleteListOnServer(String.valueOf(listSpinner.getSelectedItemId()));
         getContentResolver()
                 .delete(
                         GroceryItem.ContentUri,
@@ -287,12 +288,10 @@ public class GroceryActivity extends Activity {
         getContentResolver().delete(
                 ContentUris.withAppendedId(GroceryList.ContentUri, listSpinner
                         .getSelectedItemId()), null, null);
-        deleteListOnServer(listSpinner.getSelectedItemId());
     }
 
-    private void deleteListOnServer(long selectedItemId) {
-        String.valueOf(selectedItemId);
-        String id=getListServiceId(String.valueOf(selectedItemId));
+    private void deleteListOnServer(String selectedItemId) {
+        String id=getListServiceId(selectedItemId);
         restInterface.deleteList(userInfo.getResidenceId(),id, new Callback<Void>() {
             @Override
             public void success(Void aVoid, Response response) {
