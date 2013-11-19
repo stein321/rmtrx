@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.DataAccess.UserSQLHelper;
 import cap.mizzou.rmtrx.app.R;
@@ -26,7 +27,7 @@ import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 public class FinanceActivity extends ListActivity {
 
     private FinanceDb datasource;
-    private ResidentDataSource data;
+
     private double accountbalance;
     private String abText;
     TextView tv;
@@ -35,6 +36,8 @@ public class FinanceActivity extends ListActivity {
 
     private Spinner spinner;
 
+
+    private ResidentDataSource data;      //stein
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,9 +71,14 @@ public class FinanceActivity extends ListActivity {
 
 
         List<String> list = new ArrayList<String>();
-        list.add("Ryan");
-        list.add("Jim");
-        list.add("Brad");
+        List<Resident> residents=data.getAllResidents();
+
+        for(Resident resident : residents) {
+            list.add(resident.getFirstName());
+        }
+//        list.add("Ryan");
+//        list.add("Jim");
+//        list.add("Brad");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
