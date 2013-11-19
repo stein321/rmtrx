@@ -37,7 +37,7 @@ public class FinanceDb {
         dbHelper.close();
     }
 
-    public Transaction createTransaction(String from, String to,String description, double amount) {
+    public void createTransaction(String from, String to,String description, double amount) {
         ContentValues values = new ContentValues();
 //
         values.put(COLUMN_SERVICE_ID,"");
@@ -47,13 +47,35 @@ public class FinanceDb {
         values.put(COLUMN_FROM,from);
 
         long insertId = database.insert(TABLE_TRANSACTIONS, null, values);
-        Cursor cursor = database.query(TABLE_TRANSACTIONS,
-                allColumns, COLUMN_LOCAL_ID + " = " + insertId, null,null, null, COLUMN_DATE);
+        Cursor cursor = database.query(TABLE_TRANSACTIONS, null, COLUMN_LOCAL_ID + " = " + insertId, null,null, null, COLUMN_DATE);
+        int index=cursor.getColumnIndex(COLUMN_AMOUNT);
         cursor.moveToFirst();
-        Transaction newTransaction = cursorToTransaction(cursor);
+        String id=cursor.getString(index);
+
         cursor.close();
 //        sendTractionToServer(from,to,description,amount);
-        return newTransaction;
+    }
+    public double amountOwed(String fromId,String toId) {
+        double sum=0;
+        double amount;
+        String[] columns={COLUMN_AMOUNT};
+        String[] selectionArgs={fromId,toId};
+        String queryCalled=COLUMN_FROM + " = ? " + " AND " + COLUMN_TO + " = ? ";
+        Cursor cursor = database.query(TABLE_TRANSACTIONS,null,queryCalled,selectionArgs,null,null,null);
+
+        int index=cursor.getColumnIndex(COLUMN_AMOUNT);
+        if(cursor==null) {
+            return 0;
+        }
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            String number=cursor.getString(index);
+            amount=Double.parseDouble(number);
+            sum=sum+amount;
+            cursor.moveToNext();
+        }
+
+        return sum;
 
     }
 
@@ -76,14 +98,15 @@ public class FinanceDb {
                 + " = " + id, null);
     }
 
-    public List<Transaction> getAllTransactions(String fromUser) {
+    public List<Transaction> getAllTransactions(String fromUser, String toUser) {
         List<Transaction> transactions = new ArrayList<Transaction>();
          String[] columns={COLUMN_AMOUNT};
-        String[] selectionArgument={fromUser};
-        String queryToRun= COLUMN_FROM + " = " + fromUser + " AND " ;
-        Cursor cursor = database.query(TABLE_TRANSACTIONS,columns, null,null,null,null,null);
+        String[] selectionArgument={fromUser,toUser};
+        String queryToRun= COLUMN_FROM + " = ? " + "AND" + COLUMN_TO + " = ?" ;
+        Cursor cursor = database.query(TABLE_TRANSACTIONS,columns, queryToRun,null,null,null,null);
 
         cursor.moveToFirst();
+
         while (!cursor.isAfterLast()) {
             Transaction transaction  = cursorToTransaction(cursor);
             transactions.add(transaction);

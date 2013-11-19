@@ -77,7 +77,7 @@ public class FinanceActivity extends ListActivity {
         allResidents.remove(index);
 
         for(Resident resident: allResidents) {
-                list.add(resident.getFirstName());   //  + getTabWithUser(resident.getUserID()));
+                list.add(resident.getFirstName() + " $ " + String.valueOf(datasource.amountOwed(userinfo.getId(),resident.getUserID())));
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -90,10 +90,12 @@ public class FinanceActivity extends ListActivity {
 
 }
 
-    private String getTabWithUser(String userid) {
-             double profit=getAccountBalance(userinfo.getId(), userid) - getAccountBalance(userid, userinfo.getId());
-        return " $" + String.valueOf(profit);
-    }
+//    private String getTabWithUser() {
+//                String amount= String.valueOf(datasource.amountOwed(userinfo.getId(),));
+//
+////             double profit=getAccountBalance(userinfo.getId(), userid) - getAccountBalance(userid, userinfo.getId());
+//        return amount;// + String.valueOf(profit);
+//    }
 
     public void addTransaction(View v){
 
@@ -106,33 +108,37 @@ public class FinanceActivity extends ListActivity {
         Double amount=Double.parseDouble(amountText.getText().toString());
 
         //Spinner selection
+
         String roomateUserFirstName=String.valueOf(spinner.getSelectedItem());
         int index= spinner.getSelectedItemPosition();
         //getUserIdFromSpinner
         Resident to= allResidents.get(index);
         String toId= to.getUserID();
 
-        //TODO: add a description box
         String description="Mike for breakfast";
 
         amountText.setText("");
         //Sends transaction info to record creation method
-        transaction=datasource.createTransaction(userinfo.getId(),toId,description,amount);
 
-        //add toast message
-        Context context = getApplicationContext();
-        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserFirstName + "'s Account.";
-        int duration = Toast.LENGTH_SHORT;
+        datasource.createTransaction(userinfo.getId(),toId,description,amount);
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-        datasource.getAllTransactions(userinfo.getId());
-        t.setText("boom");
+        String number= String.valueOf(datasource.amountOwed(userinfo.getId(),toId));
+        t.setText(number);
+
+
+        //        //add toast message
+//        Context context = getApplicationContext();
+//        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserFirstName + "'s Account.";
+//        int duration = Toast.LENGTH_SHORT;
+//
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+//        datasource.getAllTransactions(userinfo.getId());
     }
 
     public double getAccountBalance(String from, String to ){
         double ab=0;
-        List<Transaction> values = datasource.getAllTransactions(from);
+        List<Transaction> values = datasource.getAllTransactions(from,to);
 
         for (int i = 0; i < values.size(); i++) {
             ab= ab+ values.get(i).getAmount();
