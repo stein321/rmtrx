@@ -117,10 +117,10 @@
         </provider>
 
         <activity
-                android:name="cap.mizzou.rmtrx.app.Finances.FinancesActivity"
+                android:name="cap.mizzou.rmtrx.app.Finances.FinanceActivity"
                 android:label="@string/financeActivity"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
-                ></activity>
+                />
 
         <activity android:name="cap.mizzou.rmtrx.app.ui.SplashActivity"
                   android:label="@string/app_name"
