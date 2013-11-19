@@ -2,10 +2,13 @@ package cap.mizzou.rmtrx.app.Finances;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
+import cap.mizzou.rmtrx.app.DataAccess.UserSQLHelper;
 import cap.mizzou.rmtrx.app.R;
 
 import java.util.*;
@@ -23,6 +26,7 @@ import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 public class FinanceActivity extends ListActivity {
 
     private FinanceDb datasource;
+    private ResidentDataSource data;
     private double accountbalance;
     private String abText;
     TextView tv;
@@ -41,13 +45,10 @@ public class FinanceActivity extends ListActivity {
         userinfo= new UserInfo(this);
         userid=userinfo.getId();
 
-
-
-
-
         datasource = new FinanceDb(this);
         datasource.open();
-
+        data = new ResidentDataSource(this);
+        data.open();
 
 
          //Gets total account balance
@@ -64,6 +65,8 @@ public class FinanceActivity extends ListActivity {
         //Spinner
         spinner = (Spinner) findViewById(R.id.other_roommates);
         //TODO Ben: Change hardcode to roommate objects
+
+
         List<String> list = new ArrayList<String>();
         list.add("Ryan");
         list.add("Jim");

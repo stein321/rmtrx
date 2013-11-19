@@ -5,7 +5,6 @@ import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity;
 import cap.mizzou.rmtrx.app.DataAccess.UserSQLHelper;
-import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
 import cap.mizzou.rmtrx.app.Finances.FinanceActivity;
 import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Residence.UserInfoActivity;
@@ -57,13 +56,12 @@ import javax.inject.Singleton;
                 JoinResidenceActivity.class,
                 LogOutActivity.class,
                 UserInfoActivity.class,
-                FinancesActivity.class,
+                FinanceActivity.class,
                 BulletinBoardActivity.class,
                 Resident.class,
                 ResidentDataSource.class,
                 ShowResidentsActivity.class,
-                UserSQLHelper.class
-                CurrentResidence.class,
+                UserSQLHelper.class,
                 FinanceActivity.class,
                 BulletinBoardActivity.class
 

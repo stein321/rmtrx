@@ -19,8 +19,8 @@ public class FinanceMySQLiteHelper extends SQLiteOpenHelper{
         public static final String COLUMN_USERID= "userid";
         public static final String COLUMN_AMOUNT = "amount";
 
-        private static final String DATABASE_NAME = "transactions.db";
-        private static final int DATABASE_VERSION = 1;
+        private static final String DATABASE_NAME = "rmtrx.db";
+        private static final int DATABASE_VERSION = 2;
 
         // Database creation sql statement
         private static final String DATABASE_CREATE = "create table "
