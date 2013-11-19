@@ -66,19 +66,19 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.Log_out.LogOutActivity"
+                android:name="cap.mizzou.rmtrx.app.LogOut.LogOutActivity"
                 android:label="@string/Logout"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 android:noHistory="true">
 
 
         </activity>
-        <activity
-                android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceInfo"
-                android:label="@string/SeeResidenceInfo"
-                android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
+        <!--<activity-->
+                <!--android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceInfo"-->
+                <!--android:label="@string/SeeResidenceInfo"-->
+                <!--android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">-->
 
-        </activity>
+        <!--</activity>-->
         <activity
                 android:name="cap.mizzou.rmtrx.app.Residence.UserInfoActivity"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
