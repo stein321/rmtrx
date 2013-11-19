@@ -23,6 +23,12 @@
               android:layout_height="wrap_content"
               android:inputType="numberDecimal|numberSigned"
             />
+        <!--<EditText android:id="@+id/description"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:inputType="text"-->
+                  <!--android:layout_marginTop="50dp"-->
+                <!--/>-->
 
         <Spinner
                 android:id="@+id/other_roommates"
@@ -40,15 +46,15 @@
             android:text="Add Transaction"
             android:onClick="addTransaction"/>
 
-    <Button
-            android:id="@+id/generateBill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="14dp"
-            android:text="Generate Bill"
-            android:onClick="onClick"/>
+    <!--<Button-->
+            <!--android:id="@+id/generateBill"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginRight="14dp"-->
+            <!--android:text="Generate Bill"-->
+            <!--android:onClick="onClick"/>-->
 
     <TextView
             android:layout_width="wrap_content"

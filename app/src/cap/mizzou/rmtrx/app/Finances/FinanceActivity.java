@@ -1,5 +1,6 @@
 package cap.mizzou.rmtrx.app.Finances;
 
+import Models.TransactionCallback;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +15,11 @@ import java.util.*;
 
 
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
+import cap.mizzou.rmtrx.app.grocery.GroceryRequestInterface;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,8 +41,11 @@ public class FinanceActivity extends ListActivity {
     private Spinner spinner;
     private int index;
     private TextView t;
-    private ResidentDataSource data;      //stein
+    private ResidentDataSource data;
+    private financesInterface restInterface;
     List<Resident> allResidents;
+
+    private RestAdapter restAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +59,8 @@ public class FinanceActivity extends ListActivity {
         datasource.open();
         data = new ResidentDataSource(this);
         data.open();
-
+        restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
+        restInterface = restAdapter.create(financesInterface.class);
 
 //         //Gets total account balance
 //         accountbalance=getAccountBalance(userid);
@@ -85,7 +95,7 @@ public class FinanceActivity extends ListActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
-        t=(TextView)findViewById(R.id.Owed);
+//        t=(TextView)findViewById(R.id.Owed);
 
 
 }
@@ -122,6 +132,8 @@ public class FinanceActivity extends ListActivity {
 
         datasource.createTransaction(userinfo.getId(),toId,description,amount);
 
+//        sendTransactionToServer(toId,description,amount);
+
         String number= String.valueOf(datasource.amountOwed(userinfo.getId(),toId));
         t.setText(number);
 
@@ -135,6 +147,20 @@ public class FinanceActivity extends ListActivity {
 //        toast.show();
 //        datasource.getAllTransactions(userinfo.getId());
     }
+
+//    private void sendTransactionToServer(String toId, String description, Double amount) {
+//        restInterface.sendTransaction(userinfo.getResidenceId(),userinfo.getId(),toId,description , String.valueOf(amount),new Callback<TransactionCallback>() {
+//            @Override
+//            public void success(TransactionCallback transactionCallback, Response response) {
+//                //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError retrofitError) {
+//                //To change body of implemented methods use File | Settings | File Templates.
+//            }
+//        });
+//    }
 
     public double getAccountBalance(String from, String to ){
         double ab=0;

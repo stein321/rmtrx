@@ -17,9 +17,10 @@ public interface financesInterface {
     @FormUrlEncoded
     @POST("/transaction")
     void sendTransaction(
-        @Field("from") String from,
-        @Field("to") String to,
-        @Field("description") String description,
+        @Field("residence_id") String residenceId,
+        @Field("from_user") String from,
+        @Field("to_user") String to,
+        @Field("note") String description,
         @Field("amount") String amount,
         Callback<TransactionCallback> transaction);
 

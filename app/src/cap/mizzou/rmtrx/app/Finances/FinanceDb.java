@@ -53,7 +53,6 @@ public class FinanceDb {
         String id=cursor.getString(index);
 
         cursor.close();
-//        sendTractionToServer(from,to,description,amount);
     }
     public double amountOwed(String fromId,String toId) {
         double sum=0;
@@ -79,9 +78,7 @@ public class FinanceDb {
 
     }
 
-    private void sendTractionToServer(String from, String to, String description, double amount) {
-        //To change body of created methods use File | Settings | File Templates.
-    }
+
 
     public void updateTransaction(int localId, String serviceId) {
         ContentValues values = new ContentValues();
