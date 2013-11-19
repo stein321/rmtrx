@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="?android:attr/listPreferredItemHeight"
+                android:padding="4dip"
+                android:descendantFocusability="blocksDescendants">
+
+
+
+    <TextView
+            android:id="@+id/post_title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            />
+
+    <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="right"
+            android:onClick="deletePost"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription=""
+            />
+</RelativeLayout>

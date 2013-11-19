@@ -5,44 +5,67 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-
     <TextView
             android:layout_width="wrap_content"
-            android:layout_height="31dp"
-            android:text="Account Balance:"
-            android:id="@+id/ABTitle"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textSize="24dp"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:id="@+id/AccountBalance"
+            android:layout_height="wrap_content"
+            android:id="@+id/account_balance"
             android:layout_gravity="center"/>
+
+    <LinearLayout
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+
+    <EditText android:id="@+id/transaction_amount"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:inputType="numberDecimal|numberSigned"
+            />
+        <!--<EditText android:id="@+id/description"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:inputType="text"-->
+                  <!--android:layout_marginTop="50dp"-->
+                <!--/>-->
+
+        <Spinner
+                android:id="@+id/other_roommates"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+    </LinearLayout>
     <Button
-            android:id="@+id/Transaction"
+            android:id="@+id/addTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_marginRight="14dp"
             android:text="Add Transaction"
-            android:onClick="addTransaction"
-            android:layout_gravity="center_horizontal"/>
+            android:onClick="addTransaction"/>
 
-    <Space
-            android:layout_width="20px"
-            android:layout_height="20px"
-            android:id="@+id/space"
-            android:layout_gravity="left|center_vertical"/>
+    <!--<Button-->
+            <!--android:id="@+id/generateBill"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginRight="14dp"-->
+            <!--android:text="Generate Bill"-->
+            <!--android:onClick="onClick"/>-->
 
-    <Button
-            android:id="@+id/GenerateBill"
-            android:layout_width="160dp"
+    <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text="Generate Bill"
-            android:onClick="generateBill"
-            android:layout_gravity="center_horizontal"/>
+            android:id="@+id/Owed"
+            android:layout_gravity="center"/>
+
+    <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello"/>
 
 </LinearLayout>

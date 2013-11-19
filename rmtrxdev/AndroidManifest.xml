@@ -104,9 +104,9 @@
         </activity>
 
         <activity
-                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPost"
-                android:label="@string/bb_add_post_name"
-                android:parentActivityName="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity">
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPostActivity"
+                android:label="Add Bulletin Board Post"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.BulletinBoard.AddBBPostActivity">
 
         </activity>
 

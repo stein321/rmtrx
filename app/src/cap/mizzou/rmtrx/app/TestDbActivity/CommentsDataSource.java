@@ -54,7 +54,7 @@ public class CommentsDataSource {
         long id = comment.getId();
         System.out.println("Comment deleted with id: " + id);
         comment.setStatus("crossed out");
-//        database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID
+//        database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_LOCAL_ID
 //                + " = " + id, null);
     }
 
