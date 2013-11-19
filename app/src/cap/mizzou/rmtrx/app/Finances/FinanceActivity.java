@@ -2,14 +2,12 @@ package cap.mizzou.rmtrx.app.Finances;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
 import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
-import cap.mizzou.rmtrx.app.DataAccess.UserSQLHelper;
 import cap.mizzou.rmtrx.app.R;
 
 import java.util.*;
@@ -38,7 +36,7 @@ public class FinanceActivity extends ListActivity {
 
 
     private ResidentDataSource data;      //stein
-
+    List<Resident> residents;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,37 +52,37 @@ public class FinanceActivity extends ListActivity {
         data.open();
 
 
-         //Gets total account balance
-         accountbalance=getAccountBalance(userid);
-         //Converts double to String
-         abText= String.valueOf(accountbalance);
-         abText= "$" + abText;
-         //Grabs Texview
-        tv= (TextView)findViewById(R.id.account_balance);
-         //Fills Textview with accountbalance
-        tv.setText(abText);
+//         //Gets total account balance
+//         accountbalance=getAccountBalance(userid);
+//         //Converts double to String
+//         abText= String.valueOf(accountbalance);
+//         abText= "$" + abText;
+//         //Grabs Texview
+//        tv= (TextView)findViewById(R.id.account_balance);
+//         //Fills Textview with accountbalance
+//        tv.setText(abText);
 
 
         //Spinner
         spinner = (Spinner) findViewById(R.id.other_roommates);
-        //TODO Ben: Change hardcode to roommate objects
-
-
         List<String> list = new ArrayList<String>();
-        List<Resident> residents=data.getAllResidents();
+        residents=data.getAllResidents();
 
         for(Resident resident : residents) {
-            list.add(resident.getFirstName());
+            list.add(resident.getFirstName());// + getTabWithUser(resident.getUserID()));
         }
-//        list.add("Ryan");
-//        list.add("Jim");
-//        list.add("Brad");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
 }
+
+    private String getTabWithUser(String userid) {
+             double profit=getAccountBalance(userinfo.getId(), userid) - getAccountBalance(userid, userinfo.getId());
+        return " $" + String.valueOf(profit);
+    }
+
     public void addTransaction(View v){
 
         Transaction transaction;
@@ -97,11 +95,17 @@ public class FinanceActivity extends ListActivity {
 
         //Spinner selection
         String roomateUserId=String.valueOf(spinner.getSelectedItem());
+        int index= spinner.getSelectedItemPosition();
+        //getUserIdFromSpinner
+        Resident to=residents.get(index);
+        String toId= to.getUserID();
 
+        //TODO: add a description box
+        String description="Mike for breakfast";
 
         amountText.setText("");
         //Sends transaction info to record creation method
-        transaction=datasource.createTransaction(roomateUserId, amount);
+        transaction=datasource.createTransaction(userinfo.getId(),toId,description,amount);
 
         //add toast message
         Context context = getApplicationContext();
@@ -112,9 +116,9 @@ public class FinanceActivity extends ListActivity {
         toast.show();
     }
 
-    public double getAccountBalance(String userid){
+    public double getAccountBalance(String from, String to ){
         double ab=0;
-        List<Transaction> values = datasource.getAllTransactions(userid);
+        List<Transaction> values = datasource.getAllTransactions(from,to);
 
         for (int i = 0; i < values.size(); i++) {
             ab= ab+ values.get(i).getAmount();

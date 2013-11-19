@@ -33,7 +33,7 @@ public class HomeActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         userInfo = new UserInfo(this);
         setContentView(R.layout.activity_login);
-        getActionBar().setTitle("Login");
+//        getActionBar().setTitle("Login");
         if(userInfo.isLoggedIn()) {
             goToDashBoard();
         }
