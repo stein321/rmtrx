@@ -134,8 +134,8 @@ public class FinanceActivity extends ListActivity {
 
 //        sendTransactionToServer(toId,description,amount);
 
-        String number= String.valueOf(datasource.amountOwed(userinfo.getId(),toId));
-        t.setText(number);
+//        String number= String.valueOf(datasource.amountOwed(userinfo.getId(),toId));
+//        t.setText(number);
 
 
         //        //add toast message
