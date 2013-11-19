@@ -56,7 +56,7 @@ public interface GroceryRequestInterface {
             Callback<Void> callback);
 
 
-    @GET("/residence/{residence_id}/update_time")
+    @GET("/residence/{residence_id}/list/update_time")
     void getUpdateTime(
             @Path("residence_id") String residenceId,
             Callback<UpdateTimeModel> callback);
