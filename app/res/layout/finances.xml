@@ -57,6 +57,15 @@
             android:layout_marginRight="14dp"
             android:text="Generate Bill"
             android:onClick="generateBill"/>
+    <Button
+            android:id="@+id/addGroupBill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="14dp"
+            android:text="Add Group Bill"
+            android:onClick="generateBill"/>
 
 
 
