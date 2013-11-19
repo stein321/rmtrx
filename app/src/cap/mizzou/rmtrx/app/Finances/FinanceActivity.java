@@ -33,15 +33,15 @@ public class FinanceActivity extends ListActivity {
     private String userid;
 
     private Spinner spinner;
-
-
+    private int index;
+    private TextView t;
     private ResidentDataSource data;      //stein
-    List<Resident> residents;
+    List<Resident> allResidents;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.finances);
-        getActionBar().setTitle("Finances");
+//        getActionBar().setTitle("Finances");
 
         userinfo= new UserInfo(this);
         userid=userinfo.getId();
@@ -66,15 +66,27 @@ public class FinanceActivity extends ListActivity {
         //Spinner
         spinner = (Spinner) findViewById(R.id.other_roommates);
         List<String> list = new ArrayList<String>();
-        residents=data.getAllResidents();
+        allResidents =data.getAllResidents();
 
-        for(Resident resident : residents) {
-            list.add(resident.getFirstName());// + getTabWithUser(resident.getUserID()));
+        //get index of currentUser   so it can be removed from the list
+        for(int i=0;i<allResidents.size();i++) {
+            if(allResidents.get(i).getUserID().equals(userinfo.getId())) {
+                  index=i;
+            }
         }
+        allResidents.remove(index);
+
+        for(Resident resident: allResidents) {
+                list.add(resident.getFirstName());   //  + getTabWithUser(resident.getUserID()));
+        }
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+
+        t=(TextView)findViewById(R.id.Owed);
+
 
 }
 
@@ -94,10 +106,10 @@ public class FinanceActivity extends ListActivity {
         Double amount=Double.parseDouble(amountText.getText().toString());
 
         //Spinner selection
-        String roomateUserId=String.valueOf(spinner.getSelectedItem());
+        String roomateUserFirstName=String.valueOf(spinner.getSelectedItem());
         int index= spinner.getSelectedItemPosition();
         //getUserIdFromSpinner
-        Resident to=residents.get(index);
+        Resident to= allResidents.get(index);
         String toId= to.getUserID();
 
         //TODO: add a description box
@@ -109,16 +121,18 @@ public class FinanceActivity extends ListActivity {
 
         //add toast message
         Context context = getApplicationContext();
-        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserId + "'s Account.";
+        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserFirstName + "'s Account.";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+        datasource.getAllTransactions(userinfo.getId());
+        t.setText("boom");
     }
 
     public double getAccountBalance(String from, String to ){
         double ab=0;
-        List<Transaction> values = datasource.getAllTransactions(from,to);
+        List<Transaction> values = datasource.getAllTransactions(from);
 
         for (int i = 0; i < values.size(); i++) {
             ab= ab+ values.get(i).getAmount();

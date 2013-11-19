@@ -25,7 +25,7 @@ public class FinanceMySQLiteHelper extends SQLiteOpenHelper{
         public static final String COLUMN_DATE          = "date";
 
         private static final String DATABASE_NAME = "rmtrx.db";
-        private static final int DATABASE_VERSION = 2;
+        private static final int DATABASE_VERSION = 3;
 
         // Database creation sql statement
         private static final String DATABASE_CREATE = "create table "

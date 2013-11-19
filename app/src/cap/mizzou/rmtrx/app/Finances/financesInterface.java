@@ -1,5 +1,7 @@
 package cap.mizzou.rmtrx.app.Finances;
 
+import Models.TransactionCallback;
+import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
@@ -13,11 +15,12 @@ import retrofit.http.POST;
  */
 public interface financesInterface {
     @FormUrlEncoded
-    @POST("")
+    @POST("/transaction")
     void sendTransaction(
         @Field("from") String from,
         @Field("to") String to,
         @Field("description") String description,
-        @Field("amount") String amount
-    );
+        @Field("amount") String amount,
+        Callback<TransactionCallback> transaction);
+
 }

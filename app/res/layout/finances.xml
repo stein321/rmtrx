@@ -50,7 +50,11 @@
             android:text="Generate Bill"
             android:onClick="onClick"/>
 
-
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Owed"
+            android:layout_gravity="center"/>
 
     <ListView
             android:id="@android:id/list"

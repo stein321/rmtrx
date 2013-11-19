@@ -52,7 +52,7 @@ public class FinanceDb {
         cursor.moveToFirst();
         Transaction newTransaction = cursorToTransaction(cursor);
         cursor.close();
-        sendTractionToServer(from,to,description,amount);
+//        sendTractionToServer(from,to,description,amount);
         return newTransaction;
 
     }
@@ -76,11 +76,11 @@ public class FinanceDb {
                 + " = " + id, null);
     }
 
-    public List<Transaction> getAllTransactions(String fromUser,String toUser) {
+    public List<Transaction> getAllTransactions(String fromUser) {
         List<Transaction> transactions = new ArrayList<Transaction>();
          String[] columns={COLUMN_AMOUNT};
-        String[] selectionArgument={fromUser,toUser};
-        String queryToRun= COLUMN_FROM + " = " + fromUser + " AND " + COLUMN_TO + " = " + toUser;
+        String[] selectionArgument={fromUser};
+        String queryToRun= COLUMN_FROM + " = " + fromUser + " AND " ;
         Cursor cursor = database.query(TABLE_TRANSACTIONS,columns, null,null,null,null,null);
 
         cursor.moveToFirst();
