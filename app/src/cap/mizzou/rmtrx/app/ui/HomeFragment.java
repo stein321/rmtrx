@@ -14,7 +14,7 @@ import cap.mizzou.rmtrx.app.Finances.FinanceActivity;
 import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Messages.MessagesActivity;
 import cap.mizzou.rmtrx.app.R;
-import cap.mizzou.rmtrx.app.Residence.CurrentResidence;
+import cap.mizzou.rmtrx.app.Residence.UserInfoActivity;
 import cap.mizzou.rmtrx.app.TestDbActivity.TestDatabaseActivity;
 import cap.mizzou.rmtrx.app.grocery.GroceryActivity;
 import cap.mizzou.rmtrx.core.ui.BaseListFragment;
@@ -95,7 +95,7 @@ public class HomeFragment extends BaseListFragment {
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.db_attempt_name, TestDatabaseActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));
-        activitiesList.add(new RmtrxActivity(R.string.residence_info, CurrentResidence.class));
+        activitiesList.add(new RmtrxActivity(R.string.residence_info, UserInfoActivity.class));
         //  activitiesList.add(new RmtrxActivity(R.string.registration_activity_name, RegistrationActivity.class));
 /*        activitiesList.add(new RmtrxActivity(R.string.action_settings, SettingsActivity.class));*/
 

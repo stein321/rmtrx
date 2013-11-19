@@ -52,7 +52,10 @@
     <string name="lastName">Last Name</string>
     <string name="residence_name">Residence Name</string>
     <string name="subject">Object</string>
-    <string name="name_of_residence_title">Residence</string>
+    <string name="name_of_residence_title">Residence: </string>
+    <string name="codeButtonDirection"><![CDATA[<-Click for new code]]></string>
+    <string name="showResidents">Show Residents</string>
+    <string name="Truncate">Truncate</string>
 
 
 </resources>

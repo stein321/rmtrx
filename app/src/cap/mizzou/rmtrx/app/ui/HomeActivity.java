@@ -2,6 +2,7 @@ package cap.mizzou.rmtrx.app.ui;
 
 
 import Models.Key;
+import Models.Residence;
 import Models.ResponseObject;
 import Models.User;
 import android.app.AlertDialog;
@@ -11,6 +12,8 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import cap.mizzou.rmtrx.app.DataAccess.ResidenceDataInterface;
+import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
@@ -23,46 +26,36 @@ import retrofit.client.Response;
 
 public class HomeActivity extends BaseFragmentActivity {
     private UserInfo userInfo;
+    private RestAdapter restAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context context=getApplicationContext();
-        userInfo =new UserInfo(context);
+        userInfo = new UserInfo(this);
         setContentView(R.layout.activity_login);
         getActionBar().setTitle("Login");
         if(userInfo.isLoggedIn()) {
-            startIntent();
+            goToDashBoard();
         }
+        restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
     }
-    public void startIntent() {
-        Intent goToDashBoard=new Intent(this,DashboardActivity.class);
+    public void goToDashBoard() {
+        Intent goToDashBoard=new Intent(this, DashboardActivity.class);
         startActivity(goToDashBoard);
     }
     public void sendLoginInfo(View view) {
-        //grabs text from form
-        EditText login_name_text = (EditText) findViewById(R.id.login_name);
-        EditText p_word_text = (EditText) findViewById(R.id.p_word);
-
-        String login_to_add = login_name_text.getText().toString();
-        String p_word_to_add = p_word_text.getText().toString();
-        checkLoginCredentials(login_to_add, p_word_to_add);
+        EditText userName = (EditText) findViewById(R.id.login_name);
+        EditText password = (EditText) findViewById(R.id.p_word);
+        checkLoginCredentials(userName.getText().toString(), password.getText().toString());
     }
 
     public void checkLoginCredentials(String username, String password) {
-
-        RestAdapter restAdapter =
-                new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-
         AuthenticationRequestInterface ri = restAdapter.create(AuthenticationRequestInterface.class);
-
-
         ri.login(username, password, new Callback<ResponseObject>() {
-
 
             @Override
             public void success(ResponseObject authResponse, Response response) {
-                successfulLogin(authResponse.getResponse(),authResponse.getUser());
+                successfulLogin(authResponse.getResponse(),authResponse.getUser(),authResponse.getResidence());
             }
 
             @Override
@@ -78,15 +71,33 @@ public class HomeActivity extends BaseFragmentActivity {
         alertDialogBuilder.setMessage("Wrong login").create().show();
     }
 
-    private void successfulLogin(Key key, User user) {
+    private void successfulLogin(Key key, User user, Residence residence) {
+        setUserInfo(key, user, residence);
+        grabAllUsersInResidenceAndStoreInfoInDb(residence);
+        goToDashBoard();
+    }
+
+    private void setUserInfo(Key key, User user, Residence residence) {
         userInfo.setEmail(user.getEmail());
         userInfo.setFirstName(user.getFirstName());
         userInfo.setLastName(user.getLastName());
         userInfo.setAuthKey(key.getKey());
         userInfo.setLoggedIn(true);
         userInfo.setId(user.getId());
-        userInfo.commit();
-        startIntent();
+        userInfo.setResidenceId(residence.getId());
+        userInfo.setResidenceName(residence.getName());
+    }
+
+
+    private void grabAllUsersInResidenceAndStoreInfoInDb(Residence residence) {
+        ResidentDataSource data=new ResidentDataSource(this);
+
+        User[] users=residence.getUsers();
+        for(User user : users) {
+            data.open();
+            data.addResident(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName());
+            data.close();
+        }
     }
 
 

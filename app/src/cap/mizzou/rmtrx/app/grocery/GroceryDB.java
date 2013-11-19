@@ -18,7 +18,7 @@ public class GroceryDB extends ContentProvider {
 	
     private static final String TAG = "GroceryDB";
     private static final String DatabaseName = "grocery.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static HashMap <String, String> GroceryListProjectionMap;
     private static HashMap <String, String> GroceryItemProjectionMap;
     private static final int GetList = 1;
@@ -61,13 +61,15 @@ public class GroceryDB extends ContentProvider {
         GroceryListProjectionMap.put(GroceryList.Columns.DEFAULT, GroceryList.Columns.DEFAULT);
         GroceryListProjectionMap.put(GroceryList.Columns.CreatedDate, GroceryList.Columns.CreatedDate);
         GroceryListProjectionMap.put(GroceryList.Columns.ModifiedDate, GroceryList.Columns.ModifiedDate);
+        GroceryListProjectionMap.put(GroceryList.Columns.SERVICE_ID, GroceryList.Columns.SERVICE_ID);
 
         GroceryItemProjectionMap = new HashMap<String, String>();
         GroceryItemProjectionMap.put(GroceryItem.Columns._ID, GroceryItem.Columns._ID);
         GroceryItemProjectionMap.put(GroceryItem.Columns.NAME, GroceryItem.Columns.NAME);
-        GroceryItemProjectionMap.put(GroceryItem.Columns.IsChecked, GroceryItem.Columns.IsChecked);
-        GroceryItemProjectionMap.put(GroceryItem.Columns.CreatedDate, GroceryItem.Columns.CreatedDate);
-        GroceryItemProjectionMap.put(GroceryItem.Columns.ModifiedDate, GroceryItem.Columns.ModifiedDate);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.IS_CHECKED, GroceryItem.Columns.IS_CHECKED);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.CREATED_DATE, GroceryItem.Columns.CREATED_DATE);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.MODIFIED_DATE, GroceryItem.Columns.MODIFIED_DATE);
+        GroceryItemProjectionMap.put(GroceryItem.Columns.SERVICE_ID,GroceryItem.Columns.SERVICE_ID);
     }
 
 
@@ -108,9 +110,9 @@ public class GroceryDB extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-        
+
         String contentType = getType(uri);
-        
+
         if(contentType == GroceryList.ContentType) {
             qb.setTables(GroceryList.TableName);
             qb.setProjectionMap(GroceryListProjectionMap);
@@ -150,7 +152,7 @@ public class GroceryDB extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues initialValues) {
-    	
+
         ContentValues values;
         if (initialValues != null) {
             values = new ContentValues(initialValues);
@@ -159,7 +161,7 @@ public class GroceryDB extends ContentProvider {
         }
 
         Long now = Long.valueOf(System.currentTimeMillis());
-        
+
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         long rowId;
 
@@ -170,16 +172,16 @@ public class GroceryDB extends ContentProvider {
 	        if (!values.containsKey(GroceryList.Columns.CreatedDate)) {
 	            values.put(GroceryList.Columns.CreatedDate, now);
 	        }
-	
+
 	        if (!values.containsKey(GroceryList.Columns.ModifiedDate)) {
 	            values.put(GroceryList.Columns.ModifiedDate, now);
 	        }
-	
+
 	        if (!values.containsKey(GroceryList.Columns.NAME)) {
 	            Resources r = Resources.getSystem();
 	            values.put(GroceryList.Columns.NAME, r.getString(android.R.string.untitled));
 	        }
-	
+
 	        rowId = db.insert(GroceryList.TableName, GroceryList.Columns.NAME, values);
 	        if (rowId > 0) {
 	            Uri noteUri = ContentUris.withAppendedId(GroceryList.ContentUri, rowId);
@@ -189,23 +191,23 @@ public class GroceryDB extends ContentProvider {
 	        break;
         case GetItem:
 
-	        if (!values.containsKey(GroceryItem.Columns.CreatedDate)) {
-	            values.put(GroceryItem.Columns.CreatedDate, now);
+	        if (!values.containsKey(GroceryItem.Columns.CREATED_DATE)) {
+	            values.put(GroceryItem.Columns.CREATED_DATE, now);
 	        }
-	
-	        if (!values.containsKey(GroceryItem.Columns.ModifiedDate)) {
-	            values.put(GroceryItem.Columns.ModifiedDate, now);
+
+	        if (!values.containsKey(GroceryItem.Columns.MODIFIED_DATE)) {
+	            values.put(GroceryItem.Columns.MODIFIED_DATE, now);
 	        }
-	
+
 	        if (!values.containsKey(GroceryItem.Columns.NAME)) {
 	            Resources r = Resources.getSystem();
 	            values.put(GroceryItem.Columns.NAME, r.getString(android.R.string.untitled));
 	        }
-	        
-            if (!values.containsKey(GroceryItem.Columns.IsChecked)) {
-                values.put(GroceryItem.Columns.IsChecked, 0);
+
+            if (!values.containsKey(GroceryItem.Columns.IS_CHECKED)) {
+                values.put(GroceryItem.Columns.IS_CHECKED, 0);
             }
-	
+
 	       	rowId = db.insert(GroceryItem.TableName, GroceryItem.Columns.NAME, values);
 	        if (rowId > 0) {
 	            Uri noteUri = ContentUris.withAppendedId(GroceryItem.ContentUri, rowId);
@@ -239,7 +241,7 @@ public class GroceryDB extends ContentProvider {
             count = db.delete(GroceryList.TableName, GroceryList.Columns._ID + "=" + id
                     + (!TextUtils.isEmpty(where) ? " AND (" + where + ')' : ""), whereArgs);
             break;
-            
+
         case GetItem:
             count = db.delete(GroceryItem.TableName, where, whereArgs);
             break;
@@ -274,7 +276,7 @@ public class GroceryDB extends ContentProvider {
             count = db.update(GroceryList.TableName, values, GroceryList.Columns._ID + "=" + noteId
                     + (!TextUtils.isEmpty(where) ? " AND (" + where + ')' : ""), whereArgs);
             break;
-            
+
         case GetItem:
             count = db.update(GroceryItem.TableName, values, where, whereArgs);
             break;
@@ -284,7 +286,7 @@ public class GroceryDB extends ContentProvider {
             count = db.update(GroceryItem.TableName, values, GroceryItem.Columns._ID + "=" + noteId
                     + (!TextUtils.isEmpty(where) ? " AND (" + where + ')' : ""), whereArgs);
             break;
-            
+
 
         }
 

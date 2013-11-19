@@ -1,7 +1,6 @@
 package cap.mizzou.rmtrx.app.User_setup;
 
-import Models.CreateUserResponse;
-import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
+import Models.UserAndResidenceResponse;
 import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -16,11 +15,24 @@ import retrofit.http.POST;
 public interface UserCreationInterface {
 
     @FormUrlEncoded
-    @POST("/user")
-    void createUser(
+    @POST("/account")
+    void createUserAndResidence(
             @Field("first_name") String firstName,
             @Field("last_name") String lastName,
             @Field("email") String email,
             @Field("password") String password,
-            Callback<CreateUserResponse> user);
+            @Field("residence_name") String residenceName,
+            Callback<UserAndResidenceResponse> userAndResidence
+    );
+
+    @FormUrlEncoded
+    @POST("/join")
+    void createUserAndJoinResidence(
+            @Field("first_name") String firstName,
+            @Field("last_name") String lastName,
+            @Field("email") String email,
+            @Field("password") String password,
+            @Field("code") String residenceCode,
+            Callback<UserAndResidenceResponse> userAndResidence
+    );
 }

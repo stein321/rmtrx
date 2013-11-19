@@ -1,9 +1,9 @@
 package cap.mizzou.rmtrx.app.grocery;
 
+import Models.GroceryListItemModel;
+import Models.GroceryListModel;
 import retrofit.Callback;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
+import retrofit.http.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,5 +19,37 @@ public interface GroceryRequestInterface {
     void createList(
             @Field("residence_id") String residenceId ,
             @Field("list_name") String listName,
-            Callback<GroceryActivity.GroceryListModel> callback);
+            Callback<GroceryListModel> callback);
+
+    @FormUrlEncoded
+    @POST("/list/item")
+    void addItemToList(
+            @Field("residence_id") String residenceId,
+            @Field("list_id") String listId,
+            @Field("item_name") String itemName,
+            Callback<GroceryListItemModel> callback);
+
+    @FormUrlEncoded
+    @PUT("/list/item")
+    void checkBox(
+            @Field("residence_id") String residenceId,
+            @Field("list_id") String listId,
+            @Field("item_id") String itemId,
+            @Field("item_status") String isChecked,
+            Callback<GroceryListItemModel> callback);
+
+    @DELETE("/residence/{residence_id}/list/{list_id}")
+    void deleteList(
+            @Path("residence_id") String residenceId,
+            @Path("list_id") String listId,
+            Callback<Void> callback);
+
+
+    @DELETE("/residence/{residence_id}/list/{list_id}/item/{item_id}")
+    void deleteItem(
+            @Path("residence_id") String residenceId,
+            @Path("list_id") String listId,
+            @Path("item_id") String itemId,
+            Callback<Void> callback);
+
 }

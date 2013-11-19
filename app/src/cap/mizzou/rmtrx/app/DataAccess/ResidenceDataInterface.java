@@ -1,6 +1,7 @@
 package cap.mizzou.rmtrx.app.DataAccess;
 
 import Models.Residence;
+import Models.User;
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -15,5 +16,8 @@ import retrofit.http.Path;
 public interface ResidenceDataInterface {
 
     @GET("/residence/user/{id}")
-    void getResidence(@Path("id") String residenceId, Callback<Residence> callback);
+    void getResidence(@Path("id") String userId, Callback<Residence> callback);
+
+    @GET("/user/{id}")
+    void getUser(@Path("id") String userId, Callback<User> callback);
 }
