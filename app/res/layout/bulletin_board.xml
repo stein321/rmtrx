@@ -1,25 +1,26 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              >
+
+
+<Button
+                android:id="@+id/addPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:onClick="onClick"/>
 
 
 
-    <Button
-            android:id="@+id/BBPostButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="14dp"
-            android:text="Add"
-            android:onClick="addBBPost"/>
 
     <ListView
-            android:id="@+id/bblistview"
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/button1" >
-    </ListView>
-</RelativeLayout>
+            android:text="@string/hello"
+            android:listSelector="@drawable/list_selector"/>
+
+</LinearLayout>

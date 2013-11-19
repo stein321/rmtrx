@@ -66,23 +66,26 @@
 
         </activity>
         <activity
-                android:name="cap.mizzou.rmtrx.app.LogOut.LogOutActivity"
+                android:name="cap.mizzou.rmtrx.app.Log_out.LogOutActivity"
                 android:label="@string/Logout"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 android:noHistory="true">
 
 
         </activity>
-        <!--<activity-->
-                <!--android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceI"-->
-                <!--android:label="@string/SeeResidenceInfo"-->
-                <!--android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">-->
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Residence.SeeResidenceInfo"
+                android:label="@string/SeeResidenceInfo"
+                android:parentActivityName="cap.mizzou.rmtrx.app.Login.RegistrationActivity">
 
-        <!--</activity>-->
+        </activity>
         <activity
                 android:name="cap.mizzou.rmtrx.app.Residence.UserInfoActivity"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 android:label="@string/currentResidence">
+                android:name="cap.mizzou.rmtrx.app.Residence.CurrentResidence"
+                android:label="@string/currentResidence"
+              >
 
         </activity>
         <activity
@@ -93,6 +96,8 @@
         <activity
                 android:name="cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity"
                 android:label="@string/residents">
+                android:label="@string/dashboardActivity"
+                >
 
         </activity>
 
@@ -104,9 +109,9 @@
         </activity>
 
         <activity
-                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPost"
-                android:label="@string/bb_add_post_name"
-                android:parentActivityName="cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity">
+                android:name="cap.mizzou.rmtrx.app.BulletinBoard.AddBBPostActivity"
+                android:label="Add Bulletin Board Post"
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.BulletinBoard.AddBBPostActivity">
 
         </activity>
 
@@ -117,10 +122,19 @@
         </provider>
 
         <activity
-                android:name="cap.mizzou.rmtrx.app.Finances.FinancesActivity"
+                android:name="cap.mizzou.rmtrx.app.Finances.FinanceActivity"
                 android:label="@string/financeActivity"
-                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
-                ></activity>
+                android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity">
+        </activity>
+
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.TransactionActivity"
+                android:label="Transaction"
+                android:parentActivityName="cap.mizzou.rmtrx.app.Finances.FinanceActivity">
+
+        </activity>
+
+
 
     </application>
 

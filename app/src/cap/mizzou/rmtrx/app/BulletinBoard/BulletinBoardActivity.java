@@ -1,16 +1,18 @@
 package cap.mizzou.rmtrx.app.BulletinBoard;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.EditText;
 import cap.mizzou.rmtrx.app.R;
+import android.widget.*;
+import java.util.List;
+import android.content.Intent;
+import android.app.*;
+import android.content.DialogInterface;
 
-import java.util.ArrayList;
 
 
 /**
@@ -20,67 +22,104 @@ import java.util.ArrayList;
  * Time: 5:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BulletinBoardActivity extends Activity {
+public class BulletinBoardActivity extends ListActivity {
 
 
-    ListView listView ;
-    // Defined Array values to show in ListView
-    ArrayList <String> posts;
-
+    private BulletinBoardDb datasource;
+    private PostListAdapter postListAdapter;
+    private Post currentpost;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bulletin_board);
         getActionBar().setTitle("Bulletin Board");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get the reference of ListViewAnimals
-        ListView postlistview=(ListView)findViewById(R.id.bblistview);
-
-        posts= new ArrayList<String>();
-
-          //This won't work until you actually pass Extra info with the intent.
-//        //Receives data passed with intent
-//        Intent intent = getIntent();
-//        String test = intent.getStringExtra("message");
-//        Bundle extras = getIntent().getExtras();
-//        String title = extras.getString("title");
-//        String message = extras.getString("message");
-//
-//        //Adds messages to ArrayList
-//        posts.add(message);
+        datasource = new BulletinBoardDb(this);
+        datasource.open();
 
 
-        //Create Adapter
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, posts);
-        // Set Adapter
-        postlistview.setAdapter(arrayAdapter);
 
-        // register onClickListener to handle click events on each item
-        postlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            // argument position gives the index of item which is clicked
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+        List<Post> values = datasource.getAllPosts();
 
-                String selectedpost = posts.get(position);
-                Toast.makeText(getApplicationContext(), "Post Selected: " + selectedpost, Toast.LENGTH_LONG).show();
+        postListAdapter = new PostListAdapter(getApplicationContext(), R.layout.post_list_item, values);
 
-                Intent display= new Intent(getApplicationContext(), DisplayBBPost.class);
-                display.putExtra("message", selectedpost);
-                startActivity(display);
-            }
-        });
+        setListAdapter(postListAdapter);
+
+
+
+        this.getListView().setClickable(true);
+        this.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                //show post details
+            }});
+
 
 
 
     }
 
-    public void addBBPost(View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this, AddBBPost.class);
-        startActivity(intent);
+    //starts the addPost activity
+    public void onClick(View view) {
+
+        Intent addpost= new Intent(this, AddBBPostActivity.class);
+        startActivity(addpost);
+        }
+
+    public void deletePost(View view){
+        ImageButton button = (ImageButton) view;
+        currentpost = (Post) button.getTag();
+        datasource.deletePost(currentpost);
+
+        postListAdapter.removePost(currentpost);
+        postListAdapter.notifyDataSetChanged();
+
+        //showDialog(1);
     }
+
+
+    @Override
+    protected void onResume() {
+        datasource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        datasource.close();
+        super.onPause();
+    }
+
+
+    private Dialog createDialogRemoveConfirm() {
+        return new AlertDialog.Builder(getApplicationContext())
+                //.setIcon(R.drawable.trashbin_icon)
+                .setTitle("Remove?")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        handleRemoveConfirm();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+    }
+
+
+    protected void handleRemoveConfirm() {
+
+        datasource.deletePost(currentpost);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int i) {
+
+                return createDialogRemoveConfirm();
+
+        }
+
 }
-
 
 
 
