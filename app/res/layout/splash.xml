@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="vertical"
+        android:foregroundGravity="center"
+        android:gravity="center|bottom"
+        android:windowBackground="@drawable/gradient">
+
+    <!--<ImageView
+            android:layout_width="170dp"
+            android:layout_height="147dp"
+            android:src="@drawable/ic_action_search"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="119dp"/>-->
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="20px"
+            android:id="@+id/space"
+            android:layout_gravity="center_vertical"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading..."
+            android:id="@+id/textView"/>
+
+
+    <Space
+            android:layout_width="fill_parent"
+            android:layout_height="20px"
+            android:id="@+id/space2"
+            android:layout_gravity="left|center_vertical"/>
+
+    <SurfaceView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/surfaceView"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:visibility="visible"
+            android:layout_centerHorizontal="true"
+            />
+
+    <Space
+            android:layout_width="fill_parent"
+            android:layout_height="20px"
+            android:id="@+id/space1"
+            android:layout_gravity="left|center_vertical"/>
+
+
+</LinearLayout>

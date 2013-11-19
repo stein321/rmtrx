@@ -28,8 +28,8 @@
             android:textStyle="bold"
             android:textSize="20dp"/>
     <EditText android:id="@+id/login_name"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="84dp"
+              android:layout_height="50dp"
               android:inputType="text"
               android:layout_gravity="center"/>
 
@@ -48,14 +48,20 @@
             android:textSize="20dp"
             />
     <EditText android:id="@+id/p_word"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="83dp"
+              android:layout_height="50dp"
               android:layout_gravity="center"
               android:password="true"/>
 
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space3"
+            android:layout_gravity="center"/>
+
     <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:text="@string/Login"
             android:onClick="sendLoginInfo"
             android:layout_gravity="center"
@@ -68,8 +74,8 @@
             android:layout_gravity="center"/>
 
     <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
             android:text="@string/newResidence"
             android:onClick="register"
             android:layout_gravity="center"

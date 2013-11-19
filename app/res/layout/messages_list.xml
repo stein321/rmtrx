@@ -25,6 +25,12 @@
 
     <!--</LinearLayout>-->
 
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space1"
+            android:layout_gravity="left|center_vertical"/>
+
     <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
@@ -36,13 +42,20 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             />
-     <Button
-            android:layout_width="match_parent"
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space"
+            android:layout_gravity="left|center_vertical"/>
+
+    <Button
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:text="@string/button_send"
             android:onClick="sendMessage"
 
-         />
+            android:layout_gravity="center_horizontal"/>
 
 
 

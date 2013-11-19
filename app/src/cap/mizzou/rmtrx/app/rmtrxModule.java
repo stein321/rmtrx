@@ -1,10 +1,6 @@
 package cap.mizzou.rmtrx.app;
 
 import cap.mizzou.rmtrx.app.BulletinBoard.BulletinBoardActivity;
-import cap.mizzou.rmtrx.app.DataAccess.Resident;
-import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
-import cap.mizzou.rmtrx.app.DataAccess.ShowResidentsActivity;
-import cap.mizzou.rmtrx.app.DataAccess.UserSQLHelper;
 import cap.mizzou.rmtrx.app.Finances.FinancesActivity;
 import cap.mizzou.rmtrx.app.LogOut.LogOutActivity;
 import cap.mizzou.rmtrx.app.Residence.UserInfoActivity;
@@ -21,6 +17,7 @@ import cap.mizzou.rmtrx.app.settings.SettingsActivity;
 import cap.mizzou.rmtrx.app.ui.DashboardActivity;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
 import cap.mizzou.rmtrx.app.ui.HomeFragment;
+import cap.mizzou.rmtrx.app.ui.SplashActivity;
 import com.squareup.otto.Bus;
 import dagger.Module;
 import dagger.Provides;
@@ -58,10 +55,12 @@ import javax.inject.Singleton;
                 UserInfoActivity.class,
                 FinancesActivity.class,
                 BulletinBoardActivity.class,
-                Resident.class,
-                ResidentDataSource.class,
-                ShowResidentsActivity.class,
-                UserSQLHelper.class
+                SplashActivity.class,
+                BulletinBoardActivity.class,
+//                Resident.class,
+//                ResidentDataSource.class,
+//                ShowResidentsActivity.class,
+//                UserSQLHelper.class
 
 
         })
