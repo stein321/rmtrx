@@ -18,16 +18,16 @@ public class GroceryItem {
 			public static final String LIST_ID = "list_id";
             public static final String SERVICE_ID ="service_id";
 			public static final String NAME = "name";
-			public static final String IsChecked = "is_checked";
-			public static final String CreatedDate = "created";
-			public static final String ModifiedDate = "modified";
+			public static final String IS_CHECKED = "is_checked";
+			public static final String CREATED_DATE = "created";
+			public static final String MODIFIED_DATE = "modified";
 		}
 
     //Sort
     public enum Sort {
         name(Columns.NAME), age(Columns._ID), status_name(
-                Columns.IsChecked + "," + name), status_age(
-                Columns.IsChecked + "," + age);
+                Columns.IS_CHECKED + "," + name), status_age(
+                Columns.IS_CHECKED + "," + age);
 
         private String sortString;
 
@@ -53,15 +53,15 @@ public class GroceryItem {
         + Columns.LIST_ID + " INTEGER,"
         + Columns.SERVICE_ID + " TEXT, "
         + Columns.NAME + " TEXT,"
-        + Columns.IsChecked + " INTEGER,"
-        + Columns.CreatedDate + " INTEGER,"
-        + Columns.ModifiedDate + " INTEGER"
+        + Columns.IS_CHECKED + " INTEGER,"
+        + Columns.CREATED_DATE + " INTEGER,"
+        + Columns.MODIFIED_DATE + " INTEGER"
         + ");";
 
 	    public static final String[] PROJECTION = new String[] {
             Columns._ID, // 0
             Columns.NAME, // 1
-            Columns.IsChecked
+            Columns.IS_CHECKED
 	    };
 		
         public static ContentValues contentValues(int listId, String name) {
@@ -73,7 +73,7 @@ public class GroceryItem {
         
         public static ContentValues contentValues(Boolean isChecked) {
             ContentValues values = new ContentValues();
-            values.put(Columns.IsChecked, isChecked ? 1 : 0);
+            values.put(Columns.IS_CHECKED, isChecked ? 1 : 0);
             return values;
         }
 	}
