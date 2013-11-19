@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import cap.mizzou.rmtrx.app.DataAccess.DatabaseHydrator;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import retrofit.Callback;
@@ -41,6 +42,9 @@ public class MessagesActivity extends ListActivity {
 //        displayMessageList();
         getMessagesFromServer();
 
+        DatabaseHydrator dh = new DatabaseHydrator(this);
+        String residenceId = userInfo.getResidenceId();
+        dh.UpdateDatabase(residenceId);
     }
 
     private List<Message> getAllMessages() {

@@ -12,7 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import cap.mizzou.rmtrx.app.DataAccess.ResidenceDataInterface;
+import cap.mizzou.rmtrx.app.DataAccess.DatabaseHydrator;
 import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
@@ -33,7 +33,6 @@ public class HomeActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         userInfo = new UserInfo(this);
         setContentView(R.layout.activity_login);
-        getActionBar().setTitle("Login");
         if(userInfo.isLoggedIn()) {
             goToDashBoard();
         }
@@ -73,7 +72,10 @@ public class HomeActivity extends BaseFragmentActivity {
 
     private void successfulLogin(Key key, User user, Residence residence) {
         setUserInfo(key, user, residence);
-        grabAllUsersInResidenceAndStoreInfoInDb(residence);
+
+        DatabaseHydrator hydrator = new DatabaseHydrator(this);
+        hydrator.UpdateDatabase(residence.getId());
+
         goToDashBoard();
     }
 
@@ -86,6 +88,8 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo.setId(user.getId());
         userInfo.setResidenceId(residence.getId());
         userInfo.setResidenceName(residence.getName());
+
+        userInfo.setGroceryListLastUpdate(residence.getGroceryListLastUpdate());
     }
 
 

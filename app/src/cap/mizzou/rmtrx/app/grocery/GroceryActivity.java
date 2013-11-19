@@ -2,6 +2,7 @@ package cap.mizzou.rmtrx.app.grocery;
 
 import Models.GroceryListItemModel;
 import Models.GroceryListModel;
+import Models.UpdateTimeModel;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
+import cap.mizzou.rmtrx.app.DataAccess.DatabaseHydrator;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import retrofit.Callback;
@@ -23,6 +25,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +60,29 @@ public class GroceryActivity extends Activity {
         newItemButton.setImageResource(android.R.drawable.ic_input_add);
         restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         restInterface = restAdapter.create(GroceryRequestInterface.class);
+
+
         Context context=getApplicationContext();
         userInfo=new UserInfo(context);
+
+        restInterface.getUpdateTime(userInfo.getResidenceId(),new Callback<UpdateTimeModel>() {
+            @Override
+            public void success(UpdateTimeModel updateTimeModel, Response response) {
+                if(updateTimeModel.getTimeStamp() > userInfo.getGroceryListLastUpdate()) {
+                    DatabaseHydrator hydrator = new DatabaseHydrator(getApplicationContext());
+                    hydrator.updateGroceryDatabase(userInfo.getResidenceId());
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                    userInfo.setGroceryListLastUpdate(timestamp.getTime());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
         setupCallbacks();
         loadLists();
     }

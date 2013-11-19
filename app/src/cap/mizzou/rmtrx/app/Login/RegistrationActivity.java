@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import cap.mizzou.rmtrx.app.DataAccess.DatabaseHydrator;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import cap.mizzou.rmtrx.app.User_setup.CreateResidenceActivity;
@@ -131,6 +132,8 @@ public class RegistrationActivity extends Activity {
 
     private void saveUserLocallyAndLogin(UserAndResidenceResponse userInfoAndKey) {
         setUserInfo(userInfoAndKey);
+        DatabaseHydrator hydrator = new DatabaseHydrator(this);
+        hydrator.UpdateDatabase(userInfoAndKey.getResidence().getId());
         Intent dashboard=new Intent(this, DashboardActivity.class);
         startActivity(dashboard);
     }
@@ -142,7 +145,7 @@ public class RegistrationActivity extends Activity {
         user.setAuthKey(userInfoAndKey.getKey().getKey());
         user.setId(userInfoAndKey.getUser().getId());
         user.setResidenceName(userInfoAndKey.getResidence().getName());
-        user.setResidenceName(userInfoAndKey.getResidence().getId());
+        user.setResidenceId(userInfoAndKey.getResidence().getId());
         user.setLoggedIn(true);
     }
 

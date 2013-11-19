@@ -2,6 +2,10 @@ package Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Ben
@@ -14,6 +18,9 @@ public class Residence {
     @SerializedName("_id")
     String id;
     User[] users;
+    List<GroceryListModel> groceryLists;
+    long groceryListLastUpdate;
+
 
     public String getName() {
         return name;
@@ -37,5 +44,26 @@ public class Residence {
 
     public void setUsers(User[] users) {
         this.users = users;
+    }
+
+    public List<GroceryListModel> getGroceryLists() {
+        return groceryLists;
+    }
+
+    public void setGroceryLists(List<GroceryListModel> groceryLists) {
+        this.groceryLists = groceryLists;
+    }
+
+    public long getGroceryListLastUpdate() {
+        return groceryListLastUpdate;
+    }
+
+    public void setGroceryListLastUpdate(long groceryListLastUpdate) {
+        this.groceryListLastUpdate = groceryListLastUpdate;
+    }
+
+    public Date getTimestampAsDate(int timestamp) {
+        Timestamp stamp = new Timestamp(timestamp);
+        return new Date(stamp.getTime());
     }
 }

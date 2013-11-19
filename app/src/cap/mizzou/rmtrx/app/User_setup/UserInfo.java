@@ -2,7 +2,6 @@ package cap.mizzou.rmtrx.app.User_setup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.Map;
 
@@ -28,6 +27,7 @@ public class UserInfo {
     private String email;
     private String password;
     private boolean loggedIn;
+    private long groceryListLastUpdate;
 
     public UserInfo(Context context) {
             pref=context.getSharedPreferences("MyPref", 0);
@@ -40,6 +40,7 @@ public class UserInfo {
             setResidenceId(pref.getString("residenceId", null));
             setResidenceName(pref.getString("residenceName",null));
             setLoggedIn(pref.getBoolean("loggedIn", false));
+            setGroceryListLastUpdate(pref.getLong("groceryListLastUpdate", 0));
             keys = pref.getAll();
     }
 
@@ -146,8 +147,13 @@ public class UserInfo {
         editor.commit();
     }
 
+    public long getGroceryListLastUpdate() {
+        return groceryListLastUpdate;
+    }
 
-
-
-
+    public void setGroceryListLastUpdate(long groceryListLastUpdate) {
+        this.groceryListLastUpdate = groceryListLastUpdate;
+        editor.putLong("groceryListLastUpdate", groceryListLastUpdate);
+        editor.commit();
+    }
 }

@@ -2,8 +2,11 @@ package cap.mizzou.rmtrx.app.grocery;
 
 import Models.GroceryListItemModel;
 import Models.GroceryListModel;
+import Models.UpdateTimeModel;
 import retrofit.Callback;
 import retrofit.http.*;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,4 +55,14 @@ public interface GroceryRequestInterface {
             @Path("item_id") String itemId,
             Callback<Void> callback);
 
+
+    @GET("/residence/{residence_id}/update_time")
+    void getUpdateTime(
+            @Path("residence_id") String residenceId,
+            Callback<UpdateTimeModel> callback);
+
+    @GET("/residence/{residence_id}/list")
+    void getLists(
+            @Path("residence_id") String residenceId,
+            Callback<List<GroceryListModel>> callback);
 }
