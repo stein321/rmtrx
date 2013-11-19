@@ -7,7 +7,8 @@
 
 	<Spinner android:layout_height="wrap_content"
              android:id="@+id/Spinner"
-             android:layout_width="fill_parent"></Spinner>
+             android:layout_width="fill_parent"
+             android:textSize="30sp"></Spinner>
 
 	<ListView android:id="@+id/List"
               android:layout_width="fill_parent"

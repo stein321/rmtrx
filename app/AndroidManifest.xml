@@ -3,10 +3,6 @@
           package="cap.mizzou.rmtrx.app">
     <uses-sdk
             android:minSdkVersion="14"
-            android:targetSdkVersion="17"
-            android:theme="@style/ThemeGreen"
-
-
-             />
+            android:targetSdkVersion="17"/>
 
 </manifest>

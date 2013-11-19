@@ -24,7 +24,7 @@ public final class GroceryList
 		public static final String ModifiedDate = "modified";
         public static final String SERVICE_ID = "service_id";
     }
-    //public static final String DEFAULT_SORT_ORDER = Columns.NAME;
+    public static final String DEFAULT_SORT_ORDER = Columns.NAME;
 
 
     public static final String CREATE_STATEMENT =

@@ -49,7 +49,7 @@ public class GroceryItem
         }
     }
 
-    //public static final String DEFAULT_SORT_ORDER = Columns._ID;
+    public static final String DEFAULT_SORT_ORDER = Columns._ID;
 
 
 

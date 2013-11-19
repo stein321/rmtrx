@@ -40,7 +40,7 @@ public class GifRun implements Runnable, Callback {
 				
 					Canvas rCanvas = mSurfaceHolder.lockCanvas();
 					rCanvas.drawBitmap(bmb, 0, 0, new Paint());
-
+                    Bitmap.createScaledBitmap(bmb, 400, 400, false);
 					
 					mSurfaceHolder.unlockCanvasAndPost(rCanvas);
 					bmb = decode.next();

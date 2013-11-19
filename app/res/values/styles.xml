@@ -1,56 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
+    <!--&lt;!&ndash;-->
+        <!--Base application theme, dependent on API level. This theme is replaced-->
+        <!--by AppBaseTheme from res/values-vXX/styles.xml on newer devices.-->
+    <!--&ndash;&gt;-->
+    <!--<style name="AppBaseTheme" parent="android:Theme.Light">-->
+        <!--&lt;!&ndash;-->
+            <!--Theme customizations available in newer API levels can go in-->
+            <!--res/values-vXX/styles.xml, while customizations related to-->
+            <!--backward-compatibility can go here.-->
+        <!--&ndash;&gt;-->
 
 
-    </style>
+    <!--</style>-->
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
+    <!--&lt;!&ndash; Application theme. &ndash;&gt;-->
+    <!--<style name="AppTheme" parent="AppBaseTheme">-->
+        <!--&lt;!&ndash; All customizations that are NOT specific to a particular API-level can go here. &ndash;&gt;-->
+    <!--</style>-->
 
 
-    <style name="ThemeGreen.Button" parent="@android:style/Widget.Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/button</item>
-        <item name="android:textSize">15sp</item>
-    </style>
+    <!--<style name="ThemeGreen.Button" parent="@android:style/Widget.Button">-->
+        <!--<item name="android:textColor">@color/white</item>-->
+        <!--<item name="android:background">@drawable/button</item>-->
+        <!--<item name="android:textSize">15sp</item>-->
+    <!--</style>-->
 
-    <style name="ThemeGreen.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/checkboxes</item>
-    </style>
+    <!--<style name="ThemeGreen.CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">-->
+        <!--<item name="android:button">@drawable/checkboxes</item>-->
+    <!--</style>-->
 
-    <style name="ThemeGreen.Spinner" parent="@android:style/Widget.Spinner">
-        <item name="android:background">@drawable/spinner</item>
-    </style>
+    <!--<style name="ThemeGreen.Spinner" parent="@android:style/Widget.Spinner">-->
+        <!--<item name="android:background">@drawable/spinner</item>-->
+    <!--</style>-->
 
-    <style name="ThemeGreen.SpinnerItemText" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/spinneritem</item>
-    </style>
+    <!--<style name="ThemeGreen.SpinnerItemText" parent="android:TextAppearance.Widget.TextView.SpinnerItem">-->
+        <!--<item name="android:textColor">@color/white</item>-->
+        <!--<item name="android:background">@drawable/spinneritem</item>-->
+    <!--</style>-->
 
-    <style name="ThemeGreen.EditText" parent="@android:style/Widget.EditText">
-        <item name="android:clickable">true</item>
-        <item name="android:background">@drawable/edittext</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:gravity">center_vertical</item>
+    <!--<style name="ThemeGreen.EditText" parent="@android:style/Widget.EditText">-->
+        <!--<item name="android:clickable">true</item>-->
+        <!--<item name="android:background">@drawable/edittext</item>-->
+        <!--<item name="android:textColor">@color/white</item>-->
+        <!--<item name="android:gravity">center_vertical</item>-->
 
-    </style>
+    <!--</style>-->
 
-    <style name="ThemeGreen.TextView" parent="@android:style/Widget.TextView">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:typeface">monospace</item>
-    </style>
+    <!--<style name="ThemeGreen.TextView" parent="@android:style/Widget.TextView">-->
+        <!--<item name="android:textColor">@color/white</item>-->
+        <!--<item name="android:typeface">monospace</item>-->
+    <!--</style>-->
 
 
 </resources>
