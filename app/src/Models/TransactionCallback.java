@@ -1,6 +1,5 @@
 package Models;
 
-import android.util.EventLogTags;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -17,6 +16,25 @@ public class TransactionCallback {
     String fromUser;
     String toUser;
     String description;
+    int amount;
+    int dateSubmitted;
+
+    public int getDateSubmitted() {
+        return dateSubmitted;
+    }
+
+    public void setDateSubmitted(int dateSubmitted) {
+        this.dateSubmitted = dateSubmitted;
+    }
+
+    public int getAmount() {
+
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 
     public String get_Id() {
         return _Id;

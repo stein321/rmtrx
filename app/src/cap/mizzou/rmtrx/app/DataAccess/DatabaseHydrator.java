@@ -4,6 +4,7 @@ import Models.*;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import cap.mizzou.rmtrx.app.Finances.FinanceDb;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import cap.mizzou.rmtrx.app.grocery.GroceryItem;
 import cap.mizzou.rmtrx.app.grocery.GroceryList;
@@ -75,6 +76,17 @@ public class DatabaseHydrator {
                             }
                         }
                     }
+                }
+
+                Ledger ledger = residence.getLedger();
+                if(ledger != null) {
+                    FinanceDb financeDb = new FinanceDb(context);
+                    financeDb.open();
+
+                    for(TransactionCallback transaction : ledger.getTransactions()) {
+                        financeDb.createTransaction(transaction.getFromUser(), transaction.getToUser(), transaction.getDescription(), transaction.getAmount(), transaction.get_Id(), transaction.getDateSubmitted());
+                    }
+                    financeDb.close();
                 }
             }
 

@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import cap.mizzou.rmtrx.app.DataAccess.DatabaseHydrator;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import retrofit.Callback;
@@ -25,7 +24,6 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,11 +67,11 @@ public class GroceryActivity extends Activity {
             @Override
             public void success(UpdateTimeModel updateTimeModel, Response response) {
                 if(updateTimeModel.getTimeStamp() > userInfo.getGroceryListLastUpdate()) {
-                    DatabaseHydrator hydrator = new DatabaseHydrator(getApplicationContext());
-                    hydrator.updateGroceryDatabase(userInfo.getResidenceId());
-                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-                    userInfo.setGroceryListLastUpdate(timestamp.getTime());
+//                    DatabaseHydrator hydrator = new DatabaseHydrator(getApplicationContext());
+//                    hydrator.updateGroceryDatabase(userInfo.getResidenceId());
+//                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//
+//                    userInfo.setGroceryListLastUpdate(timestamp.getTime());
                 }
             }
 

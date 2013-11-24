@@ -30,6 +30,10 @@ public class LogOutActivity extends Activity {  //make sure to delete all  TestD
         goToLoginPage();
     }
     private void clearStoredUserInfo() {
+        Context context = getApplicationContext();
+        context.deleteDatabase("rmtrx.db");
+        context.deleteDatabase("grocery.db");
+
         //TODO:clear local DB
         dataSource.open();
         dataSource.truncate();

@@ -34,6 +34,7 @@ public class HomeActivity extends BaseFragmentActivity {
         userInfo = new UserInfo(this);
         setContentView(R.layout.activity_login);
         if(userInfo.isLoggedIn()) {
+            hydrateDatabase(userInfo.getResidenceId());
             goToDashBoard();
         }
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
@@ -70,12 +71,14 @@ public class HomeActivity extends BaseFragmentActivity {
         alertDialogBuilder.setMessage("Wrong login").create().show();
     }
 
+    public void hydrateDatabase(String residenceId) {
+        DatabaseHydrator hydrator = new DatabaseHydrator(this);
+        hydrator.UpdateDatabase(residenceId);
+    }
+
     private void successfulLogin(Key key, User user, Residence residence) {
         setUserInfo(key, user, residence);
-
-        DatabaseHydrator hydrator = new DatabaseHydrator(this);
-        hydrator.UpdateDatabase(residence.getId());
-
+        hydrateDatabase(residence.getId());
         goToDashBoard();
     }
 

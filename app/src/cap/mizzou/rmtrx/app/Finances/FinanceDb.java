@@ -54,6 +54,27 @@ public class FinanceDb {
 
         cursor.close();
     }
+
+    public void createTransaction(String from, String to,String description, double amount, String serviceId, int dateAdded) {
+        ContentValues values = new ContentValues();
+//
+        values.put(COLUMN_SERVICE_ID,"");
+        values.put(COLUMN_DESCRIPTION,description);
+        values.put(COLUMN_AMOUNT,amount);
+        values.put(COLUMN_TO, to);
+        values.put(COLUMN_FROM,from);
+        values.put(COLUMN_SERVICE_ID, serviceId);
+        values.put(COLUMN_DATE, dateAdded);
+
+        long insertId = database.insert(TABLE_TRANSACTIONS, null, values);
+        Cursor cursor = database.query(TABLE_TRANSACTIONS, null, COLUMN_LOCAL_ID + " = " + insertId, null,null, null, COLUMN_DATE);
+        int index=cursor.getColumnIndex(COLUMN_AMOUNT);
+        cursor.moveToFirst();
+        String id=cursor.getString(index);
+
+        cursor.close();
+    }
+
     public double amountOwed(String fromId,String toId) {
         double sum=0;
         double amount;

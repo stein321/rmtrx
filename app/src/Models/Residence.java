@@ -20,6 +20,7 @@ public class Residence {
     User[] users;
     List<GroceryListModel> groceryLists;
     long groceryListLastUpdate;
+    Ledger ledger;
 
 
     public String getName() {
@@ -65,5 +66,13 @@ public class Residence {
     public Date getTimestampAsDate(int timestamp) {
         Timestamp stamp = new Timestamp(timestamp);
         return new Date(stamp.getTime());
+    }
+
+    public Ledger getLedger() {
+        return ledger;
+    }
+
+    public void setLedger(Ledger ledger) {
+        this.ledger = ledger;
     }
 }
