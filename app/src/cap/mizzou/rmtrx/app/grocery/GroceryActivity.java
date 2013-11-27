@@ -54,7 +54,7 @@ public class GroceryActivity extends Activity {
         list = (ListView) findViewById(R.id.List);
         listSpinner = (Spinner) findViewById(R.id.Spinner);
         newItemEditText = (EditText) findViewById(R.id.AddNewEditText);
-        newItemButton = (ImageButton) findViewById(R.id.AddNewImageButton);
+        newItemButton = (ImageButton) findViewById(R.drawable.ic_add);
         newItemButton.setImageResource(android.R.drawable.ic_input_add);
         restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         restInterface = restAdapter.create(GroceryRequestInterface.class);

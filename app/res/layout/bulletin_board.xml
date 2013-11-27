@@ -6,21 +6,19 @@
               >
 
 
-<Button
-                android:id="@+id/addPost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add"
-                android:onClick="onClick"/>
-
-
-
-
     <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/hello"
             android:listSelector="@drawable/list_selector"/>
+
+    <Button
+                    android:id="@+id/addPost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add"
+                    android:onClick="onClick"
+                    android:layout_gravity="center_vertical|bottom|right"/>
 
 </LinearLayout>

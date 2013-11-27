@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
               android:orientation="horizontal">
 
 
@@ -15,7 +15,7 @@
             <!--android:layout_marginLeft="10dip"-->
             <!--/>-->
     <TextView
-            android:layout_alignParentRight="true"
+            android:layout_alignParentRight="false"
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,17 +60,16 @@
             android:layout_height="wrap_content"
             android:text="@string/GenerateCode"
             android:layout_marginTop="170dip"
-            android:onClick="generateCode"/>
+            android:onClick="generateCode"
+            android:layout_centerInParent="true"/>
     <TextView
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dip"
-            android:layout_marginTop="190dip"
             android:id="@+id/code"
             android:text="@string/codeButtonDirection"
 
-            />
+            android:layout_toRightOf="@+id/truncate"
+            android:layout_below="@+id/generateCode"/>
     <!--<TextView-->
             <!--android:layout_alignParentLeft="true"-->
             <!--android:layout_width="wrap_content"-->
@@ -87,7 +86,8 @@
             android:layout_height="wrap_content"
             android:text="@string/showResidents"
             android:layout_marginTop="300dip"
-            android:onClick="showResidentsList"/>
+            android:onClick="showResidentsList"
+            android:layout_centerHorizontal="true"/>
 
 
     <!--This is just for testing purposes-->

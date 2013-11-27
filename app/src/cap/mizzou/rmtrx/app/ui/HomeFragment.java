@@ -39,6 +39,9 @@ public class HomeFragment extends BaseListFragment {
 
     private int lastCheckedItem;
 
+
+
+
     @Inject
     Bus bus;
 
@@ -109,11 +112,14 @@ public class HomeFragment extends BaseListFragment {
     private static final class RmtrxAdapter extends ArrayAdapter<RmtrxActivity> {
 
         Context context;
+        String[] values;
 
         private RmtrxAdapter(Context context,
                              List<RmtrxActivity> accounts) {
-            super(context, android.R.layout.simple_list_item_1, accounts);
+            super(context, R.layout.dashboard, accounts);
             this.context = context;
+            this.values = values;
+
         }
 
         @Override
@@ -123,13 +129,45 @@ public class HomeFragment extends BaseListFragment {
             ViewHolder holder;
             if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+                convertView = inflater.inflate(R.layout.dashboard, parent, false);
                 holder = new ViewHolder();
+//icon
+                TextView textView = (TextView) convertView.findViewById(R.id.label);
+                ImageView imageView = (ImageView) convertView.findViewById(R.id.logo);
+                textView.setText(values[position]);
+//
 
-//                holder.activityIcon = (ImageView)convertView.findViewById(R.id.activityIcon);
 
                 holder.name = (TextView) convertView.findViewById(android.R.id.text1);
                 convertView.setTag(holder);
+
+
+            //icon
+                String s = activitiesList.get(position);
+                System.out.println(s);
+
+                if (s.equals("Grocery List")) {
+                    imageView.setImageResource(R.drawable.ic_check);
+                }  else if (s.equals("Bulletin Board")) {
+                    imageView.setImageResource(R.drawable.ic_picture);
+                }  else if (s.equals("Profile")) {
+                    imageView.setImageResource(R.drawable.ic_profile);
+                }  else if (s.equals("Messages")) {
+                    imageView.setImageResource(R.drawable.ic_speech);
+                }  else if (s.equals("Logout")) {
+                    imageView.setImageResource(R.drawable.ic_unlock);
+                }  else if (s.equals("Tasks")) {
+                    imageView.setImageResource(R.drawable.ic_clock);
+                }  else if (s.equals("Finances")) {
+                    imageView.setImageResource(R.drawable.ic_charge);
+                }  else if (s.equals("Location")) {
+                    imageView.setImageResource(R.drawable.ic_home);
+                } else {
+                    imageView.setImageResource(R.drawable.ic_construct);
+                }
+            //
+
+
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
@@ -139,7 +177,7 @@ public class HomeFragment extends BaseListFragment {
 
             holder.name.setText(context.getString(rmtrxActivity.resourceId));
 
-//            holder.activityIcon.setImageResource(rmtrxActivity.icon);
+
 
             return convertView;
         }
@@ -148,7 +186,7 @@ public class HomeFragment extends BaseListFragment {
     static class ViewHolder {
 
         TextView name;
-        ImageView activityIcon;
+
     }
 
     public final class RmtrxActivity {
@@ -167,23 +205,5 @@ public class HomeFragment extends BaseListFragment {
     }
 
 
-/*
-Activity with icon
 
-    public final class RmtrxActivity {
-
-        int resourceId;
-        public int icon;
-
-        Class<? extends Activity> activityClass;
-
-        public RmtrxActivity(int resourceId, int icon,
-                             Class<? extends Activity> activityClass) {
-            this.resourceId = resourceId;
-            this.icon = icon;
-
-            this.activityClass = activityClass;
-        }
-    }
- */
 }

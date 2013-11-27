@@ -21,14 +21,22 @@
 
     <Button
             android:id="@+id/send"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Send"
-            android:onClick="sendPost"/>
+            android:onClick="sendPost"
+            android:layout_gravity="center_horizontal"/>
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space"
+            android:layout_gravity="center"/>
 
     <DatePicker
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/expiration_date" />
+            android:id="@+id/expiration_date"
+            android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

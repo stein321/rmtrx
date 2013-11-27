@@ -33,6 +33,7 @@
 
     <item name="android:spinnerItemStyle">@style/SpinnerItemRmtrxTheme</item>
 
+      <item name="android:fontFamily">sans-serif-light</item>
     <!--<item name="android:windowBackground">@drawable/gradient</item>-->
 
   </style>
