@@ -97,7 +97,7 @@ public class GroceryDB extends ContentProvider {
 
 
 
-    private DatabaseHelper mOpenHelper;
+    public DatabaseHelper mOpenHelper;
 
 
 
