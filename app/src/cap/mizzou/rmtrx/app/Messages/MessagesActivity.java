@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
-import cap.mizzou.rmtrx.app.DataAccess.DatabaseHydrator;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import retrofit.Callback;
@@ -48,9 +47,9 @@ public class MessagesActivity extends Activity {
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         getMessagesFromServer();
 
-        DatabaseHydrator dh = new DatabaseHydrator(this);
-        String residenceId = userInfo.getResidenceId();
-        dh.UpdateDatabase(residenceId);
+//        DatabaseHydrator dh = new DatabaseHydrator(this);
+//        String residenceId = userInfo.getResidenceId();
+//        dh.UpdateDatabase(residenceId);
     }
     
     public void getMessagesFromServer() {
