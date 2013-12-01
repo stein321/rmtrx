@@ -2,8 +2,6 @@ package Models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Ben
@@ -52,5 +50,14 @@ public class Message {
     }
     public String toString() {
         return message;
+    }
+
+    public boolean isOwnMessage(String userId) {
+        if(userId.equals(this.senderId)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
