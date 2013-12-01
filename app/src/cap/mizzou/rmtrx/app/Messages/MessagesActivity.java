@@ -1,13 +1,12 @@
 package cap.mizzou.rmtrx.app.Messages;
 
 import Models.Message;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import cap.mizzou.rmtrx.app.DataAccess.DatabaseHydrator;
+import android.widget.ListView;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import retrofit.Callback;
@@ -25,31 +24,32 @@ import java.util.concurrent.TimeUnit;
  * Time: 10:55 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MessagesActivity extends ListActivity {
+public class MessagesActivity extends Activity {
     private List<Message> messageList;
     private RestAdapter restAdapter;
     private UserInfo userInfo;
     private EditText messageEditText;
+    private MessagesArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.messages_list);
-        getActionBar().setTitle("Messages");
-        messageEditText =(EditText)findViewById(R.id.message);
+        setContentView(R.layout.activity_discuss);
         userInfo=new UserInfo(this);
+
+        ListView lv = (ListView) findViewById(R.id.listView1);
+        adapter = new MessagesArrayAdapter(getApplicationContext(), R.layout.listitem_discuss, userInfo.getId());
+        lv.setAdapter(adapter);
+
+
+        getActionBar().setTitle("Messages");
+        messageEditText =(EditText)findViewById(R.id.messageText);
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-//        displayMessageList();
         getMessagesFromServer();
 
-        DatabaseHydrator dh = new DatabaseHydrator(this);
-        String residenceId = userInfo.getResidenceId();
-        dh.UpdateDatabase(residenceId);
-    }
-
-    private List<Message> getAllMessages() {
-
-        return null;  //To change body of created methods use File | Settings | File Templates.
+//        DatabaseHydrator dh = new DatabaseHydrator(this);
+//        String residenceId = userInfo.getResidenceId();
+//        dh.UpdateDatabase(residenceId);
     }
     
     public void getMessagesFromServer() {
@@ -58,7 +58,9 @@ public class MessagesActivity extends ListActivity {
         ri.getChatLog(userInfo.getResidenceId(),new Callback<List<Message>>() {
             @Override
             public void success(List<Message> messages, Response response) {
-               displayMessageList(messages);
+                for(Message message : messages) {
+                    adapter.add(message);
+                }
             }
 
             @Override
@@ -68,18 +70,6 @@ public class MessagesActivity extends ListActivity {
         });
     }
 
-    private void displayMessageList(List<Message> listOfMessages) {
-        List<Message> messages=listOfMessages;
-//        Message messageEditText=new Message();
-//        messageEditText.setMessage("Hey Mike");
-//        messageEditText.setDateSent(new Date());
-//        messageEditText.setId("12345");
-//        messageEditText.setSenderId("me");
-//        messages.add(messageEditText);
-
-        ArrayAdapter<Message> adapter=new ArrayAdapter<Message>(this,android.R.layout.simple_list_item_1,messages);
-        setListAdapter(adapter);
-    }
     public void sendMessage(View view) {
               if(grabMessage()!=null && !grabMessage().isEmpty())
                 sendMessageToServer(grabMessage());
@@ -89,7 +79,7 @@ public class MessagesActivity extends ListActivity {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         clearMessageBox();
-        getMessagesFromServer();
+//        getMessagesFromServer();
     }
 
     private void clearMessageBox() {
@@ -107,7 +97,8 @@ public class MessagesActivity extends ListActivity {
         ri.sendMessage(userInfo.getId(),userInfo.getResidenceId(), message, new Callback<Message>() {
             @Override
             public void success(Message message, Response response) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                adapter.add(message);
+                adapter.notifyDataSetChanged();
             }
 
             @Override

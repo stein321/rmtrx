@@ -53,6 +53,16 @@ public class ResidentDataSource {
         database.execSQL("delete  from " + TABLE_RESIDENTS);
     }
 
+    public Resident findResident(String userId) {
+        String selectionClause = COLUMN_USER_ID + " = ?";
+        String selectionArgs[]={userId};
+
+        Cursor cursor = database.query(TABLE_RESIDENTS,allColumns,selectionClause,selectionArgs,null,null,null);
+        cursor.moveToFirst();
+
+        return cursorToResident(cursor);
+    }
+
     public List<Resident> getAllResidents() {
             List<Resident> residents=new ArrayList<Resident>();
             Cursor cursor=database.query(TABLE_RESIDENTS,allColumns,null,null,null,null,null);

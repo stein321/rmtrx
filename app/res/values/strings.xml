@@ -55,6 +55,9 @@
     <string name="codeButtonDirection"><![CDATA[Click for new code]]></string>
     <string name="showResidents">Show Residents</string>
     <string name="Truncate">Truncate</string>
+    <string name="sendMessageButtonText">Send Message</string>
+    <string name="messageText">New EditText</string>
+    <string name="messagetexthint">Message...</string>
 
 
 </resources>

@@ -4,11 +4,13 @@ import Models.*;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import cap.mizzou.rmtrx.app.Finances.FinanceDb;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 import cap.mizzou.rmtrx.app.grocery.GroceryItem;
 import cap.mizzou.rmtrx.app.grocery.GroceryList;
 import cap.mizzou.rmtrx.app.grocery.GroceryRequestInterface;
+import cap.mizzou.rmtrx.app.ui.DashboardActivity;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -25,10 +27,10 @@ import java.util.List;
  */
 public class DatabaseHydrator {
 
-    private Context context;
     private RestAdapter restAdapter;
     private ResidenceDataInterface residenceRestInterface;
     private GroceryRequestInterface groceryRequestInterface;
+    private Context context;
 
     public DatabaseHydrator(Context context) {
         this.context = context;
@@ -88,6 +90,7 @@ public class DatabaseHydrator {
                     }
                     financeDb.close();
                 }
+               goToDashboard(context);
             }
 
             @Override
@@ -97,6 +100,11 @@ public class DatabaseHydrator {
             }
         });
 
+    }
+    private void goToDashboard(Context context){
+        Intent goToDashBoard=new Intent(context, DashboardActivity.class);
+//        createDBs();
+        context.startActivity(goToDashBoard);
     }
 
     public void updateGroceryDatabase(String residenceId) {
