@@ -109,17 +109,18 @@ public class HomeFragment extends BaseListFragment {
     /**
      * Adapter for this activity that will hold possible
      */
-    private static final class RmtrxAdapter extends ArrayAdapter<RmtrxActivity> {
+    public static final class RmtrxAdapter extends ArrayAdapter<RmtrxActivity> {
 
         Context context;
         String[] values;
+        List<RmtrxActivity> activities;
 
         private RmtrxAdapter(Context context,
                              List<RmtrxActivity> accounts) {
             super(context, R.layout.dashboard, accounts);
             this.context = context;
             this.values = values;
-
+            this.activities = accounts;
         }
 
         @Override
@@ -134,7 +135,7 @@ public class HomeFragment extends BaseListFragment {
 //icon
                 TextView textView = (TextView) convertView.findViewById(R.id.label);
                 ImageView imageView = (ImageView) convertView.findViewById(R.id.logo);
-                textView.setText(values[position]);
+
 //
 
 
@@ -143,10 +144,42 @@ public class HomeFragment extends BaseListFragment {
 
 
             //icon
-                String s = activitiesList.get(position);
-                System.out.println(s);
 
-                if (s.equals("Grocery List")) {
+            //    ArrayList.indexOf("Grocery List");
+            //    activitiesList.contains("Grocery List");
+
+
+
+
+               // Integer s =  ArrayList.indexOf("Grocery List");
+                //        activitiesList.get(position);
+               // System.out.println(s);
+
+                //
+
+                RmtrxActivity activity = getActivityById(position);
+
+
+
+                if (activitiesList.contains(R.string.grocery_list_activity_name)) {
+                    imageView.setImageResource(R.drawable.ic_check);
+                }  else if (activitiesList.contains(R.string.bulletin_board_activity_name)) {
+                    imageView.setImageResource(R.drawable.ic_picture);
+                }  else if (activitiesList.contains(R.string.residence_info)) {
+                    imageView.setImageResource(R.drawable.ic_profile);
+                }  else if (activitiesList.contains(R.string.messages_activity_name)) {
+                    imageView.setImageResource(R.drawable.ic_speech);
+                }  else if (activitiesList.contains(R.string.logout_name)) {
+                    imageView.setImageResource(R.drawable.ic_unlock);
+                }  else if (activitiesList.contains(R.string.finances_activity_name)) {
+                    imageView.setImageResource(R.drawable.ic_charge);
+                }  else {
+                    imageView.setImageResource(R.drawable.ic_construct);
+                }
+
+
+
+                /*if (s.equals("Grocery List")) {
                     imageView.setImageResource(R.drawable.ic_check);
                 }  else if (s.equals("Bulletin Board")) {
                     imageView.setImageResource(R.drawable.ic_picture);
@@ -164,8 +197,8 @@ public class HomeFragment extends BaseListFragment {
                     imageView.setImageResource(R.drawable.ic_home);
                 } else {
                     imageView.setImageResource(R.drawable.ic_construct);
-                }
-            //
+                }*/
+
 
 
             } else {
@@ -180,6 +213,10 @@ public class HomeFragment extends BaseListFragment {
 
 
             return convertView;
+        }
+
+        public RmtrxActivity getActivityById(int id) {
+            return this.activities.get(id);
         }
     }
 
