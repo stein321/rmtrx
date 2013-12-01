@@ -18,6 +18,7 @@ import cap.mizzou.rmtrx.app.Login.AuthenticationRequestInterface;
 import cap.mizzou.rmtrx.app.Login.RegistrationActivity;
 import cap.mizzou.rmtrx.app.R;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
+import cap.mizzou.rmtrx.app.grocery.GroceryDB;
 import cap.mizzou.rmtrx.core.ui.BaseFragmentActivity;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -35,14 +36,21 @@ public class HomeActivity extends BaseFragmentActivity {
         setContentView(R.layout.activity_login);
         if(userInfo.isLoggedIn()) {
             hydrateDatabase(userInfo.getResidenceId());
-            goToDashBoard();
+//            goToDashBoard();
         }
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
     }
     public void goToDashBoard() {
         Intent goToDashBoard=new Intent(this, DashboardActivity.class);
+//        createDBs();
         startActivity(goToDashBoard);
     }
+
+    private void createDBs() {
+        GroceryDB groceryDB=new GroceryDB();
+        boolean yes=groceryDB.onCreate();
+    }
+
     public void sendLoginInfo(View view) {
         EditText userName = (EditText) findViewById(R.id.login_name);
         EditText password = (EditText) findViewById(R.id.p_word);
@@ -55,7 +63,7 @@ public class HomeActivity extends BaseFragmentActivity {
 
             @Override
             public void success(ResponseObject authResponse, Response response) {
-                successfulLogin(authResponse.getResponse(),authResponse.getUser(),authResponse.getResidence());
+                successfulLogin(authResponse.getResponse(), authResponse.getUser(), authResponse.getResidence());
             }
 
             @Override

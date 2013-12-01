@@ -33,6 +33,7 @@ public class LogOutActivity extends Activity {  //make sure to delete all  TestD
         Context context = getApplicationContext();
         context.deleteDatabase("rmtrx.db");
         context.deleteDatabase("grocery.db");
+        context.deleteDatabase("roommates.db");
 
         //TODO:clear local DB
         dataSource.open();
