@@ -12,6 +12,7 @@ import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.R;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 
@@ -79,7 +80,7 @@ public class FinanceActivity extends ListActivity {
         getListOfAllResidents().remove(getIndex());
 
         for(Resident resident: getListOfAllResidents()) {
-            getResidentWithTabList().add(resident.getFirstName() + " $ " + String.valueOf(getDataSource().amountOwed(getUserinfo().getId(), resident.getUserID())));
+            getResidentWithTabList().add(resident.getFirstName() + " $ " + getFormattedAmount(getDataSource().amountOwed(getUserinfo().getId(), resident.getUserID())));
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
@@ -103,7 +104,7 @@ public class FinanceActivity extends ListActivity {
     }
 
     private void createToast(Double amount, String roommateUserFirstName) {
-        CharSequence text = "Transaction of $" + amount + " was added to " + roommateUserFirstName + "'s Account.";
+        CharSequence text = "Transaction of $" + getFormattedAmount(amount) + " was added to " + roommateUserFirstName + "'s Account.";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(this, text, duration);
@@ -121,7 +122,7 @@ public class FinanceActivity extends ListActivity {
 
         new AlertDialog.Builder(this)
                 .setTitle("Group Transaction")
-                .setMessage("Are you sure you want to charge everyone" + " $" + getCharge() + " ?")
+                .setMessage("Are you sure you want to charge everyone" + " $" + getFormattedAmount(getCharge()) + " ?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         for(Resident resident: getListOfAllResidents()) {
@@ -174,7 +175,16 @@ public class FinanceActivity extends ListActivity {
     public Double getAmount() {
         return amount;
     }
+    public String getFormattedAmount() {
+        DecimalFormat df = new DecimalFormat("#.##");
 
+        return df.format(getAmount());
+    }
+    public String getFormattedAmount(double amount) {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        return df.format(amount);
+    }
     public void setAmount(Double amount) {
         this.amount = amount;
     }
