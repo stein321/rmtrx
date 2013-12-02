@@ -31,58 +31,54 @@ public class FinanceActivity extends ListActivity {
     private String description;
     private Double amount;
     private UserInfo userinfo;
-    private String userid;
+    private double charge;
 
     private Spinner spinner;
     private int index;
     private TextView t;
     private ResidentDataSource data;
     private financesInterface restInterface;
-    List<Resident> allResidents;
+    List<Resident> listOfAllResidents;
     List<String> residentWithTabList;
     private RestAdapter restAdapter;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.finances);
-//        getActionBar().setTitle("Finances");
 
-        userinfo= new UserInfo(this);
-        userid=userinfo.getId();
+        setUserinfo(new UserInfo(this));
 
-        dataSource = new FinanceDb(this);
-        dataSource.open();
-        data = new ResidentDataSource(this);
-        data.open();
-        restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-        restInterface = restAdapter.create(financesInterface.class);
+        setDataSource(new FinanceDb(this));
+        getDataSource().open();
+        setData(new ResidentDataSource(this));
+        getData().open();
+        setRestAdapter(new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build());
+        setRestInterface(getRestAdapter().create(financesInterface.class));
 
         //initialize Spinner
-        spinner = (Spinner) findViewById(R.id.other_roommates);
+        setSpinner((Spinner)findViewById(R.id.other_roommates));
 
-        residentWithTabList = new ArrayList<String>();
-        allResidents=new ArrayList<Resident>();
-
-
-//        allResidents =data.getAllResidents();
-         updateSpinner();
-        //get index of currentUser   so it can be removed from the list
+        setResidentWithTabList(new ArrayList<String>());
+        setListOfAllResidents(new ArrayList<Resident>());
+        updateSpinner();
 
     }
 
     public void updateSpinner() {
             residentWithTabList.clear();
-//            allResidents.clear();
-            allResidents =data.getAllResidents();
+//            listOfAllResidents.clear();
+            listOfAllResidents =data.getAllResidents();
 
-        for(int i=0;i<allResidents.size();i++) {
-            if(allResidents.get(i).getUserID().equals(userinfo.getId())) {
+        for(int i=0;i< listOfAllResidents.size();i++) {
+            if(listOfAllResidents.get(i).getUserID().equals(userinfo.getId())) {
                 index=i;
             }
         }
-        allResidents.remove(index);
+        listOfAllResidents.remove(index);
 
-        for(Resident resident: allResidents) {
+        for(Resident resident: listOfAllResidents) {
             residentWithTabList.add(resident.getFirstName() + " $ " + String.valueOf(dataSource.amountOwed(userinfo.getId(), resident.getUserID())));
         }
 
@@ -105,7 +101,7 @@ public class FinanceActivity extends ListActivity {
         String roomateUserFirstName=String.valueOf(spinner.getSelectedItem());
         int index= spinner.getSelectedItemPosition();
         //getUserIdFromSpinner
-        Resident to= allResidents.get(index);
+        Resident to= listOfAllResidents.get(index);
         String toId= to.getUserID();
 
 
@@ -128,13 +124,17 @@ public class FinanceActivity extends ListActivity {
 
     public void addGroupTransaction(View view) {
         setFormInputAndClear();
+        int numberOfResidents= listOfAllResidents.size()+1;
+        setCharge(amount/numberOfResidents );
+
+
         new AlertDialog.Builder(this)
                 .setTitle("Group Transaction")
-                .setMessage("Are you sure you want to charge everyone" + " $" + amount + " ?")
+                .setMessage("Are you sure you want to charge everyone" + " $" + getCharge() + " ?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        for(Resident resident: allResidents) {
-                            dataSource.createTransaction(userinfo.getId(), resident.getUserID(), description, amount); ;
+                        for(Resident resident: listOfAllResidents) {
+                            dataSource.createTransaction(userinfo.getId(), resident.getUserID(), description, getCharge()); ;
                         }
                         updateSpinner();
                     }
@@ -145,19 +145,15 @@ public class FinanceActivity extends ListActivity {
                     }
                 })
                 .show();
-
-
-
-
-
     }
+
     private void setFormInputAndClear() {
         //grab text from form
         EditText amountText = (EditText) findViewById(R.id.transaction_amount);
         EditText descriptionText=(EditText)findViewById(R.id.transaction_nature);
         //Converts text to double
-        amount=Double.parseDouble(amountText.getText().toString());
-        description=descriptionText.getText().toString();
+        setAmount(Double.parseDouble(amountText.getText().toString()));
+        setDescription(descriptionText.getText().toString());
         //clear form
         descriptionText.setText("");
         amountText.setText("");
@@ -174,6 +170,105 @@ public class FinanceActivity extends ListActivity {
         dataSource.close();
         super.onPause();
     }
+    public double getCharge() {
+        return charge;
+    }
+
+    public void setCharge(double charge) {
+        this.charge = charge;
+    }
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public List<Resident> getListOfAllResidents() {
+        return listOfAllResidents;
+    }
+
+    public void setListOfAllResidents(List<Resident> listOfAllResidents) {
+        this.listOfAllResidents = listOfAllResidents;
+    }
+
+    public List<String> getResidentWithTabList() {
+        return residentWithTabList;
+    }
+
+    public void setResidentWithTabList(List<String> residentWithTabList) {
+        this.residentWithTabList = residentWithTabList;
+    }
+    public UserInfo getUserinfo() {
+        return userinfo;
+    }
+
+    public void setUserinfo(UserInfo userinfo) {
+        this.userinfo = userinfo;
+    }
+
+    public FinanceDb getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(FinanceDb dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public Spinner getSpinner() {
+        return spinner;
+    }
+
+    public void setSpinner(Spinner spinner) {
+        this.spinner = spinner;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public ResidentDataSource getData() {
+        return data;
+    }
+
+    public void setData(ResidentDataSource data) {
+        this.data = data;
+    }
+    public TextView getT() {
+        return t;
+    }
+
+    public void setT(TextView t) {
+        this.t = t;
+    }
+
+    public financesInterface getRestInterface() {
+        return restInterface;
+    }
+
+    public void setRestInterface(financesInterface restInterface) {
+        this.restInterface = restInterface;
+    }
+
+    public RestAdapter getRestAdapter() {
+        return restAdapter;
+    }
+
+    public void setRestAdapter(RestAdapter restAdapter) {
+        this.restAdapter = restAdapter;
+    }
+
 
 }
 
