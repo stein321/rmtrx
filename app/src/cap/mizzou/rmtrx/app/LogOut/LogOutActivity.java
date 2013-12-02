@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
+import cap.mizzou.rmtrx.app.grocery.GroceryDB;
+import cap.mizzou.rmtrx.app.grocery.GroceryList;
 import cap.mizzou.rmtrx.app.ui.HomeActivity;
 
 /**
@@ -20,6 +22,7 @@ public class LogOutActivity extends Activity {  //make sure to delete all  TestD
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private UserInfo userInfo;
     private ResidentDataSource dataSource;
+    private GroceryDB groceryDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +35,9 @@ public class LogOutActivity extends Activity {  //make sure to delete all  TestD
     private void clearStoredUserInfo() {
         Context context = getApplicationContext();
         context.deleteDatabase("rmtrx.db");
-        context.deleteDatabase("grocery.db");
+//        context.deleteDatabase("grocery.db");
+        getContentResolver().delete(GroceryList.ContentUri,null,null);
         context.deleteDatabase("roommates.db");
-
         //TODO:clear local DB
         dataSource.open();
         dataSource.truncate();

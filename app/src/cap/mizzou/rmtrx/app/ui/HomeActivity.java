@@ -36,13 +36,12 @@ public class HomeActivity extends BaseFragmentActivity {
         setContentView(R.layout.activity_login);
         if(userInfo.isLoggedIn()) {
             hydrateDatabase(userInfo.getResidenceId());
-//            goToDashBoard();
+            goToDashBoard();
         }
         restAdapter=new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
     }
     public void goToDashBoard() {
         Intent goToDashBoard=new Intent(this, DashboardActivity.class);
-//        createDBs();
         startActivity(goToDashBoard);
     }
 

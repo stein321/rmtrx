@@ -90,7 +90,7 @@ public class DatabaseHydrator {
                     }
                     financeDb.close();
                 }
-               goToDashboard(context);
+//               goToDashboard(context);
             }
 
             @Override
