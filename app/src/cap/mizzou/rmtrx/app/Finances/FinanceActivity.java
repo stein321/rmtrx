@@ -44,7 +44,7 @@ public class FinanceActivity extends ListActivity {
     private ResidentDataSource data;
     private financesInterface restInterface;
     List<Resident> allResidents;
-
+    List<String> residentWithTabList;
     private RestAdapter restAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,29 +62,40 @@ public class FinanceActivity extends ListActivity {
         restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         restInterface = restAdapter.create(financesInterface.class);
 
-        //Spinner
+        //initialize Spinner
         spinner = (Spinner) findViewById(R.id.other_roommates);
-        List<String> list = new ArrayList<String>();
-        allResidents =data.getAllResidents();
 
+        residentWithTabList = new ArrayList<String>();
+        allResidents=new ArrayList<Resident>();
+
+
+//        allResidents =data.getAllResidents();
+         updateSpinner();
         //get index of currentUser   so it can be removed from the list
+
+    }
+
+    public void updateSpinner() {
+            residentWithTabList.clear();
+//            allResidents.clear();
+            allResidents =data.getAllResidents();
+
         for(int i=0;i<allResidents.size();i++) {
             if(allResidents.get(i).getUserID().equals(userinfo.getId())) {
-                  index=i;
+                index=i;
             }
         }
         allResidents.remove(index);
 
         for(Resident resident: allResidents) {
-                list.add(resident.getFirstName() + " $ " + String.valueOf(datasource.amountOwed(userinfo.getId(),resident.getUserID())));
+            residentWithTabList.add(resident.getFirstName() + " $ " + String.valueOf(datasource.amountOwed(userinfo.getId(), resident.getUserID())));
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
+                android.R.layout.simple_spinner_item, residentWithTabList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
     }
-
 
     public void addTransaction(View v){
 
@@ -110,7 +121,7 @@ public class FinanceActivity extends ListActivity {
         //Sends transaction info to record creation method
 
         datasource.createTransaction(userinfo.getId(),toId,description,amount);
-
+        updateSpinner();
 //        sendTransactionToServer(toId,description,amount);
 
 //        String number= String.valueOf(datasource.amountOwed(userinfo.getId(),toId));
