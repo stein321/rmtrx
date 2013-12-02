@@ -58,7 +58,7 @@ public class FinanceActivity extends ListActivity {
         setRestInterface(getRestAdapter().create(financesInterface.class));
 
         //initialize Spinner
-        setSpinner((Spinner)findViewById(R.id.other_roommates));
+        setSpinner((Spinner) findViewById(R.id.other_roommates));
 
         setResidentWithTabList(new ArrayList<String>());
         setListOfAllResidents(new ArrayList<Resident>());
@@ -67,54 +67,43 @@ public class FinanceActivity extends ListActivity {
     }
 
     public void updateSpinner() {
-            residentWithTabList.clear();
+            getResidentWithTabList().clear();
 //            listOfAllResidents.clear();
-            listOfAllResidents =data.getAllResidents();
+            setListOfAllResidents(getData().getAllResidents());
 
-        for(int i=0;i< listOfAllResidents.size();i++) {
-            if(listOfAllResidents.get(i).getUserID().equals(userinfo.getId())) {
-                index=i;
+        for(int i=0;i< getListOfAllResidents().size();i++) {
+            if(getListOfAllResidents().get(i).getUserID().equals(getUserinfo().getId())) {
+                setIndex(i);
             }
         }
-        listOfAllResidents.remove(index);
+        getListOfAllResidents().remove(getIndex());
 
-        for(Resident resident: listOfAllResidents) {
-            residentWithTabList.add(resident.getFirstName() + " $ " + String.valueOf(dataSource.amountOwed(userinfo.getId(), resident.getUserID())));
+        for(Resident resident: getListOfAllResidents()) {
+            getResidentWithTabList().add(resident.getFirstName() + " $ " + String.valueOf(getDataSource().amountOwed(getUserinfo().getId(), resident.getUserID())));
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, residentWithTabList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
+        getSpinner().setAdapter(dataAdapter);
     }
 
     public void addTransaction(View v){
 
-        Transaction transaction;
-        spinner = (Spinner) findViewById(R.id.other_roommates);
-
+        setSpinner((Spinner)findViewById(R.id.other_roommates));
         setFormInputAndClear();
-
-
-        //Spinner selection
-
-        String roomateUserFirstName=String.valueOf(spinner.getSelectedItem());
-        int index= spinner.getSelectedItemPosition();
+        String roommateUserFirstName=String.valueOf(getSpinner().getSelectedItem());
         //getUserIdFromSpinner
-        Resident to= listOfAllResidents.get(index);
+        Resident to= getListOfAllResidents().get(getSpinner().getSelectedItemPosition());
         String toId= to.getUserID();
-
-
-
-
-        dataSource.createTransaction(userinfo.getId(), toId, description, amount);
+        getDataSource().createTransaction(getUserinfo().getId(), toId, getDescription(), getAmount());
         updateSpinner();
-
-        createToast(amount,roomateUserFirstName);
+        createToast(getAmount(),roommateUserFirstName);
     }
 
-    private void createToast(Double amount, String roomateUserFirstName) {
-        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserFirstName + "'s Account.";
+    private void createToast(Double amount, String roommateUserFirstName) {
+        //TODO:change name to not reflect amount
+        CharSequence text = "Transaction of $" + amount + " was added to " + roommateUserFirstName + "'s Account.";
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(this, text, duration);
@@ -124,8 +113,8 @@ public class FinanceActivity extends ListActivity {
 
     public void addGroupTransaction(View view) {
         setFormInputAndClear();
-        int numberOfResidents= listOfAllResidents.size()+1;
-        setCharge(amount/numberOfResidents );
+        int numberOfResidents= getListOfAllResidents().size()+1;
+        setCharge(getAmount()/numberOfResidents );
 
 
         new AlertDialog.Builder(this)
@@ -133,8 +122,8 @@ public class FinanceActivity extends ListActivity {
                 .setMessage("Are you sure you want to charge everyone" + " $" + getCharge() + " ?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        for(Resident resident: listOfAllResidents) {
-                            dataSource.createTransaction(userinfo.getId(), resident.getUserID(), description, getCharge()); ;
+                        for(Resident resident: getListOfAllResidents()) {
+                            getDataSource().createTransaction(getUserinfo().getId(), resident.getUserID(), getDescription(), getCharge()); ;
                         }
                         updateSpinner();
                     }
