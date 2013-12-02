@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/roommate_choice_instructions"
-                android:text="Choose Roommate to Charge/Credit:"
+                android:text="Roommate to Charge/Credit:"
                 android:textSize="8dp"/>
 
         <Spinner

@@ -91,18 +91,18 @@ public class FinanceActivity extends ListActivity {
     public void addTransaction(View v){
 
         setSpinner((Spinner)findViewById(R.id.other_roommates));
-        setFormInputAndClear();
-        String roommateUserFirstName=String.valueOf(getSpinner().getSelectedItem());
+        if(!setFormInputAndClear()) {
+            return;
+        }
         //getUserIdFromSpinner
         Resident to= getListOfAllResidents().get(getSpinner().getSelectedItemPosition());
         String toId= to.getUserID();
         getDataSource().createTransaction(getUserinfo().getId(), toId, getDescription(), getAmount());
         updateSpinner();
-        createToast(getAmount(),roommateUserFirstName);
+        createToast(getAmount(),to.getFirstName());
     }
 
     private void createToast(Double amount, String roommateUserFirstName) {
-        //TODO:change name to not reflect amount
         CharSequence text = "Transaction of $" + amount + " was added to " + roommateUserFirstName + "'s Account.";
         int duration = Toast.LENGTH_SHORT;
 
@@ -112,7 +112,9 @@ public class FinanceActivity extends ListActivity {
     }
 
     public void addGroupTransaction(View view) {
-        setFormInputAndClear();
+        if(!setFormInputAndClear()) {
+            return;
+        }
         int numberOfResidents= getListOfAllResidents().size()+1;
         setCharge(getAmount()/numberOfResidents );
 
@@ -123,22 +125,24 @@ public class FinanceActivity extends ListActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         for(Resident resident: getListOfAllResidents()) {
-                            getDataSource().createTransaction(getUserinfo().getId(), resident.getUserID(), getDescription(), getCharge()); ;
+                            getDataSource().createTransaction(getUserinfo().getId(), resident.getUserID(), getDescription(), getCharge());
                         }
                         updateSpinner();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        return;
                     }
                 })
                 .show();
     }
 
-    private void setFormInputAndClear() {
+    private boolean setFormInputAndClear() {
         //grab text from form
         EditText amountText = (EditText) findViewById(R.id.transaction_amount);
+        if(amountText.getText().toString().equals("")) {
+            return false;
+        }
         EditText descriptionText=(EditText)findViewById(R.id.transaction_nature);
         //Converts text to double
         setAmount(Double.parseDouble(amountText.getText().toString()));
@@ -146,6 +150,7 @@ public class FinanceActivity extends ListActivity {
         //clear form
         descriptionText.setText("");
         amountText.setText("");
+        return true;
     }
 
     @Override
@@ -234,18 +239,6 @@ public class FinanceActivity extends ListActivity {
     public void setData(ResidentDataSource data) {
         this.data = data;
     }
-    public TextView getT() {
-        return t;
-    }
-
-    public void setT(TextView t) {
-        this.t = t;
-    }
-
-    public financesInterface getRestInterface() {
-        return restInterface;
-    }
-
     public void setRestInterface(financesInterface restInterface) {
         this.restInterface = restInterface;
     }
