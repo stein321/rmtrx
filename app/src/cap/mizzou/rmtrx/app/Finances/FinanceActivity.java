@@ -141,6 +141,9 @@ public class FinanceActivity extends ListActivity {
 //        });
 //    }
 
+    public void addGroupTransaction(View view) {
+              //TODO: group transaction
+    }
     public double getAccountBalance(String from, String to ){
         double ab=0;
         List<Transaction> values = datasource.getAllTransactions(from,to);
