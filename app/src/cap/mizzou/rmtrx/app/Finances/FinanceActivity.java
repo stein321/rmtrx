@@ -62,17 +62,6 @@ public class FinanceActivity extends ListActivity {
         restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         restInterface = restAdapter.create(financesInterface.class);
 
-//         //Gets total account balance
-//         accountbalance=getAccountBalance(userid);
-//         //Converts double to String
-//         abText= String.valueOf(accountbalance);
-//         abText= "$" + abText;
-//         //Grabs Texview
-//        tv= (TextView)findViewById(R.id.account_balance);
-//         //Fills Textview with accountbalance
-//        tv.setText(abText);
-
-
         //Spinner
         spinner = (Spinner) findViewById(R.id.other_roommates);
         List<String> list = new ArrayList<String>();
@@ -94,18 +83,8 @@ public class FinanceActivity extends ListActivity {
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
+    }
 
-//        t=(TextView)findViewById(R.id.Owed);
-
-
-}
-
-//    private String getTabWithUser() {
-//                String amount= String.valueOf(datasource.amountOwed(userinfo.getId(),));
-//
-////             double profit=getAccountBalance(userinfo.getId(), userid) - getAccountBalance(userid, userinfo.getId());
-//        return amount;// + String.valueOf(profit);
-//    }
 
     public void addTransaction(View v){
 
