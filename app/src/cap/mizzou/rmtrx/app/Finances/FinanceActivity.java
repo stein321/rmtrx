@@ -91,14 +91,15 @@ public class FinanceActivity extends ListActivity {
     public void addTransaction(View v){
 
         setSpinner((Spinner)findViewById(R.id.other_roommates));
-        setFormInputAndClear();
-        String roommateUserFirstName=String.valueOf(getSpinner().getSelectedItem());
+        if(!setFormInputAndClear()) {
+            return;
+        }
         //getUserIdFromSpinner
         Resident to= getListOfAllResidents().get(getSpinner().getSelectedItemPosition());
         String toId= to.getUserID();
         getDataSource().createTransaction(getUserinfo().getId(), toId, getDescription(), getAmount());
         updateSpinner();
-        createToast(getAmount(),roommateUserFirstName);
+        createToast(getAmount(),to.getFirstName());
     }
 
     private void createToast(Double amount, String roommateUserFirstName) {
@@ -112,7 +113,9 @@ public class FinanceActivity extends ListActivity {
     }
 
     public void addGroupTransaction(View view) {
-        setFormInputAndClear();
+        if(!setFormInputAndClear()) {
+            return;
+        }
         int numberOfResidents= getListOfAllResidents().size()+1;
         setCharge(getAmount()/numberOfResidents );
 
@@ -136,9 +139,12 @@ public class FinanceActivity extends ListActivity {
                 .show();
     }
 
-    private void setFormInputAndClear() {
+    private boolean setFormInputAndClear() {
         //grab text from form
         EditText amountText = (EditText) findViewById(R.id.transaction_amount);
+        if(amountText.getText().toString().equals("")) {
+            return false;
+        }
         EditText descriptionText=(EditText)findViewById(R.id.transaction_nature);
         //Converts text to double
         setAmount(Double.parseDouble(amountText.getText().toString()));
@@ -146,6 +152,7 @@ public class FinanceActivity extends ListActivity {
         //clear form
         descriptionText.setText("");
         amountText.setText("");
+        return true;
     }
 
     @Override
