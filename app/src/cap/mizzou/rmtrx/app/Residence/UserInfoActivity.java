@@ -107,7 +107,7 @@ public class UserInfoActivity extends Activity {
     }
 
     public void setCode(String code) {
-        this.code = "123";
+        this.code = code;
     }
 
 }
