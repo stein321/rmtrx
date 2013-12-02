@@ -1,9 +1,10 @@
 package cap.mizzou.rmtrx.app.Finances;
 
-import Models.TransactionCallback;
+import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.*;
 
@@ -11,15 +12,12 @@ import cap.mizzou.rmtrx.app.DataAccess.Resident;
 import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 import cap.mizzou.rmtrx.app.R;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 
 import cap.mizzou.rmtrx.app.User_setup.UserInfo;
-import cap.mizzou.rmtrx.app.grocery.GroceryRequestInterface;
-import retrofit.Callback;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,160 +28,239 @@ import retrofit.client.Response;
  */
 public class FinanceActivity extends ListActivity {
 
-    private FinanceDb datasource;
-
-    private double accountbalance;
-    private String abText;
-    TextView tv;
+    private FinanceDb dataSource;
+    private String description;
+    private Double amount;
     private UserInfo userinfo;
-    private String userid;
+    private double charge;
 
     private Spinner spinner;
     private int index;
     private TextView t;
     private ResidentDataSource data;
     private financesInterface restInterface;
-    List<Resident> allResidents;
-
+    List<Resident> listOfAllResidents;
+    List<String> residentWithTabList;
     private RestAdapter restAdapter;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.finances);
-//        getActionBar().setTitle("Finances");
 
-        userinfo= new UserInfo(this);
-        userid=userinfo.getId();
+        setUserinfo(new UserInfo(this));
 
-        datasource = new FinanceDb(this);
-        datasource.open();
-        data = new ResidentDataSource(this);
-        data.open();
-        restAdapter = new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
-        restInterface = restAdapter.create(financesInterface.class);
+        setDataSource(new FinanceDb(this));
+        getDataSource().open();
+        setData(new ResidentDataSource(this));
+        getData().open();
+        setRestAdapter(new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build());
+        setRestInterface(getRestAdapter().create(financesInterface.class));
 
-//         //Gets total account balance
-//         accountbalance=getAccountBalance(userid);
-//         //Converts double to String
-//         abText= String.valueOf(accountbalance);
-//         abText= "$" + abText;
-//         //Grabs Texview
-//        tv= (TextView)findViewById(R.id.account_balance);
-//         //Fills Textview with accountbalance
-//        tv.setText(abText);
+        //initialize Spinner
+        setSpinner((Spinner) findViewById(R.id.other_roommates));
 
+        setResidentWithTabList(new ArrayList<String>());
+        setListOfAllResidents(new ArrayList<Resident>());
+        updateSpinner();
 
-        //Spinner
-        spinner = (Spinner) findViewById(R.id.other_roommates);
-        List<String> list = new ArrayList<String>();
-        allResidents =data.getAllResidents();
+    }
 
-        //get index of currentUser   so it can be removed from the list
-        for(int i=0;i<allResidents.size();i++) {
-            if(allResidents.get(i).getUserID().equals(userinfo.getId())) {
-                  index=i;
+    public void updateSpinner() {
+            getResidentWithTabList().clear();
+//            listOfAllResidents.clear();
+            setListOfAllResidents(getData().getAllResidents());
+
+        for(int i=0;i< getListOfAllResidents().size();i++) {
+            if(getListOfAllResidents().get(i).getUserID().equals(getUserinfo().getId())) {
+                setIndex(i);
             }
         }
-        allResidents.remove(index);
+        getListOfAllResidents().remove(getIndex());
 
-        for(Resident resident: allResidents) {
-                list.add(resident.getFirstName() + " $ " + String.valueOf(datasource.amountOwed(userinfo.getId(),resident.getUserID())));
+        for(Resident resident: getListOfAllResidents()) {
+            getResidentWithTabList().add(resident.getFirstName() + " $ " + getFormattedAmount(getDataSource().amountOwed(getUserinfo().getId(), resident.getUserID())));
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list);
+                android.R.layout.simple_spinner_item, residentWithTabList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-//        t=(TextView)findViewById(R.id.Owed);
-
-
-}
-
-//    private String getTabWithUser() {
-//                String amount= String.valueOf(datasource.amountOwed(userinfo.getId(),));
-//
-////             double profit=getAccountBalance(userinfo.getId(), userid) - getAccountBalance(userid, userinfo.getId());
-//        return amount;// + String.valueOf(profit);
-//    }
+        getSpinner().setAdapter(dataAdapter);
+    }
 
     public void addTransaction(View v){
 
-        Transaction transaction;
-        spinner = (Spinner) findViewById(R.id.other_roommates);
-
-
-        EditText amountText = (EditText) findViewById(R.id.transaction_amount);
-        //Converts text to double
-        Double amount=Double.parseDouble(amountText.getText().toString());
-
-        //Spinner selection
-
-        String roomateUserFirstName=String.valueOf(spinner.getSelectedItem());
-        int index= spinner.getSelectedItemPosition();
+        setSpinner((Spinner)findViewById(R.id.other_roommates));
+        if(!setFormInputAndClear()) {
+            return;
+        }
         //getUserIdFromSpinner
-        Resident to= allResidents.get(index);
+        Resident to= getListOfAllResidents().get(getSpinner().getSelectedItemPosition());
         String toId= to.getUserID();
-
-        String description="Mike for breakfast";
-
-        amountText.setText("");
-        //Sends transaction info to record creation method
-
-        datasource.createTransaction(userinfo.getId(),toId,description,amount);
-
-//        sendTransactionToServer(toId,description,amount);
-
-//        String number= String.valueOf(datasource.amountOwed(userinfo.getId(),toId));
-//        t.setText(number);
-
-
-        //        //add toast message
-//        Context context = getApplicationContext();
-//        CharSequence text = "Transaction of $" + amount + " was added to " + roomateUserFirstName + "'s Account.";
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.show();
-//        datasource.getAllTransactions(userinfo.getId());
+        getDataSource().createTransaction(getUserinfo().getId(), toId, getDescription(), getAmount());
+        updateSpinner();
+        createToast(getAmount(),to.getFirstName());
     }
 
-//    private void sendTransactionToServer(String toId, String description, Double amount) {
-//        restInterface.sendTransaction(userinfo.getResidenceId(),userinfo.getId(),toId,description , String.valueOf(amount),new Callback<TransactionCallback>() {
-//            @Override
-//            public void success(TransactionCallback transactionCallback, Response response) {
-//                //To change body of implemented methods use File | Settings | File Templates.
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError retrofitError) {
-//                //To change body of implemented methods use File | Settings | File Templates.
-//            }
-//        });
-//    }
+    private void createToast(Double amount, String roommateUserFirstName) {
+        CharSequence text = "Transaction of $" + getFormattedAmount(amount) + " was added to " + roommateUserFirstName + "'s Account.";
+        int duration = Toast.LENGTH_SHORT;
 
-    public double getAccountBalance(String from, String to ){
-        double ab=0;
-        List<Transaction> values = datasource.getAllTransactions(from,to);
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.setGravity(Gravity.TOP|Gravity.LEFT, 0, 0);
+        toast.show();
+    }
 
-        for (int i = 0; i < values.size(); i++) {
-            ab= ab+ values.get(i).getAmount();
+    public void addGroupTransaction(View view) {
+        if(!setFormInputAndClear()) {
+            return;
         }
+        int numberOfResidents= getListOfAllResidents().size()+1;
+        setCharge(getAmount()/numberOfResidents );
 
-        return ab;
+
+        new AlertDialog.Builder(this)
+                .setTitle("Group Transaction")
+                .setMessage("Are you sure you want to charge everyone" + " $" + getFormattedAmount(getCharge()) + " ?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        for(Resident resident: getListOfAllResidents()) {
+                            getDataSource().createTransaction(getUserinfo().getId(), resident.getUserID(), getDescription(), getCharge());
+                        }
+                        updateSpinner();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
+
+    private boolean setFormInputAndClear() {
+        //grab text from form
+        EditText amountText = (EditText) findViewById(R.id.transaction_amount);
+        if(amountText.getText().toString().equals("")) {
+            return false;
+        }
+        EditText descriptionText=(EditText)findViewById(R.id.transaction_nature);
+        //Converts text to double
+        setAmount(Double.parseDouble(amountText.getText().toString()));
+        setDescription(descriptionText.getText().toString());
+        //clear form
+        descriptionText.setText("");
+        amountText.setText("");
+        return true;
     }
 
     @Override
     protected void onResume() {
-        datasource.open();
+        dataSource.open();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        datasource.close();
+        dataSource.close();
         super.onPause();
     }
+    public double getCharge() {
+        return charge;
+    }
+
+    public void setCharge(double charge) {
+        this.charge = charge;
+    }
+    public Double getAmount() {
+        return amount;
+    }
+    public String getFormattedAmount() {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        return df.format(getAmount());
+    }
+    public String getFormattedAmount(double amount) {
+        DecimalFormat df = new DecimalFormat("#.##");
+
+        return df.format(amount);
+    }
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public List<Resident> getListOfAllResidents() {
+        return listOfAllResidents;
+    }
+
+    public void setListOfAllResidents(List<Resident> listOfAllResidents) {
+        this.listOfAllResidents = listOfAllResidents;
+    }
+
+    public List<String> getResidentWithTabList() {
+        return residentWithTabList;
+    }
+
+    public void setResidentWithTabList(List<String> residentWithTabList) {
+        this.residentWithTabList = residentWithTabList;
+    }
+    public UserInfo getUserinfo() {
+        return userinfo;
+    }
+
+    public void setUserinfo(UserInfo userinfo) {
+        this.userinfo = userinfo;
+    }
+
+    public FinanceDb getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(FinanceDb dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public Spinner getSpinner() {
+        return spinner;
+    }
+
+    public void setSpinner(Spinner spinner) {
+        this.spinner = spinner;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public ResidentDataSource getData() {
+        return data;
+    }
+
+    public void setData(ResidentDataSource data) {
+        this.data = data;
+    }
+    public void setRestInterface(financesInterface restInterface) {
+        this.restInterface = restInterface;
+    }
+
+    public RestAdapter getRestAdapter() {
+        return restAdapter;
+    }
+
+    public void setRestAdapter(RestAdapter restAdapter) {
+        this.restAdapter = restAdapter;
+    }
+
 
 }
 
