@@ -24,7 +24,7 @@ public class AddBBPostActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_post);
-        getActionBar().setTitle("Add Post");
+        getActionBar().setTitle("Bulletin Board");
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         datasource = new BulletinBoardDb(this);
@@ -47,7 +47,7 @@ public class AddBBPostActivity extends Activity {
         String postDetails = details.getText().toString();
 
         // Save the new comment to the database
-        comment = datasource.createPost(userid, postTitle, postDetails);
+        comment = datasource.createPost("37536483758", postTitle, postDetails);
 
 
         Intent goback= new Intent(this, BulletinBoardActivity.class);

@@ -20,14 +20,26 @@ public class BBMySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_POST = "post";
     public static final String COLUMN_POSTDETAILS = "details";
 
+    public static final String TABLE_LIKES = "likes";
+    public static final String COLUMN_LIKEID = "_id";
+    public static final String COLUMN_POSTID= "postid";
+    public static final String COLUMN_NAME= "name";
+
 
     private static final String DATABASE_NAME = "posts.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // Database creation sql statement
-    private static final String DATABASE_CREATE = "create table "
+    private static final String DATABASE_CREATEPOSTTABLE = "create table "
             + TABLE_POSTS + "(" + COLUMN_ID
-            + " integer primary key autoincrement, " + COLUMN_POST
+            + " integer primary key autoincrement, " + COLUMN_USERID
+            + " text not null, " + COLUMN_POST + " text not null, " + COLUMN_POSTDETAILS
+            + " text not null);";
+
+    private static final String DATABASE_CREATELIKETABLE = "create table "
+            + TABLE_LIKES + "(" + COLUMN_LIKEID
+            + " integer primary key autoincrement, " + COLUMN_POSTID
+            + " integer not null, " + COLUMN_NAME
             + " text not null);";
 
     public BBMySQLiteHelper(Context context) {
@@ -36,7 +48,8 @@ public class BBMySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+        database.execSQL(DATABASE_CREATEPOSTTABLE);
+        database.execSQL(DATABASE_CREATELIKETABLE);
     }
 
     @Override
@@ -45,6 +58,7 @@ public class BBMySQLiteHelper extends SQLiteOpenHelper {
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_POSTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LIKES);
         onCreate(db);
     }
 

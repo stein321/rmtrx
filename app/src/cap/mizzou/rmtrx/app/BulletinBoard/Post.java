@@ -1,5 +1,7 @@
 package cap.mizzou.rmtrx.app.BulletinBoard;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Desi
@@ -7,7 +9,7 @@ package cap.mizzou.rmtrx.app.BulletinBoard;
  * Time: 12:55 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Post {
+public class Post implements Serializable{
 
         private long id;
         private String userid;

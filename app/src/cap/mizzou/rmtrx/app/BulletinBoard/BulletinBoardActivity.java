@@ -1,6 +1,7 @@
 package cap.mizzou.rmtrx.app.BulletinBoard;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +13,7 @@ import java.util.List;
 import android.content.Intent;
 import android.app.*;
 import android.content.DialogInterface;
-
+import cap.mizzou.rmtrx.app.User_setup.UserInfo;
 
 
 /**
@@ -28,6 +29,7 @@ public class BulletinBoardActivity extends ListActivity {
     private BulletinBoardDb datasource;
     private PostListAdapter postListAdapter;
     private Post currentpost;
+    private UserInfo userinfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,13 @@ public class BulletinBoardActivity extends ListActivity {
         getActionBar().setTitle("Bulletin Board");
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        userinfo= new UserInfo(this);
+
         datasource = new BulletinBoardDb(this);
         datasource.open();
+
+
+        //datasource.drop();
 
 
 
@@ -48,12 +55,44 @@ public class BulletinBoardActivity extends ListActivity {
         setListAdapter(postListAdapter);
 
 
-
+        //when an list item is clicked
         this.getListView().setClickable(true);
         this.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                //show post details
+                //show post details and likes
+                String display="";
+                Context context = getApplicationContext();
+                Post post = (Post) getListAdapter().getItem(position);
+                List<String> likes=datasource.getAlllikes(post.getId());
+                int duration = Toast.LENGTH_SHORT;
+                display= post.getPostDetails() + "\n";
+                for (int i = 0; i < likes.size(); i++) {
+                    if(likes.size()==1){
+                    display= display + likes.get(i);
+                    }
+
+                    else if(!((likes.size()-1)==1)){
+                    display=display + likes.get(i) + ", ";
+                    }
+
+                    else{
+                        display=display + likes.get(i);
+                    }
+
+
+
+                }
+
+                 if(likes.size()==1){
+                     display=display + " likes this post.";
+                 }
+                else{
+                     display=display + " like this post";
+                }
+
+                Toast toast = Toast.makeText(context, display, duration);
+                toast.show();
             }});
 
 
@@ -68,6 +107,20 @@ public class BulletinBoardActivity extends ListActivity {
         startActivity(addpost);
         }
 
+    public void editPost(View view){
+        Button button = (Button) view;
+        currentpost = (Post) button.getTag();
+
+        Intent edit= new Intent(this, EditBBPostActivity.class);
+        startActivity(edit);
+
+        edit.putExtra("postToEdit", currentpost);
+        startActivity(edit);
+        //postListAdapter.notifyDataSetChanged();
+
+        //showDialog(1);
+    }
+
     public void deletePost(View view){
         ImageButton button = (ImageButton) view;
         currentpost = (Post) button.getTag();
@@ -76,8 +129,35 @@ public class BulletinBoardActivity extends ListActivity {
         postListAdapter.removePost(currentpost);
         postListAdapter.notifyDataSetChanged();
 
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, "Post Deleted", duration);
+        toast.show();
+
         //showDialog(1);
     }
+
+    public void likePost(View view){
+        CheckBox checkBox = (CheckBox) view;
+        currentpost = (Post) checkBox.getTag();
+
+        if(checkBox.isChecked()){
+        datasource.createLike(currentpost.getId(), userinfo.getFirstName());
+            checkBox.setChecked(true);
+        }
+        //TODO
+        /*
+        else{
+
+            datasource.deleteLike(currentpost, userinfo.getFirstName());
+            checkBox.setChecked(false);
+        }
+        */
+        //postListAdapter.notifyDataSetChanged();
+
+
+    }
+
 
 
     @Override
