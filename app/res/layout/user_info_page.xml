@@ -15,7 +15,7 @@
             <!--android:layout_marginLeft="10dip"-->
             <!--/>-->
     <TextView
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_marginLeft="80dip"
             android:layout_marginTop="190dip"
             android:id="@+id/code"
-            android:text="@string/codeButtonDirection"
+
 
             />
     <!--<TextView-->
