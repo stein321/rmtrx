@@ -3,6 +3,7 @@ package cap.mizzou.rmtrx.app.Messages;
 import Models.Message;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,6 +33,8 @@ public class MessagesActivity extends Activity {
     private UserInfo userInfo;
     private EditText messageEditText;
     private MessagesArrayAdapter adapter;
+    private Handler handler;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,58 @@ public class MessagesActivity extends Activity {
 //        DatabaseHydrator dh = new DatabaseHydrator(this);
 //        String residenceId = userInfo.getResidenceId();
 //        dh.UpdateDatabase(residenceId);
+
+        handler = new Handler();
+        timer = new Timer();
+
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @SuppressWarnings("unchecked")
+                    public void run() {
+                        try {
+                            Log.d("Timer:", "Tick");
+                            getMessagesFromServer();
+                        }
+                        catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 10000, 5000);
+
+    }
+
+    protected void onPause() {
+         super.onPause();
+         timer.cancel();
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @SuppressWarnings("unchecked")
+                    public void run() {
+                        try {
+                            Log.d("Timer:", "Tick");
+                            getMessagesFromServer();
+                        }
+                        catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+
+        timer.schedule(doAsynchronousTask, 10000, 5000);
     }
     
     public void getMessagesFromServer() {
@@ -58,6 +115,8 @@ public class MessagesActivity extends Activity {
         ri.getChatLog(userInfo.getResidenceId(),new Callback<List<Message>>() {
             @Override
             public void success(List<Message> messages, Response response) {
+                adapter.clearMessagesCollection();
+                adapter.notifyDataSetChanged();
                 for(Message message : messages) {
                     adapter.add(message);
                 }
