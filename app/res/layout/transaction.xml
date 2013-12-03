@@ -5,20 +5,33 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space"
+            android:layout_gravity="left|center_vertical"/>
+
     <EditText android:id="@+id/transaction_amount"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="numberDecimal"
-            />
+              android:layout_gravity="center"/>
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space1"
+            android:layout_gravity="left|center_vertical"/>
+
     <Button
             android:id="@+id/Transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="14dp"
             android:text="Credit/Charge Roommate"
-            android:onClick="sendTransaction"/>
+            android:onClick="sendTransaction"
+            android:layout_gravity="center_horizontal"/>
 
 
 

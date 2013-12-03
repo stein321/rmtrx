@@ -1,99 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/account_balance"
-            android:layout_gravity="center"/>
 
-    <LinearLayout
-            android:id="@+id/group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:id="@+id/account_balance"
+                android:layout_gravity="center"/>
 
 
 
         <EditText android:id="@+id/transaction_amount"
-                  android:layout_width="wrap_content"
+                  android:layout_width="fill_parent"
                   android:hint="Enter Amount"
                   android:layout_height="wrap_content"
                   android:inputType="numberDecimal|numberSigned"
                 />
 
-        <TextView
+
+        <Space
+                android:layout_width="20px"
+                android:layout_height="10px"
+                android:id="@+id/space2"
+                android:layout_gravity="left|center_vertical"/>
+
+        <LinearLayout
+                android:id="@+id/group"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/roommate_choice_instructions"
+                    android:text="Roommate to Charge/Credit:"
+                    android:layout_gravity="bottom|left"
+                    android:layout_marginLeft="10dp"/>
+
+            <Spinner
+                    android:id="@+id/other_roommates"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:gravity="right"/>
+
+        </LinearLayout>
+
+        <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:id="@+id/space1"
+                android:layout_gravity="left|center_vertical"/>
+
+        <EditText android:id="@+id/transaction_nature"
+                  android:layout_width="fill_parent"
+                  android:hint="Enter Nature of Transaction"
+                  android:layout_height="wrap_content"
+                  android:inputType="text"
+                />
+
+        <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:id="@+id/space"
+                android:layout_gravity="center_vertical"/>
+
+        <Button
+                android:id="@+id/addTransaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/roommate_choice_instructions"
-                android:text="Roommate to Charge/Credit:"
-                android:textSize="8dp"/>
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:text="Add Transaction"
+                android:onClick="addTransaction"
+                android:layout_gravity="right"/>
 
-        <Spinner
-                android:id="@+id/other_roommates"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
 
-    </LinearLayout>
-
-    <EditText android:id="@+id/transaction_nature"
-              android:layout_width="wrap_content"
-              android:hint="Enter Nature of Transaction"
-              android:layout_height="wrap_content"
-              android:inputType="text"
-            />
-    <Button
-            android:id="@+id/addTransaction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="14dp"
-            android:text="Add Transaction"
-            android:onClick="addTransaction"/>
-
-    <LinearLayout
-            android:id="@+id/group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
         <Button
                 android:id="@+id/addGroupBill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="14dp"
                 android:text="Add Group Transaction"
-                android:onClick="addGroupTransaction"/>
+                android:onClick="addGroupTransaction"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"/>
 
-        <TextView
+
+        <Button
+                android:id="@+id/generateBill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/group_choice_instructions"
-                android:text="Or Choose to split Transaction as a group; Charge/Credit all roommates including yourself"
-                android:textSize="6dp"/>
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="Generate Bill"
+                android:onClick="generateBill"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"/>
+
+
+
+        <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hello"/>
+
     </LinearLayout>
 
-    <Button
-            android:id="@+id/generateBill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="14dp"
-            android:text="Generate Bill"
-            android:onClick="generateBill"/>
-
-
-
-
-    <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hello"/>
-
-</LinearLayout>
+</ScrollView>
