@@ -116,12 +116,12 @@ public class FinanceDb {
                 + " = " + id, null);
     }
 
-    public List<Transaction> getAllTransactions(String fromUser, String toUser) {
+    public List<Transaction> getAllTransactions(String fromUser) {
         List<Transaction> transactions = new ArrayList<Transaction>();
          String[] columns={COLUMN_AMOUNT};
-        String[] selectionArgument={fromUser,toUser};
+//        String[] selectionArgument={fromUser,toUser};
         String queryToRun= COLUMN_FROM + " = ? " + "AND" + COLUMN_TO + " = ?" ;
-        Cursor cursor = database.query(TABLE_TRANSACTIONS,columns, queryToRun,null,null,null,null);
+        Cursor cursor = database.query(TABLE_TRANSACTIONS,null, null,null,null,null,null);
 
         cursor.moveToFirst();
 

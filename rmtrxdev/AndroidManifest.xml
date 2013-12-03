@@ -121,6 +121,10 @@
                 android:label="@string/financeActivity"
                 android:parentActivityName="cap.mizzou.rmtrx.app.ui.HomeActivity"
                 />
+        <activity
+                android:name="cap.mizzou.rmtrx.app.Finances.GenerateBillActivity"
+                android:label="@string/generateBillActivity"
+            ></activity>
 
         <activity android:name="cap.mizzou.rmtrx.app.ui.SplashActivity"
                   android:label="@string/app_name"

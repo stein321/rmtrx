@@ -46,7 +46,7 @@ public class GenerateBillActivity extends Activity {
         TableLayout ll=new TableLayout(this);
 
          String [] columnName= new String[3];
-        columnName[0]="Date";
+        columnName[0]=String.valueOf(values.get(1).getAmount());
         columnName[1]="Amount";
         columnName[2]="Nature";
         for(int i=0;i<values.size()+1;i++) {

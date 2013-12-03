@@ -10,5 +10,6 @@
     <string name="currentResidence">Current Residence</string>
     <string name="dashboardActivity">Dashboard</string>
     <string name="financeActivity">Finance Activity</string>
+    <string name="generateBillActivity">Bill</string>
 
 </resources>
