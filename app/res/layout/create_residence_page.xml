@@ -5,21 +5,43 @@
               android:orientation="vertical">
 
 
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space"
+            android:layout_gravity="left|center_vertical"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nameOfResidence"
-            />
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold|normal"/>
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space1"
+            android:layout_gravity="center"/>
+
     <EditText android:id="@+id/residence_name"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="text"
-            />
+              android:layout_gravity="center_horizontal"/>
+
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space2"
+            android:layout_gravity="left|center_vertical"/>
+
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/CreateResidence"
-            android:onClick="submit"/>
+            android:onClick="submit"
+            android:layout_gravity="center"/>
 
 
 </LinearLayout>
