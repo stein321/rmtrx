@@ -91,13 +91,13 @@
 
 
     <!--This is just for testing purposes-->
-    <Button
-            android:id="@+id/truncate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Truncate"
-            android:layout_marginTop="400dip"
-            android:onClick="truncateTable"/>
+    <!--<Button-->
+            <!--android:id="@+id/truncate"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/Truncate"-->
+            <!--android:layout_marginTop="400dip"-->
+            <!--android:onClick="truncateTable"/>-->
 
 
 </RelativeLayout>

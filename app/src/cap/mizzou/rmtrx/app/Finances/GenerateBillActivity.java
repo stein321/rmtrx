@@ -81,7 +81,7 @@ public class GenerateBillActivity extends Activity {
                     tbrow.addView(tv3);
                     tv4.setText(columnName[3]);
                     tbrow.addView(tv4);
-                    tv5.setText(columnName[2]);
+                    tv5.setText(columnName[4]);
                     tbrow.addView(tv5);
                 }
                 else{
