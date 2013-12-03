@@ -495,8 +495,8 @@ public class GroceryActivity extends Activity {
 
 
                 builder = new AlertDialog.Builder(GroceryActivity.this);
-                builder.setView(layout).setMessage("add list").setCancelable(true)
-                        .setPositiveButton("add",
+                builder.setView(layout).setMessage("Add List").setCancelable(true)
+                        .setPositiveButton("Add",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
@@ -508,13 +508,7 @@ public class GroceryActivity extends Activity {
                                             dialog.dismiss();
                                         }
                                     }
-                                }).setNegativeButton("cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,
-                                                int id) {
-                                dialog.cancel();
-                            }
-                        });
+                                });
                 dialog = builder.create();
                 break;
 
