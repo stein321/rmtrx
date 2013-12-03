@@ -76,7 +76,7 @@ public class MessagesActivity extends Activity {
                 });
             }
         };
-        timer.schedule(doAsynchronousTask, 10000, 5000);
+        timer.schedule(doAsynchronousTask, 5000, 2000);
 
     }
 
@@ -106,7 +106,7 @@ public class MessagesActivity extends Activity {
             }
         };
 
-        timer.schedule(doAsynchronousTask, 10000, 5000);
+        timer.schedule(doAsynchronousTask, 5000, 2000);
     }
     
     public void getMessagesFromServer() {
