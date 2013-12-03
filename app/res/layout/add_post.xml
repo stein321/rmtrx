@@ -5,25 +5,43 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <Space
+            android:layout_width="20px"
+            android:layout_height="10px"
+            android:id="@+id/space1"
+            android:layout_gravity="left|center_vertical"/>
+
     <EditText android:id="@+id/title"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:hint="Enter Title"
               android:inputType="text"
             />
 
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space2"
+            android:layout_gravity="left|center_vertical"/>
+
     <EditText android:id="@+id/additional_details"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:hint="Enter Addtional Details"
               android:inputType="text"
             />
 
+    <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:id="@+id/space3"
+            android:layout_gravity="left|center_vertical"/>
+
     <Button
             android:id="@+id/send"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Send"
+            android:text="Add Post"
             android:onClick="sendPost"
             android:layout_gravity="center_horizontal"/>
 

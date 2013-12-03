@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/nameOfResidence"
             android:layout_gravity="center_horizontal"
-            android:textStyle="normal"/>
+            android:textStyle="bold|normal"/>
 
     <Space
             android:layout_width="20px"
@@ -25,7 +25,7 @@
             android:layout_gravity="center"/>
 
     <EditText android:id="@+id/residence_name"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="text"
               android:layout_gravity="center_horizontal"/>

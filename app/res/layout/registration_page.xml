@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+<LinearLayout android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,67 +23,73 @@
     </RadioGroup>
 
 
-    <TextView
+    <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/firstName"
-            />
+            />-->
     <EditText android:id="@+id/firstName"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="text"
+              android:hint="@string/firstName"
             />
 
-    <TextView
+    <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lastName"
-            />
+            />-->
     <EditText android:id="@+id/lastName"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="text"
+              android:hint="@string/lastName"
             />
-    <TextView
+    <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/email"
-            />
+            />-->
     <EditText android:id="@+id/email"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="textEmailAddress"
+              android:hint="@string/email"
             />
-    <TextView
+    <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/password"
-            />
+            />-->
     <EditText android:id="@+id/password"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="textPassword"
+              android:hint="@string/password"
             />
-    <TextView
+    <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/confirmPassword"
-            />
+            />-->
     <EditText android:id="@+id/confirmPassword"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="textPassword"
+              android:hint="@string/confirmPassword"
             />
     <TextView
             android:id="@+id/code_or_name_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Code_of_residence"
-            />
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+            <!--android:text="@string/Code_of_residence"-->
+
     <EditText android:id="@+id/code_or_name"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:inputType="text"
+              android:hint="@string/Code_of_residence_join"
             />
 
     <Button
@@ -94,3 +103,4 @@
 
 
 </LinearLayout>
+</ScrollView>

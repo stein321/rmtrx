@@ -16,14 +16,26 @@
             <!--/>-->
     <TextView
             android:layout_alignParentRight="false"
-            android:id="@+id/user_name"
+            android:id="@+id/firstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/firstName"
-            android:layout_marginTop="10dip"
-            android:layout_marginRight="10dip"
             android:textSize="@dimen/Residence_font_size"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+
+
+
+    <TextView
+            android:layout_alignParentRight="false"
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:textSize="@dimen/Residence_font_size"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="60dp"/>
+
     <!--<TextView-->
             <!--android:layout_alignParentLeft="true"-->
             <!--android:layout_width="wrap_content"-->
@@ -41,9 +53,8 @@
             android:layout_height="wrap_content"
             android:text="@string/nameOfResidence"
             android:textSize="@dimen/Residence_font_size"
-            android:layout_marginTop="80dip"
-            android:layout_marginRight="10dip"
-            />
+            android:layout_marginTop="110dip"
+            android:layout_marginLeft="10dp"/>
 
        <!--<ListView-->
               <!--android:layout_alignParentLeft="true"-->
@@ -59,17 +70,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/GenerateCode"
-            android:layout_marginTop="170dip"
+            android:layout_marginTop="210dip"
             android:onClick="generateCode"
-            android:layout_centerInParent="true"/>
+            android:layout_centerHorizontal="true"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/code"
-            android:text="@string/codeButtonDirection"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="260dp"/>
+            <!--android:text="@string/codeButtonDirection"-->
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="260dp"/>
 
-            android:layout_toRightOf="@+id/truncate"
-            android:layout_below="@+id/generateCode"/>
     <!--<TextView-->
             <!--android:layout_alignParentLeft="true"-->
             <!--android:layout_width="wrap_content"-->
@@ -80,6 +96,7 @@
             <!--android:textSize="@dimen/Residence_font_size"-->
 
             <!--/>-->
+
     <Button
             android:id="@+id/showResidents"
             android:layout_width="wrap_content"
@@ -91,13 +108,13 @@
 
 
     <!--This is just for testing purposes-->
-    <Button
+    <!--<Button
             android:id="@+id/truncate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Truncate"
             android:layout_marginTop="400dip"
-            android:onClick="truncateTable"/>
+            android:onClick="truncateTable"/>-->
 
 
 </RelativeLayout>

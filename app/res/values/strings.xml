@@ -47,6 +47,7 @@
     <string name="GenerateCode">Generate Invite Code</string>
     <string name="nameOfResidence">Name of Residence</string>
     <string name="Code_of_residence">Code of the residence you would like to join</string>
+    <string name="Code_of_residence_join">Joinable Residence Code</string>
     <string name="Go">Go</string>
     <string name="lastName">Last Name</string>
     <string name="residence_name">Residence Name</string>
