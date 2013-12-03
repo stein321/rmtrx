@@ -45,6 +45,15 @@ public class DatabaseHydrator {
             public void success(Residence residence, Response response) {
                 ContentResolver resolver = context.getContentResolver();
 
+                context.deleteDatabase("rmtrx.db");
+                context.deleteDatabase("roommates.db");
+                context.getContentResolver().delete(GroceryList.ContentUri, null, null);
+
+                ResidentDataSource dataSource = new ResidentDataSource(context);
+                dataSource.open();
+                dataSource.truncate();
+                dataSource.close();
+
                 UserInfo userInfo = new UserInfo(context);
                 userInfo.setGroceryListLastUpdate(residence.getGroceryListLastUpdate());
                 ResidentDataSource residentDataSource = new ResidentDataSource(context);

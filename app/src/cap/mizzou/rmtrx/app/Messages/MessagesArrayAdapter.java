@@ -92,4 +92,8 @@ public class MessagesArrayAdapter extends ArrayAdapter<Message> {
     public void setCurrentUserId(String currentUserId) {
         this.currentUserId = currentUserId;
     }
+
+    public void clearMessagesCollection() {
+        messages.clear();
+    }
 }
