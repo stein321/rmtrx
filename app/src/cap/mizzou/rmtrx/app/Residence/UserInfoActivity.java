@@ -31,7 +31,6 @@ public class UserInfoActivity extends Activity {
     private ResidentDataSource data;
     private String code;
 
-    //TODO:make an activity that dumps out the sharedpreferences
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +38,9 @@ public class UserInfoActivity extends Activity {
         setContentView(R.layout.user_info_page);
         getActionBar().setTitle("Residence Information");
         Context context=getApplicationContext();
-        userInfo=new UserInfo(context);
-        data=new ResidentDataSource(this);
-        data.open();
+        setUserInfo(new UserInfo(context));
+        setData(new ResidentDataSource(this));
+        getData().open();
 //        userInfo.dumpPrefValues();
 
 
@@ -55,7 +54,7 @@ public class UserInfoActivity extends Activity {
                 new RestAdapter.Builder().setServer("http://powerful-thicket-5732.herokuapp.com/").build();
         ResidenceCreationInterface ri= restAdapter.create(ResidenceCreationInterface.class);
 
-        ri.saveResidenceCode(userInfo.getResidenceId(),getCode(), new Callback<Code>() {
+        ri.saveResidenceCode(getUserInfo().getResidenceId(),getCode(), new Callback<Code>() {
             @Override
             public void success(Code code, Response response) {
                 setNewCodeOnPage();
@@ -76,8 +75,8 @@ public class UserInfoActivity extends Activity {
         TextView showNameOfUser=(TextView)findViewById(R.id.user_name);   //hard code for now
         TextView showNameOfResidence=(TextView)findViewById(R.id.residence);
 
-        showNameOfUser.setText(userInfo.getFirstName() + " " + userInfo.getLastName());
-        showNameOfResidence.setText(userInfo.getResidenceName());
+        showNameOfUser.setText(getUserInfo().getFirstName() + " " + getUserInfo().getLastName());
+        showNameOfResidence.setText(getUserInfo().getResidenceName());
     }
     public void showResidentsList(View view) {
         Intent showList=new Intent(this, ShowResidentsActivity.class);
@@ -99,9 +98,11 @@ public class UserInfoActivity extends Activity {
         return code;
     }
     public void truncateTable(View view) {
-        data.truncate();
+        getData().truncate();
         this.deleteDatabase("grocery.db");
     }
+
+
     public String getCode() {
         return code;
     }
@@ -109,5 +110,21 @@ public class UserInfoActivity extends Activity {
     public void setCode(String code) {
         this.code = code;
     }
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public ResidentDataSource getData() {
+        return data;
+    }
+
+    public void setData(ResidentDataSource data) {
+        this.data = data;
+    }
+
 
 }
