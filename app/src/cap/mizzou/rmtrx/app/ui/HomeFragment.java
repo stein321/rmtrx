@@ -93,8 +93,8 @@ public class HomeFragment extends BaseListFragment {
         activitiesList.add(new RmtrxActivity(R.string.bulletin_board_activity_name, BulletinBoardActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.finances_activity_name, FinanceActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.messages_activity_name, MessagesActivity.class));
-        activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));
         activitiesList.add(new RmtrxActivity(R.string.residence_info, UserInfoActivity.class));
+        activitiesList.add(new RmtrxActivity(R.string.logout_name, LogOutActivity.class));
         //  activitiesList.add(new RmtrxActivity(R.string.registration_activity_name, RegistrationActivity.class));
 /*        activitiesList.add(new RmtrxActivity(R.string.action_settings, SettingsActivity.class));*/
 
