@@ -1,10 +1,13 @@
 package cap.mizzou.rmtrx.app.Finances;
 
+import Models.Transaction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import cap.mizzou.rmtrx.app.DataAccess.ResidentDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,11 @@ public class FinanceDb {
     // Database fields
     private SQLiteDatabase database;
     private FinanceMySQLiteHelper dbHelper;
-    private String[] allColumns = { COLUMN_LOCAL_ID, COLUMN_SERVICE_ID,COLUMN_TO,COLUMN_FROM,COLUMN_DATE };
+
+
+    private ResidentDataSource data;
+
+
 
     public FinanceDb(Context context) {
         dbHelper = new FinanceMySQLiteHelper(context);
@@ -74,7 +81,22 @@ public class FinanceDb {
 
         cursor.close();
     }
+    public List<Transaction> getAllTransactions(String fromUser,Context context) {
+        List<Transaction> transactions = new ArrayList<Transaction>();
+        String queryToRun= COLUMN_FROM + " = ? " + "AND" + COLUMN_TO + " = ?" ;
+        Cursor cursor = database.query(TABLE_TRANSACTIONS,null, null,null,null,null,null);
 
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            Transaction transaction  = cursorToTransaction(cursor,context);
+            transactions.add(transaction);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return transactions;
+    }
     public double amountOwed(String fromId,String toId) {
         double sum=0;
         double amount;
@@ -116,31 +138,40 @@ public class FinanceDb {
                 + " = " + id, null);
     }
 
-    public List<Transaction> getAllTransactions(String fromUser) {
-        List<Transaction> transactions = new ArrayList<Transaction>();
-         String[] columns={COLUMN_AMOUNT};
-//        String[] selectionArgument={fromUser,toUser};
-        String queryToRun= COLUMN_FROM + " = ? " + "AND" + COLUMN_TO + " = ?" ;
-        Cursor cursor = database.query(TABLE_TRANSACTIONS,null, null,null,null,null,null);
 
-        cursor.moveToFirst();
 
-        while (!cursor.isAfterLast()) {
-            Transaction transaction  = cursorToTransaction(cursor);
-            transactions.add(transaction);
-            cursor.moveToNext();
-        }
-        // Make sure to close the cursor
-        cursor.close();
-        return transactions;
-    }
+    private Transaction cursorToTransaction(Cursor cursor,Context context) {
 
-    private Transaction cursorToTransaction(Cursor cursor) {
+        setData(new ResidentDataSource(context));
+        getData().open();
+
+        String id=cursor.getString(cursor.getColumnIndex(COLUMN_TO));
+        String name=data.findResident(id).getFirstName();
+
         Transaction transaction = new Transaction();
-        transaction.setId(cursor.getLong(0));
-        transaction.setUserId(cursor.getString(1));
-        transaction.setAmount(cursor.getDouble(2));
+        transaction.setName(name);
+        transaction.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_LOCAL_ID)));
+        transaction.setServiceId(cursor.getString(cursor.getColumnIndex(COLUMN_SERVICE_ID)));
+        transaction.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
+        transaction.setAmount(cursor.getDouble(cursor.getColumnIndex(COLUMN_AMOUNT)));
+        transaction.setToUser(cursor.getString(cursor.getColumnIndex(COLUMN_TO)));
+        transaction.setFromUser(cursor.getString(cursor.getColumnIndex(COLUMN_FROM)));
+        transaction.setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
         return transaction;
     }
-}
+    public ResidentDataSource getData() {
+        return data;
+    }
 
+    public void setData(ResidentDataSource data) {
+        this.data = data;
+    }
+
+}
+//private long id;
+//private String serviceId;
+//private String description;
+//private double amount;
+//private String toUser;
+//private String fromUser;
+//private String date;
