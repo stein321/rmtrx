@@ -57,7 +57,7 @@ public class Resident {
     }
 
     public String toString() {
-        return getEmail();
+        return getFirstName() + " " + getLastName();
     }
 
 

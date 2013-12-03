@@ -11,5 +11,6 @@
     <string name="dashboardActivity">Dashboard</string>
     <string name="financeActivity">Finance Activity</string>
     <string name="generateBillActivity">Bill</string>
+    <string name="residents">Residents</string>
 
 </resources>
